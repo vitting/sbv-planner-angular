@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "sbv-planner": {
+      "hosting": {
+        "planner": [
+          "sbv-planner"
+        ]
+      }
+    }
+  }
+}
