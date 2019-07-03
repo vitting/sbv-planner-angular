@@ -1,0 +1,8 @@
+<nav class="mat-h1 app-appbar">
+  <img src="assets/images/sbv_logo_250x250.png" alt="Logo" class="brand">
+  <div>{{title}}</div>
+  <div>
+    <a *ngIf="showLogin" [routerLink]="['/login']" mat-button>Login</a>
+    <a *ngIf="!showLogin" mat-button>Log ud</a>
+  </div>
+</nav>

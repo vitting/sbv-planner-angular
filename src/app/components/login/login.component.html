@@ -1,1 +1,17 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="app-form">
+  <div class="app-form-input-container">
+    <mat-form-field class="app-form-input">
+      <input id="email" name="email" matInput placeholder="E-mail" type="email" formControlName="email">
+      <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['required']">Feltet skal udfyldes</mat-error>
+      <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['email']">Feltet indeholder ikke en valid e-mail adresse</mat-error>
+    </mat-form-field>
+    <mat-form-field class="app-form-input">
+      <input id="password" name="password" matInput placeholder="Kodeord" type="password" formControlName="password">
+      <mat-error *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Feltet skal udfyldes</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="login-form-button-container">
+    <button mat-flat-button color="primary" [disabled]="loginForm.invalid || loginForm.untouched" type="submit">Login</button>
+    <a mat-flat-button [routerLink]="['/signup']">Opret ny bruger</a>
+  </div>
+</form>

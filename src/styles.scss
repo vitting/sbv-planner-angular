@@ -1,4 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+    background-color: #effefe;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.app-form {
+    width: 600px;
+    margin: 0 auto;
+    .app-form-input-container {
+
+        .app-form-input {
+            width: 600px;
+        }
+    }
+}
+
+
+@media only screen and (max-width:600px) {
+    .app-form {
+        width: 100%;
+
+        .app-form-input-container {
+            .app-form-input {
+                width: 100%;
+            }
+        }
+    }
+}

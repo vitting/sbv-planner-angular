@@ -1,1 +1,27 @@
-<p>signup works!</p>
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="app-form">
+  <div class="app-form-input-container">
+    <mat-form-field class="app-form-input">
+      <input id="email" name="email" matInput placeholder="E-mail" type="email" formControlName="email">
+      <mat-error *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched && signupForm.get('email').errors['required']">Feltet skal udfyldes</mat-error>
+      <mat-error *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched && signupForm.get('email').errors['email']">Feltet indeholder ikke en valid e-mail adresse</mat-error>
+    </mat-form-field>
+    <mat-form-field class="app-form-input">
+      <input id="password" name="password" matInput placeholder="Kodeord" type="password" formControlName="password" #passwordInput>
+      <mat-hint>Dit kodeord skal være på mindst 6 tegn</mat-hint>
+      <mat-error *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && signupForm.get('password').errors['required']">Feltet skal udfyldes</mat-error>
+      <mat-error *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && signupForm.get('password').errors['minlength']">Kodeordet skal være på mindst 6 tegn</mat-error>
+    </mat-form-field>
+    <mat-form-field class="app-form-input">
+      <input id="passwordRepeat" name="passwordRepeat" matInput placeholder="Gentag kodeord" type="password" formControlName="passwordRepeat">
+      <mat-error *ngIf="signupForm.get('passwordRepeat').invalid && signupForm.get('passwordRepeat').touched && signupForm.get('passwordRepeat').errors['required']">Feltet skal udfyldes</mat-error>
+      <mat-error *ngIf="signupForm.get('passwordRepeat').invalid && signupForm.get('passwordRepeat').touched && signupForm.get('passwordRepeat').errors['passwordsNotEqual']">Kodeord stemmer ikke overens</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="signup-form-button-container">
+    <button mat-flat-button color="primary" [disabled]="signupForm.invalid || signupForm.untouched" type="submit">Opret</button>
+  </div>
+</form>
+
+<button type="button" (click)="test()">TEST</button>
+<button type="button" (click)="testlogin()">LOGIN</button>
+<button type="button" (click)="testlogout()">LOGOUT</button>
