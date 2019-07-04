@@ -21,6 +21,7 @@ import { TasksModule } from './components/tasks/tasks.module';
 import { TemplatesModule } from './components/templates/templates.module';
 import { SignupModule } from './components/signup/signup.module';
 import { NavbarModule } from './components/navbar/navbar.module';
+import { SettingsModule } from './components/settings/settings.module';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { NavbarModule } from './components/navbar/navbar.module';
     TemplatesModule,
     SignupModule,
     SidebarModule,
-    NavbarModule
+    NavbarModule,
+    SettingsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
