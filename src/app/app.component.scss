@@ -1,3 +1,18 @@
-.content {
-  margin: 10px;
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .content {
+    width: 600px;
+  }
+}
+
+@media only screen and (max-width:600px) {
+  .container {
+    .content {
+      width: 100%;
+      margin: 0 10px;
+    }
+  }
 }

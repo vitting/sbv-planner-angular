@@ -11,26 +11,13 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.app-form {
-    width: 600px;
-    margin: 0 auto;
-    .app-form-input-container {
-
-        .app-form-input {
-            width: 600px;
-        }
-    }
+form .app-form-input {
+  width: 600px;
 }
 
 
 @media only screen and (max-width:600px) {
-    .app-form {
+    form .app-form-input {
         width: 100%;
-
-        .app-form-input-container {
-            .app-form-input {
-                width: 100%;
-            }
-        }
     }
 }

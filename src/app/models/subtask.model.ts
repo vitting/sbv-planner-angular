@@ -3,10 +3,12 @@ export interface SubTask {
   projectId: string;
   taskId: string;
   createdAt: any;
+  updatedAt: any;
   title: string;
   colorCode: string;
   completed: boolean;
   users: string[];
+  index: number;
 }
 
 export class SubTaskItem implements SubTask {
@@ -15,10 +17,12 @@ export class SubTaskItem implements SubTask {
     public projectId: string,
     public taskId: string,
     public createdAt: any,
+    public updatedAt: any,
     public title: string,
     public colorCode: string,
     public completed: boolean,
-    public users: string[]
+    public users: string[],
+    public index: number
   ) {}
 
   toObject(): SubTask {
@@ -27,10 +31,12 @@ export class SubTaskItem implements SubTask {
       projectId: this.projectId,
       taskId: this.taskId,
       createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
       title: this.title,
       colorCode: this.colorCode,
       completed: this.completed,
-      users: this.users
+      users: this.users,
+      index: this.index
     };
   }
 }

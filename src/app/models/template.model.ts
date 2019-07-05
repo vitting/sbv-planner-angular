@@ -3,6 +3,7 @@ export interface Template {
   title: string;
   description: string;
   createdAt: any;
+  updatedAt: any;
   colorCode: string;
   active: boolean;
 }
@@ -13,6 +14,7 @@ export class TemplateItem implements Template {
     public title: string,
     public description: string,
     public createdAt: any,
+    public updatedAt: any,
     public colorCode: string,
     public active: boolean) {}
 
@@ -22,6 +24,7 @@ export class TemplateItem implements Template {
       title: this.title,
       description: this.description,
       createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
       colorCode: this.colorCode,
       active: this.active
     };

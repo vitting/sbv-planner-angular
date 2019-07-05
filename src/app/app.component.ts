@@ -24,9 +24,9 @@ export class AppComponent implements OnInit {
 
   onAddItem() {
     const id = this.db.createId();
-    const project2 = new ProjectItem(id, "test2", "noget", this.util.timestamp , "121212", true, []);
+    // const project2 = new ProjectItem(id, "test2", "noget", this.util.timestamp , "121212", true, []);
 
-    this.projectsCollection.doc(id).set(project2.toObject());
+    // this.projectsCollection.doc(id).set(project2.toObject());
   }
 
   onChange(value: string) {
