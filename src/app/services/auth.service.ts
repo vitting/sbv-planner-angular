@@ -7,7 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class AuthService {
   private isLoggedIn = false;
   private user: firebase.User;
-
+  private userId: string;
   constructor(private afAuth: AngularFireAuth) {
     this.afAuth.user.subscribe((user) => {
       this.user = user;

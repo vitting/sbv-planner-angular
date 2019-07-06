@@ -4,6 +4,7 @@ export interface Project {
     description: string;
     createdAt: any;
     updatedAt: any;
+    createdBy: string;
     colorCode: string;
     active: boolean;
     users: string[];
@@ -16,9 +17,10 @@ export class ProjectItem implements Project {
     public description: string,
     public createdAt: any,
     public updatedAt: any,
-    public colorCode: string,
-    public active: boolean,
-    public users: string[]
+    public createdBy: string,
+    public colorCode: string = null,
+    public active: boolean = true,
+    public users: string[] = []
     ) {}
 
     toObject(): Project {
@@ -28,6 +30,7 @@ export class ProjectItem implements Project {
         description: this.description,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt,
+        createdBy: this.createdBy,
         colorCode: this.colorCode,
         active: this.active,
         users: this.users

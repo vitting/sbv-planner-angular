@@ -1,0 +1,17 @@
+<h3 mat-dialog-title>{{title}}</h3>
+<div mat-dialog-content>
+  <form [formGroup]="fieldForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput id="field1" name="field1" type="text" [placeholder]="data.field1Label" formControlName="field1" required>
+      <mat-error *ngIf="!fieldForm.get('field1').valid && fieldForm.get('field1').touched">Feltet skal udfyldes</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput id="field2" name="field2" type="text" [placeholder]="data.field2Label" formControlName="field2"></textarea>
+      <mat-error *ngIf="!fieldForm.get('field2').valid && fieldForm.get('field2').touched">Feltet skal udfyldes</mat-error>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button class="app-form-button" mat-flat-button color="primary" [disabled]="fieldForm.invalid || fieldForm.untouched" type="submit">{{buttonText}}</button>
+    </div>
+  </form>
+</div>
+

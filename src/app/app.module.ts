@@ -22,6 +22,8 @@ import { TemplatesModule } from './components/templates/templates.module';
 import { SignupModule } from './components/signup/signup.module';
 import { NavbarModule } from './components/navbar/navbar.module';
 import { SettingsModule } from './components/settings/settings.module';
+import { ProjectEditModule } from './components/projects/project-edit/project-edit.module';
+import { TasksEditModule } from './components/tasks/tasks-edit/tasks-edit.module';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { SettingsModule } from './components/settings/settings.module';
     SignupModule,
     SidebarModule,
     NavbarModule,
-    SettingsModule
+    SettingsModule,
+    ProjectEditModule,
+    TasksEditModule
   ],
   providers: [],
   bootstrap: [AppComponent]
