@@ -1,0 +1,22 @@
+.app-sublist-item-container {
+  margin: 10px 10px 0 40px;
+  .app-sublist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+
+    .app-sublist-item-content {
+      display: flex;
+      align-items: center;
+
+      div {
+        margin-left: 5px;
+      }
+    }
+
+    &:hover {
+      background-color: $indigo-100;
+    }
+  }
+}

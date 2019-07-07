@@ -1,0 +1,12 @@
+<h3 mat-dialog-title>{{data.title}}</h3>
+<div mat-dialog-content>
+  <form [formGroup]="fieldForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput id="field" name="field" type="text" [placeholder]="data.fieldLabel" formControlName="field" autofocus>
+    </mat-form-field>
+    <div mat-dialog-actions class="dialog-close-container">
+      <button mat-flat-button color="primary" type="submit">{{data.buttonText}}</button>
+      <button mat-flat-button type="button" color="accent" (click)="closeDialog()">Annuller</button>
+    </div>
+  </form>
+</div>

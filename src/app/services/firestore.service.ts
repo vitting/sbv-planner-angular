@@ -4,7 +4,9 @@ import * as firebase from 'firebase';
 import { AuthService } from './auth.service';
 import { ProjectItem, Project } from '../models/project.model';
 import { TaskItem, Task } from '../models/task.model';
-
+import { map, take, switchMap, mergeMap } from 'rxjs/operators';
+import { SubTaskItem, SubTask } from '../models/subtask.model';
+import { Observable, from } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,18 +22,18 @@ export class FirestoreService {
   }
 
   async addProject(title: string, description: string): Promise<string> {
-      const id = this.newId;
-      const userId = this.authService.userLoggedIn.uid;
-      const timestamp = this.timestamp;
+    const id = this.newId;
+    const userId = this.authService.userLoggedIn.uid;
+    const timestamp = this.timestamp;
 
-      const projectItem = new ProjectItem(id, title, description, timestamp, timestamp, userId);
-      try {
-        await this.db.collection<Project>("projects").doc(id).set(projectItem.toObject());
-        return id;
-      } catch (error) {
-        console.error("addProject", error);
-        return null;
-      }
+    const projectItem = new ProjectItem(id, title, description, timestamp, timestamp, userId);
+    try {
+      await this.db.collection<Project>("projects").doc(id).set(projectItem.toObject());
+      return id;
+    } catch (error) {
+      console.error("addProject", error);
+      return null;
+    }
   }
 
   async addTask(title: string, description: string, projectId: string, index: number): Promise<string> {
@@ -48,9 +50,33 @@ export class FirestoreService {
     }
   }
 
+  async addSubTask(title: string, projectId: string, taskId: string): Promise<string> {
+    const id = this.newId;
+    const userId = this.authService.userLoggedIn.uid;
+    const timestamp = this.timestamp;
+    const subTaskItem = new SubTaskItem(id, projectId, taskId, timestamp, timestamp, userId, userId, title);
+    try {
+      await this.db.collection<SubTask>("subtasks").doc(id).set(subTaskItem.toObject());
+      return id;
+    } catch (error) {
+      console.error("addSubTask", error);
+      return null;
+    }
+  }
+
+  deleteSubTask(subTaskId: string) {
+    return this.db.collection<SubTask>("subtasks").doc(subTaskId).delete();
+  }
+
   getTasks(projectId: string) {
     return this.db.collection<Task>("tasks", (ref) => {
       return ref.where("projectId", "==", projectId).orderBy("index").orderBy("title");
+    }).valueChanges();
+  }
+
+  getSubTasks(taskId: string) {
+    return this.db.collection<SubTask>("subtasks", (ref) => {
+      return ref.where("taskId", "==", taskId);
     }).valueChanges();
   }
 

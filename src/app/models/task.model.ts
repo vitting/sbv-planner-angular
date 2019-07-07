@@ -1,3 +1,5 @@
+import { SubTaskItem } from './subtask.model';
+
 export interface Task {
   id: string;
   projectId: string;
@@ -28,6 +30,22 @@ export class TaskItem implements Task {
     public completed: boolean = false,
     public users: string[] = [],
     ) {}
+
+    static fromObject(item: Task) {
+      return new TaskItem(
+        item.id,
+        item.projectId,
+        item.createdAt,
+        item.updatedAt,
+        item.createdBy,
+        item.updatedAt,
+        item.title,
+        item.description,
+        item.index,
+        item.colorCode,
+        item.completed, item.users
+        );
+    }
 
   toObject(): Task {
     return {

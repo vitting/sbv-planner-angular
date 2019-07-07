@@ -1,20 +1,25 @@
-<div>
-  <div cdkDropList class="app-list" (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="'false'">
-    <div class="app-list-item noselect" *ngFor="let task of tasks" cdkDrag>
-      <div class="app-list-item-container">
-        <div>
-          <mat-icon cdkDragHandle>drag_indicator</mat-icon>
-        </div>
-        <div class="app-list-item-content">
-          <div>
-            {{task.title}}
-          </div>
-          <div>
-            <div *ngIf="task?.description">{{task.description}}</div>
-          </div>
-        </div>
-        <button mat-button type="button"><mat-icon>more_vert</mat-icon></button>
+<div cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="'false'">
+  <div class="app-list-item bg-indigo-50 noselect" *ngFor="let task of tasks; let i = index" cdkDrag>
+    <div class="app-list-item-container">
+      <div>
+        <mat-icon cdkDragHandle>drag_indicator</mat-icon>
       </div>
+      <div class="app-list-item-content">
+        <div>
+          {{task.title}}
+        </div>
+        <div>
+          <div *ngIf="task?.description">{{task.description}}</div>
+        </div>
+      </div>
+      <button mat-button type="button">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+
+    <div class="app-sublist-item-container">
+      <button mat-button type="button" color="primary" (click)="addSubTask(task)">Tilføj en under opgave <mat-icon>add_circle</mat-icon></button>
+      <app-subtask-list-item *ngFor="let subTask of subTasks[i] | async" [subTask]="subTask" (delete)="deleteSubTask($event)"></app-subtask-list-item>
     </div>
   </div>
 </div>

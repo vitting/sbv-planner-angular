@@ -1,0 +1,9 @@
+<h3 mat-dialog-title>{{data.header}}</h3>
+<div mat-dialog-content>
+  <p>{{data.message1}}</p>
+  <p *ngIf="data.message2">{{data.message2}}</p>
+</div>
+<div mat-dialog-actions class="dialog-close-container">
+  <button mat-flat-button color="primary" type="button" (click)="closeDialog('yes')">{{data.button1Text}}</button>
+  <button mat-flat-button color="accent" type="button" (click)="closeDialog('no')">{{data.button2Text}}</button>
+</div>

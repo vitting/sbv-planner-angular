@@ -1,0 +1,4 @@
+<div class="app-sublist-item-container">
+  <button mat-button type="button" color="primary" (click)="addSubTask(task)">Tilføj en under opgave <mat-icon>add_circle</mat-icon></button>
+  <app-subtask-list-item *ngFor="let subTask of subTasks[i] | async" [subTask]="subTask" (delete)="deleteSubTask($event)"></app-subtask-list-item>
+</div>

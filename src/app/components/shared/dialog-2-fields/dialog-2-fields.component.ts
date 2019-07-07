@@ -39,6 +39,10 @@ export class Dialog2FieldsComponent implements OnInit {
     });
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
   onSubmit() {
     if (this.fieldForm.valid) {
       const field1 = this.fieldForm.get("field1").value;
