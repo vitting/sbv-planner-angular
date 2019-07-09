@@ -1,27 +1,10 @@
-<div mat-list-item class="list-item-container"
-    style="background-color: white;box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.30);margin-bottom: 5px;">
-    <div class="list-item-content">
-      <div class="list-item-title">Silkeborg Beachvolley Stævne 2019</div>
-      <div class="list-item-subtitle">ToDo liste for opgaver til stævnet.</div>
-      <div class="list-item-content-2-col">
-        <div>
-          <mat-icon>calendar_today</mat-icon>12-09-2019
-        </div>
-        <div>
-          <mat-icon>done</mat-icon>5/10
-        </div>
-      </div>
-      <div class="list-item-users">
-        <mat-chip-list>
-          <mat-chip>Christian Nicolaisen</mat-chip>
-          <mat-chip>Louise Dam</mat-chip>
-          <mat-chip>Kasper Nielsen</mat-chip>
-          <mat-chip>Else Haun</mat-chip>
-          <mat-chip>Mogen Kjeldsen</mat-chip>
-        </mat-chip-list>
-      </div>
-    </div>
-    <button mat-icon-button class="list-item-button">
-      <mat-icon>more_vert</mat-icon>
-    </button>
+<div mat-list-item class="list-item-container" appItemContainer>
+  <div class="list-item-content">
+    <app-item-title-desc [title]="'Silkeborg Beachvolley Stævne 2019'" [description]="'Dette er en beskrivelse til beachvolley stævnet 2019 og de opgaver vi har til det. Og hvem der står for hvem og hvad.'"></app-item-title-desc>
+    <app-project-details [projectDate]="" [taskCompleted]="5" [taskTotal]="10"></app-project-details>
+    <app-project-users [projectUsers]="users"></app-project-users>
   </div>
+  <button mat-icon-button class="list-item-button">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</div>

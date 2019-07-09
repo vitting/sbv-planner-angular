@@ -24,10 +24,11 @@ import { NavbarModule } from './components/navbar/navbar.module';
 import { SettingsModule } from './components/settings/settings.module';
 import { ProjectEditModule } from './components/projects/project-edit/project-edit.module';
 import { TasksEditModule } from './components/tasks/tasks-edit/tasks-edit.module';
+import { ItemContainerDirective } from './components/shared/directives/item-container/item-container.directive';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

@@ -1,39 +1,38 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
-import {MatListModule} from '@angular/material/list';
 import { TasksEditRoutingModule } from './tasks-edit-routing.module';
 import { TasksEditComponent } from './tasks-edit.component';
 import { FabButtonModule } from '../../shared/fab-button/fab-button.module';
 import { Dialog2FieldsModule } from '../../shared/dialog-2-fields/dialog-2-fields.module';
-import { Dialog1FieldModule } from '../../shared/dialog-1-field/dialog-1-fieldmodule';
+import { SubtaskListModule } from '../subtask-list/subtask-list.module';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { MatListModule } from '@angular/material/list';
+import { TaskEditMenuModule } from './task-edit-menu/task-edit-menu.module';
 import { DialogConfirmModule } from '../../shared/dialog-confirm/dialog-confirm.module';
-import { SubtaskListItemModule } from '../subtask-list-item/subtask-list-item.module';
+import { ItemContainerDirective } from '../../shared/directives/item-container/item-container.directive';
+import { ItemContainerModule } from '../../shared/directives/item-container/item-container.module';
+import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-desc.module';
 
 @NgModule({
   declarations: [TasksEditComponent],
   imports: [
     CommonModule,
     TasksEditRoutingModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     DragDropModule,
     MatIconModule,
-    MatDialogModule,
     MatListModule,
+    MatBottomSheetModule,
     FabButtonModule,
     Dialog2FieldsModule,
-    Dialog1FieldModule,
     DialogConfirmModule,
-    SubtaskListItemModule
+    SubtaskListModule,
+    TaskEditMenuModule,
+    ItemContainerModule,
+    ItemTitleDescModule
   ],
   exports: [TasksEditComponent],
 })

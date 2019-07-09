@@ -1,39 +1,27 @@
 @import "../../../../colors";
+
 .app-list-item {
-    padding: 10px;
-    border-bottom: solid 1px #fff;
-    color: rgba(0, 0, 0, 0.87);
-    font-size: 14px;
-    border-radius: 4px;
-    margin-bottom: 5px;
-
-    .app-list-item-container {
-        display: flex;
-        align-items: center;
-
-
-        .app-list-item-content {
-            width: 100%;
-        }
-    }
-
-    .app-sublist-item-container {
-      margin: 10px 10px 0 40px;
-    }
-
-
-    &:last-child {
-        border: none;
+    .app-list-item-drag {
+        align-self: flex-start;
     }
 
     &.cdk-drag-placeholder {
         opacity: 0;
     }
+}
 
-    .cdk-drag-handle {
-        cursor: move;
-        margin: 5px 10px;
+.app-list-item-container {
+    display: flex;
+    align-items: center;
+
+    .app-list-item-content {
+        width: 100%;
     }
+}
+
+.cdk-drag-handle {
+    cursor: move;
+    margin: 5px 10px;
 }
 
 .app-list-item.cdk-drop-list-dragging .cdk-drop-list:not(.cdk-drag-placeholder) {
@@ -41,25 +29,10 @@
 }
 
 .cdk-drag-preview {
-    padding: 10px;
-    border-radius: 4px;
+    opacity: 0.8;
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
         0 8px 10px 1px rgba(0, 0, 0, 0.14),
         0 3px 14px 2px rgba(0, 0, 0, 0.12);
-
-    .app-list-item-container {
-        display: flex;
-        align-items: center;
-
-        .app-list-item-content {
-            width: 100%;
-        }
-    }
-
-    .cdk-drag-handle {
-        cursor: move;
-        margin: 5px 10px;
-    }
 }
 
 .cdk-drag-animating {

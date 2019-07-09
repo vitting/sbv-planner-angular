@@ -1,43 +1,10 @@
+@import "../../../../colors";
 .list-item-container {
   display: flex;
   justify-content: space-between;
-  padding: 5px 10px 10px 10px;
-  border-radius: 4px;
 
-  .list-item-content {
-    display: flex;
-    flex-direction: column;
-    line-height: 2rem;
-
-    .list-item-title {
-      font-weight: 500;
-    }
-
-    .list-item-subtitle {
-      font-weight: lighter;
-      font-size: 0.9rem;
-    }
-
-    .list-item-content-2-col {
-      font-weight: lighter;
-      font-size: 0.9rem;
-      display: flex;
-      justify-content: space-between;
-
-      mat-icon {
-        font-size: 0.9rem;
-        margin-right:-5px;
-      }
-    }
-
-    .list-item-users {
-      margin-top: 5px;
-
-      mat-chip {
-        font-weight: lighter;
-        font-size: 0.9rem;
-      }
-    }
+  app-project-users {
+    margin-top: 5px;
   }
 
   .list-item-button {

@@ -50,6 +50,44 @@ export class FirestoreService {
     }
   }
 
+  async editTask(newTitle: string, newDescription: string, task: Task): Promise<string> {
+    const userId = this.authService.userLoggedIn.uid;
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<Task>("tasks").doc(task.id).update(
+        {
+          title: newTitle,
+          description: newDescription,
+          updatedAt: timestamp,
+          updatedBy: userId
+        }
+      );
+
+      return task.id;
+    } catch (error) {
+      console.error("editTask", error);
+      return null;
+    }
+  }
+
+  deleteTask(taskId: string) {
+    const subtasks$ = this.getSubTasks(taskId);
+    subtasks$.pipe(take(1)).subscribe((subTasks: SubTask[]) => {
+      if (subTasks) {
+        const batch = this.db.firestore.batch();
+        subTasks.forEach((subTask) => {
+          const subTaskRef = this.db.collection("subtasks").doc(subTask.id).ref;
+          batch.delete(subTaskRef);
+        });
+
+        batch.commit();
+      }
+    });
+
+    return this.db.collection("tasks").doc(taskId).delete();
+  }
+
   async addSubTask(title: string, projectId: string, taskId: string): Promise<string> {
     const id = this.newId;
     const userId = this.authService.userLoggedIn.uid;
@@ -60,6 +98,26 @@ export class FirestoreService {
       return id;
     } catch (error) {
       console.error("addSubTask", error);
+      return null;
+    }
+  }
+
+  async editSubTask(newTitle: string, subTask: SubTask): Promise<string> {
+    const userId = this.authService.userLoggedIn.uid;
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<SubTask>("subtasks").doc(subTask.id).update(
+        {
+          title: newTitle,
+          updatedAt: timestamp,
+          updatedBy: userId
+        }
+      );
+
+      return subTask.id;
+    } catch (error) {
+      console.error("editSubTask", error);
       return null;
     }
   }

@@ -1,26 +1,18 @@
 <div cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="'false'">
-  <div class="app-list-item bg-indigo-50 noselect" *ngFor="let task of tasks; let i = index" cdkDrag>
+  <div appItemContainer class="app-list-item bg-indigo-50 noselect" *ngFor="let task of tasks; let i = index" cdkDrag
+    cdkDragPreview>
     <div class="app-list-item-container">
-      <div>
+      <div class="app-list-item-drag">
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
       </div>
       <div class="app-list-item-content">
-        <div>
-          {{task.title}}
-        </div>
-        <div>
-          <div *ngIf="task?.description">{{task.description}}</div>
-        </div>
+          <app-item-title-desc [title]="task.title" [description]="task.description"></app-item-title-desc>
       </div>
-      <button mat-button type="button">
+      <button mat-button type="button" (click)="menuTask(task)">
         <mat-icon>more_vert</mat-icon>
       </button>
     </div>
-
-    <div class="app-sublist-item-container">
-      <button mat-button type="button" color="primary" (click)="addSubTask(task)">Tilføj en under opgave <mat-icon>add_circle</mat-icon></button>
-      <app-subtask-list-item *ngFor="let subTask of subTasks[i] | async" [subTask]="subTask" (delete)="deleteSubTask($event)"></app-subtask-list-item>
-    </div>
+    <app-subtask-list [showButton]="true" [task]="task"></app-subtask-list>
   </div>
 </div>
 <app-fab-button (add)="addTask()"></app-fab-button>

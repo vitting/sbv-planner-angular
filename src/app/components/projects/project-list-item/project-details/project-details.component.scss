@@ -1,0 +1,12 @@
+.app-project-details {
+  font-weight: lighter;
+  line-height: 2rem;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+
+  mat-icon {
+    font-size: 0.9rem;
+    margin-right:-5px;
+  }
+}

@@ -5,15 +5,17 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog2FieldsComponent, Dialog2FieldsResult, Dialog2FieldsData } from '../../shared/dialog-2-fields/dialog-2-fields.component';
-import { Task, TaskItem } from 'src/app/models/task.model';
-import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../../shared/dialog-1-field/dialog-1-field.component';
+import { Task } from 'src/app/models/task.model';
+import { SubTask } from 'src/app/models/subtask.model';
+import { Subscription, Observable } from 'rxjs';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { TaskEditMenuComponent, TaskEditMenuResult } from './task-edit-menu/task-edit-menu.component';
 import {
   DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
-  DialogConfirmAction } from '../../shared/dialog-confirm/dialog-confirm.component';
-import { SubTaskItem, SubTask } from 'src/app/models/subtask.model';
-import { Subscription, Observable } from 'rxjs';
+  DialogConfirmAction
+} from '../../shared/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-tasks-edit',
@@ -30,7 +32,8 @@ export class TasksEditComponent implements OnInit, OnDestroy {
     private navbarService: NavbarService,
     private route: ActivatedRoute,
     private firestoreService: FirestoreService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private bottomSheet: MatBottomSheet
   ) {
     this.navbarService.navbarTitle.next("Rediger opgaver");
     this.projectId = this.route.snapshot.params.id;
@@ -44,7 +47,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async drop(event: CdkDragDrop<string[]>) {
     moveItemInArray<Task>(this.tasks, event.previousIndex, event.currentIndex);
@@ -78,34 +81,55 @@ export class TasksEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  addSubTask(task: TaskItem) {
-    const data: Dialog1FieldData = {
-      title: "Ny del opgave",
-      buttonText: "Tilføj",
-      fieldLabel: "Titel",
-      fieldValue: null
-    };
+  menuTask(task: Task) {
+    const bottomSheetRef = this.bottomSheet.open(TaskEditMenuComponent);
 
-    const dialogRef = this.dialog.open(Dialog1FieldComponent, {
-      width: '350px',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe((result: Dialog1FieldResult) => {
+    bottomSheetRef.afterDismissed().subscribe((result) => {
       if (result) {
-        this.firestoreService.addSubTask(result.fieldValue, this.projectId, task.id);
+        switch (result.action) {
+          case TaskEditMenuResult.edit:
+            this.editTask(task);
+            break;
+          case TaskEditMenuResult.delete:
+            this.deleteTask(task);
+            break;
+          default:
+            console.log("OTHER");
+        }
       }
     });
   }
 
-  deleteSubTask(subTask: SubTaskItem) {
+  private editTask(task: Task) {
+    const data: Dialog2FieldsData = {
+      title: "Rediger opgave",
+      buttonText: "Gem",
+      field1Label: "Titel",
+      field1Value: task.title,
+      field2Label: "Beskrivelse",
+      field2Value: task.description
+    };
+
+    const dialogRef = this.dialog.open(Dialog2FieldsComponent, {
+      maxWidth: '350',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe((result: Dialog2FieldsResult) => {
+      if (result) {
+        this.firestoreService.editTask(result.field1Value, result.field2Value, task);
+      }
+    });
+  }
+
+  private deleteTask(task: Task) {
     const data: DialogConfirmData = {
-      header: "Slet del opgave",
+      header: "Slet opgaven",
       button1Text: "Ja",
       button2Text: "Nej",
-      message1: "Vil du slette del opgaven?",
-      message2: subTask.title
+      message1: "Vil du slette opgaven?",
+      message2: task.title
     };
 
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
@@ -114,16 +138,10 @@ export class TasksEditComponent implements OnInit, OnDestroy {
       data
     });
 
-    dialogRef.afterClosed().subscribe((result: DialogConfirmResult) => {
+    dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
       if (result && result.action === DialogConfirmAction.yes) {
-        console.log(result);
-        this.firestoreService.deleteSubTask(subTask.id);
+        await this.firestoreService.deleteTask(task.id);
       }
     });
-  }
-
-  getSubTasks(taskId: string) {
-    console.log("GETSUBTASKS");
-    return this.firestoreService.getSubTasks(taskId);
   }
 }

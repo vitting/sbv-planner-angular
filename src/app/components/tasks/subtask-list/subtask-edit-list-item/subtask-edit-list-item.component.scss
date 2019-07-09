@@ -1,4 +1,4 @@
-@import "../../../../colors";
+@import "../../../../../colors";
 
 .app-sublist-item {
   display: flex;
@@ -10,8 +10,7 @@
     display: flex;
     align-items: center;
 
-    mat-icon {
-      margin-left: 5px;
+    button {
       margin-right: 5px;
     }
   }
