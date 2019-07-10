@@ -1,19 +1,5 @@
-<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-  <mat-form-field class="app-form-input">
-    <input matInput id="title" name="title" type="text" placeholder="Projekt titel" formControlName="title">
-    <mat-error *ngIf="!projectForm.get('title').valid && projectForm.get('title').touched">Feltet skal udfyldes</mat-error>
-  </mat-form-field>
-  <mat-form-field class="app-form-input">
-    <textarea matInput id="description" name="description" type="text" placeholder="Projekt beskrivelse" formControlName="description"></textarea>
-    <mat-error *ngIf="!projectForm.get('description').valid && projectForm.get('description').touched">Feltet skal udfyldes</mat-error>
-  </mat-form-field>
-  <p>Vi laver det sådan at når man har oprettet projektet så kommer man over i projektet og kan tilføje opgaver der</p>
-  <!-- <mat-form-field class="app-form-input">
-    <input id="addTask" name="addTask" matInput placeholder="Tilføj opgave" #taskItemInput>
-    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="addTask()">
-        <mat-icon>add</mat-icon>
-      </button>
-  </mat-form-field>
-   -->
-  <button class="app-form-button" mat-flat-button color="primary" [disabled]="projectForm.invalid || projectForm.untouched" type="submit">{{buttonTitle}}</button>
-</form>
+<mat-nav-list>
+  <app-project-list-item [showDetailsEdit]="true" [showDetails]="false" [showUsers]="false" mat-list-item *ngFor="let project of projects$ | async" [project]="project"></app-project-list-item>
+</mat-nav-list>
+<app-fab-button (add)="addProject()"></app-fab-button>
+

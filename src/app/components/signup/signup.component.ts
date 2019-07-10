@@ -3,6 +3,7 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,24 +15,11 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   @Input() passwordTest: string;
 
-  constructor(private navbarService: NavbarService, public afAuth: AngularFireAuth, private authService: AuthService) {
-    // this.afAuth.user.subscribe((value) => {
-    //   console.log("user", value);
-    // }, (error) => {
-    //   console.log(error);
-    // });
-
-    // this.afAuth.authState.subscribe((value) => {
-    //   console.log("authState", value);
-    // }, (error) => {
-    //   console.log(error);
-    // });
-
-    // this.afAuth.auth.onAuthStateChanged((value) => {
-    //   console.log("onAuthStateChanged", value);
-    // }, (error) => {
-    //   console.log(error);
-    // });
+  constructor(
+    private navbarService: NavbarService,
+    public afAuth: AngularFireAuth,
+    private authService: AuthService,
+    private firestoreService: FirestoreService) {
   }
 
   ngOnInit() {
@@ -49,9 +37,13 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.valid) {
       const email: string = this.signupForm.get("email").value;
       const password: string = this.signupForm.get("password").value;
+      const name: string = this.signupForm.get("name").value;
+
       try {
-        const user = await this.authService.createUser(email, password);
-        console.log(user);
+        const userCred = await this.authService.createUser(email, password);
+        if (userCred) {
+          await this.firestoreService.addUser(userCred.user.uid, name);
+        }
       } catch (error) {
        this.showSignupError(error.code);
        console.log(error);

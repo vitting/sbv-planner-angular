@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Project, ProjectItem } from './models/project.model';
 import { Observable } from 'rxjs';
 import { UtilitiesService } from './services/utilities.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit {
   private projectsCollection: AngularFirestoreCollection<Project>;
   projects: Observable<Project[]>;
   sidebarState = "close";
-  constructor(private db: AngularFirestore, private util: UtilitiesService) {}
+  constructor(private db: AngularFirestore, private util: UtilitiesService, private authService: AuthService) {}
 
   ngOnInit(): void {
 

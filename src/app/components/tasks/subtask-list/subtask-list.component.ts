@@ -11,6 +11,7 @@ import {
   DialogConfirmAction,
   DialogConfirmData
 } from '../../shared/dialog-confirm/dialog-confirm.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-subtask-list',
@@ -22,7 +23,7 @@ export class SubtaskListComponent implements OnInit, OnDestroy {
   @Input() showButton = false;
   private subtasksSub: Subscription;
   subtasks: SubTask[] = [];
-  constructor(private firestoreService: FirestoreService, private dialog: MatDialog) { }
+  constructor(private firestoreService: FirestoreService, private authService: AuthService, private dialog: MatDialog) { }
 
   ngOnInit() {
     if (this.task) {
@@ -54,7 +55,7 @@ export class SubtaskListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: Dialog1FieldResult) => {
       if (result) {
-        this.firestoreService.addSubTask(result.fieldValue, this.task.projectId, task.id);
+        this.firestoreService.addSubTask(this.authService.userId, result.fieldValue, this.task.projectId, task.id);
       }
     });
   }
@@ -75,7 +76,7 @@ export class SubtaskListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: Dialog1FieldResult) => {
       if (result && result.fieldValue.trim()) {
-        this.firestoreService.editSubTask(result.fieldValue, subTask);
+        this.firestoreService.editSubTask(this.authService.userId, result.fieldValue, subTask);
       }
     });
   }

@@ -18,9 +18,9 @@ export class ProjectItem implements Project {
     public createdAt: any,
     public updatedAt: any,
     public createdBy: string,
+    public users: string[] = [],
     public colorCode: string = null,
     public active: boolean = true,
-    public users: string[] = []
     ) {}
 
     toObject(): Project {

@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Dialog2FieldsData, Dialog2FieldsComponent, Dialog2FieldsResult } from '../../shared/dialog-2-fields/dialog-2-fields.component';
+import { Observable } from 'rxjs';
+import { Project } from 'src/app/models/project.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-project-edit',
@@ -11,58 +15,43 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./project-edit.component.scss']
 })
 export class ProjectEditComponent implements OnInit {
-  @ViewChild('taskItemInput', {static: true}) taskItemInput: ElementRef;
-  projectForm: FormGroup;
-  buttonTitle: string;
-  movies = [
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith'
-  ];
+  projects$: Observable<Project[]>;
   constructor(
     private navbarService: NavbarService,
     private route: ActivatedRoute,
     private firestoreService: FirestoreService,
-    private router: Router
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog,
+    private bottomSheet: MatBottomSheet
     ) { }
 
   ngOnInit() {
-    if (this.route.snapshot.params.hasOwnProperty("id")) {
-      this.navbarService.navbarTitle.next("Rediger Projekt");
-      this.buttonTitle = "Gem";
-    } else {
-      this.navbarService.navbarTitle.next("Opret Projekt");
-      this.buttonTitle = "Opret";
-    }
+    this.navbarService.navbarTitle.next("Rediger Projekter");
 
-    this.projectForm = new FormGroup({
-      title: new FormControl(null, [Validators.required]),
-      description: new FormControl(null, [Validators.required])
+    this.projects$ = this.firestoreService.getProjects();
+  }
+
+  addProject() {
+    const data: Dialog2FieldsData = {
+      title: "Nyt Projekt",
+      buttonText: "Tilføj",
+      field1Label: "Titel",
+      field1Value: null,
+      field2Label: "Beskrivelse",
+      field2Value: null
+    };
+
+    const dialogRef = this.dialog.open(Dialog2FieldsComponent, {
+      maxWidth: '350',
+      autoFocus: false,
+      data
     });
-  }
 
-  async onSubmit() {
-    if (this.projectForm.valid) {
-      const title = this.projectForm.get("title").value;
-      const description = this.projectForm.get("description").value;
-      const projectId = await this.firestoreService.addProject(title, description);
-
-      if (projectId) {
-        this.projectForm.reset();
-        this.router.navigate(["/projects", projectId, "tasks", "edit"]);
+    dialogRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
+      if (result) {
+        await this.firestoreService.addProject(this.authService.userId, result.field1Value, result.field2Value);
       }
-      console.log(projectId);
-    }
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
-  }
-
-  addTask() {
-    if (this.taskItemInput.nativeElement.value.trim()) {
-      this.movies.push(this.taskItemInput.nativeElement.value);
-      this.taskItemInput.nativeElement.value = "";
-    }
+    });
   }
 }

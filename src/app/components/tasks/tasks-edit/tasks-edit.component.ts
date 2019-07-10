@@ -16,6 +16,7 @@ import {
   DialogConfirmResult,
   DialogConfirmAction
 } from '../../shared/dialog-confirm/dialog-confirm.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tasks-edit',
@@ -32,6 +33,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
     private navbarService: NavbarService,
     private route: ActivatedRoute,
     private firestoreService: FirestoreService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private bottomSheet: MatBottomSheet
   ) {
@@ -76,7 +78,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: Dialog2FieldsResult) => {
       if (result) {
-        this.firestoreService.addTask(result.field1Value, result.field2Value, this.projectId, this.tasks.length);
+        this.firestoreService.addTask(this.authService.userId, result.field1Value, result.field2Value, this.projectId, this.tasks.length);
       }
     });
   }
@@ -118,7 +120,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: Dialog2FieldsResult) => {
       if (result) {
-        this.firestoreService.editTask(result.field1Value, result.field2Value, task);
+        this.firestoreService.editTask(this.authService.userId, result.field1Value, result.field2Value, task);
       }
     });
   }

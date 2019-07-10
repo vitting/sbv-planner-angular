@@ -3,6 +3,10 @@
   display: flex;
   justify-content: space-between;
 
+  .list-item-content {
+    width: 100%;
+  }
+
   app-project-users {
     margin-top: 5px;
   }

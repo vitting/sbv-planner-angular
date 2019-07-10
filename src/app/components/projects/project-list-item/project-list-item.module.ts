@@ -8,6 +8,7 @@ import { ItemContainerModule } from '../../shared/directives/item-container/item
 import { ProjectUsersModule } from './project-users/project-users.module';
 import { ProjectDetailsModule } from './project-details/project-details.module';
 import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-desc.module';
+import { ProjectDetailsEditModule } from './project-details-edit/project-details-edit.module';
 
 @NgModule({
   declarations: [ProjectListItemComponent],
@@ -19,6 +20,7 @@ import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-des
     ItemContainerModule,
     ProjectUsersModule,
     ProjectDetailsModule,
+    ProjectDetailsEditModule,
     ItemTitleDescModule
   ],
   exports: [ProjectListItemComponent]

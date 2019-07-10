@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   title = "Mine projekter";
-  showLogout = false;
+  showLogout = true;
   constructor(private navbarService: NavbarService, private authService: AuthService) { }
 
   ngOnInit() {

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { AuthService } from './auth.service';
 import { ProjectItem, Project } from '../models/project.model';
 import { TaskItem, Task } from '../models/task.model';
-import { map, take, switchMap, mergeMap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { SubTaskItem, SubTask } from '../models/subtask.model';
-import { Observable, from } from 'rxjs';
+import { User, UserItem } from '../models/user.model';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
-  constructor(private db: AngularFirestore, private authService: AuthService) { }
+  constructor(private db: AngularFirestore) { }
 
   get timestamp() {
     return firebase.firestore.FieldValue.serverTimestamp();
@@ -21,12 +21,33 @@ export class FirestoreService {
     return this.db.createId();
   }
 
-  async addProject(title: string, description: string): Promise<string> {
+  async addUser(userId: string, name: string): Promise<User> {
+    const timestamp = this.timestamp;
+    const user: User = new UserItem(userId, name, timestamp).toObject();
+    try {
+      await this.db.collection<User>("users").doc(userId).set(user);
+      return user;
+    } catch (error) {
+      console.error("AddUser");
+      return null;
+    }
+  }
+
+  getUser(userId: string): Observable<User> {
+    return this.db.collection<User>("users").doc<User>(userId).valueChanges();
+  }
+
+  getProjects() {
+    return this.db.collection<Project>("projects", (ref) => {
+      return ref.where("active", "==", true).orderBy("createdAt", "desc").orderBy("title");
+    }).valueChanges();
+  }
+
+  async addProject(userId: string, title: string, description: string): Promise<string> {
     const id = this.newId;
-    const userId = this.authService.userLoggedIn.uid;
     const timestamp = this.timestamp;
 
-    const projectItem = new ProjectItem(id, title, description, timestamp, timestamp, userId);
+    const projectItem = new ProjectItem(id, title, description, timestamp, timestamp, userId, [userId]);
     try {
       await this.db.collection<Project>("projects").doc(id).set(projectItem.toObject());
       return id;
@@ -36,9 +57,8 @@ export class FirestoreService {
     }
   }
 
-  async addTask(title: string, description: string, projectId: string, index: number): Promise<string> {
+  async addTask(userId: string, title: string, description: string, projectId: string, index: number): Promise<string> {
     const id = this.newId;
-    const userId = this.authService.userLoggedIn.uid;
     const timestamp = this.timestamp;
     const taskItem = new TaskItem(id, projectId, timestamp, timestamp, userId, userId, title, description, index);
     try {
@@ -50,8 +70,7 @@ export class FirestoreService {
     }
   }
 
-  async editTask(newTitle: string, newDescription: string, task: Task): Promise<string> {
-    const userId = this.authService.userLoggedIn.uid;
+  async editTask(userId: string, newTitle: string, newDescription: string, task: Task): Promise<string> {
     const timestamp = this.timestamp;
 
     try {
@@ -88,9 +107,8 @@ export class FirestoreService {
     return this.db.collection("tasks").doc(taskId).delete();
   }
 
-  async addSubTask(title: string, projectId: string, taskId: string): Promise<string> {
+  async addSubTask(userId: string, title: string, projectId: string, taskId: string): Promise<string> {
     const id = this.newId;
-    const userId = this.authService.userLoggedIn.uid;
     const timestamp = this.timestamp;
     const subTaskItem = new SubTaskItem(id, projectId, taskId, timestamp, timestamp, userId, userId, title);
     try {
@@ -102,8 +120,7 @@ export class FirestoreService {
     }
   }
 
-  async editSubTask(newTitle: string, subTask: SubTask): Promise<string> {
-    const userId = this.authService.userLoggedIn.uid;
+  async editSubTask(userId: string, newTitle: string, subTask: SubTask): Promise<string> {
     const timestamp = this.timestamp;
 
     try {
