@@ -23,7 +23,7 @@ export class AuthService {
     })).subscribe((user) => {
       this.user = user;
       this.isLoggedIn = user ? true : false;
-      this.id = user ? user.uid : null;
+      this.id = user ? user.id : null;
       console.log("AUTHSERVICE", user);
     }, (error) => {
       this.user = null;

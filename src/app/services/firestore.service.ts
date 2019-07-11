@@ -57,6 +57,39 @@ export class FirestoreService {
     }
   }
 
+  async editProject(userId: string, projectId: string, newTitle: string, newDescription: string): Promise<string> {
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<Project>("projects").doc(projectId).update(
+        {
+          title: newTitle,
+          description: newDescription,
+          updatedAt: timestamp,
+          updatedBy: userId
+        }
+      );
+
+      return projectId;
+    } catch (error) {
+      console.error("editProject", error);
+      return null;
+    }
+  }
+
+  deleteProject(projectId: string) {
+    const tasks$ = this.getTasks(projectId);
+    tasks$.pipe(take(1)).subscribe((tasks: Task[]) => {
+      if (tasks) {
+        tasks.forEach((task) => {
+          this.deleteTask(task.id);
+        });
+      }
+    });
+
+    return this.db.collection<Project>("projects").doc(projectId).delete();
+  }
+
   async addTask(userId: string, title: string, description: string, projectId: string, index: number): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;

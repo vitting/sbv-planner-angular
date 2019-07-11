@@ -55,5 +55,26 @@ form {
   border-radius: 4px;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.30);
   margin-bottom: 5px;
-  background-color: $indigo-50;
+  background-color: $indigo-500;
+  color: white;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

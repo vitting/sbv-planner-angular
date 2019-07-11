@@ -25,6 +25,7 @@ import { SettingsModule } from './components/settings/settings.module';
 import { ProjectEditModule } from './components/projects/project-edit/project-edit.module';
 import { TasksEditModule } from './components/tasks/tasks-edit/tasks-edit.module';
 import { ItemContainerDirective } from './components/shared/directives/item-container/item-container.directive';
+import { CommentsModule } from './components/comments/comments.module';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ItemContainerDirective } from './components/shared/directives/item-cont
     NavbarModule,
     SettingsModule,
     ProjectEditModule,
-    TasksEditModule
+    TasksEditModule,
+    CommentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

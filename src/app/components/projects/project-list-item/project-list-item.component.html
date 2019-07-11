@@ -1,11 +1,11 @@
 <div class="list-item-container" appItemContainer>
   <div class="list-item-content">
     <app-item-title-desc [title]="project.title" [description]="project.description"></app-item-title-desc>
-    <app-project-details *ngIf="showDetails" [projectDate]="" [taskCompleted]="5" [taskTotal]="10"></app-project-details>
+    <app-project-details *ngIf="showDetails" [projectDate]="project?.createdAt.toDate()" [taskCompleted]="5" [taskTotal]="10"></app-project-details>
     <app-project-details-edit *ngIf="showDetailsEdit" [project]="project"></app-project-details-edit>
     <app-project-users *ngIf="showUsers" [projectUsers]="users"></app-project-users>
   </div>
-  <button mat-icon-button class="list-item-button">
+  <button mat-icon-button class="list-item-button" (click)="showMenu()">
     <mat-icon>more_vert</mat-icon>
   </button>
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { SubTask } from 'src/app/models/subtask.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../../shared/dialog-1-field/dialog-1-field.component';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -12,30 +12,22 @@ import {
   DialogConfirmData
 } from '../../shared/dialog-confirm/dialog-confirm.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-subtask-list',
   templateUrl: './subtask-list.component.html',
   styleUrls: ['./subtask-list.component.scss']
 })
-export class SubtaskListComponent implements OnInit, OnDestroy {
+export class SubtaskListComponent implements OnInit {
   @Input() task: Task;
   @Input() showButton = false;
-  private subtasksSub: Subscription;
-  subtasks: SubTask[] = [];
+  subtasks$: Observable<SubTask[]>;
   constructor(private firestoreService: FirestoreService, private authService: AuthService, private dialog: MatDialog) { }
 
   ngOnInit() {
     if (this.task) {
-      this.subtasksSub = this.firestoreService.getSubTasks(this.task.id).subscribe((subtasks) => {
-        this.subtasks = subtasks;
-      });
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.subtasksSub) {
-      this.subtasksSub.unsubscribe();
+      this.subtasks$ = this.firestoreService.getSubTasks(this.task.id);
     }
   }
 
@@ -49,7 +41,7 @@ export class SubtaskListComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
-      autoFocus: false,
+      autoFocus: true,
       data
     });
 

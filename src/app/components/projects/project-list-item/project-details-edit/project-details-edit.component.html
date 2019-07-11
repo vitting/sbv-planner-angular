@@ -1,8 +1,8 @@
 <div class="app-project-details-edit">
   <div>
-    <mat-icon>calendar_today</mat-icon>{{ project.createdAt.toDate() | date }}
+      <mat-icon>person</mat-icon>{{ user?.name }}
   </div>
   <div>
-    <mat-icon>person</mat-icon>{{ taskCompleted }} / {{ taskTotal }}
+      <mat-icon>calendar_today</mat-icon><span *ngIf="project.createdAt">{{ project.createdAt.toDate() | date:'d. MMMM yyyy' }}</span>
   </div>
 </div>

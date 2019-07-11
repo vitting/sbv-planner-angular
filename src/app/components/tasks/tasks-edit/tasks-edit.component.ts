@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Dialog2FieldsComponent, Dialog2FieldsResult, Dialog2FieldsData } from '../../shared/dialog-2-fields/dialog-2-fields.component';
 import { Task } from 'src/app/models/task.model';
 import { SubTask } from 'src/app/models/subtask.model';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, forkJoin, zip } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TaskEditMenuComponent, TaskEditMenuResult } from './task-edit-menu/task-edit-menu.component';
 import {
@@ -17,6 +17,7 @@ import {
   DialogConfirmAction
 } from '../../shared/dialog-confirm/dialog-confirm.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks-edit',
@@ -26,7 +27,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class TasksEditComponent implements OnInit, OnDestroy {
   projectId: string = null;
   tasks: Task[] = [];
-  subTasks: Observable<SubTask[]>[] = [];
+  // subTasks: Observable<SubTask[]>[] = [];
   private taskSubscribtion: Subscription;
 
   constructor(
@@ -42,10 +43,6 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
     this.taskSubscribtion = this.firestoreService.getTasks(this.projectId).subscribe((tasks) => {
       this.tasks = tasks;
-      this.subTasks = [];
-      this.tasks.forEach((task) => {
-        this.subTasks.push(this.firestoreService.getSubTasks(task.id));
-      });
     });
   }
 

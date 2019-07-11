@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 
 @Component({
@@ -11,6 +11,7 @@ export class ProjectListItemComponent implements OnInit {
   @Input() showDetailsEdit = false;
   @Input() showUsers = true;
   @Input() project: Project;
+  @Output() menuClick = new EventEmitter<Project>();
   users: string[] = ["Christian Nicolaisen", "Louise Dam", "Tanja Jensen", "Peter Larsen", "Jeppe Kjems", "Thomas Hoeg"];
   constructor() { }
 
@@ -18,4 +19,7 @@ export class ProjectListItemComponent implements OnInit {
 
   }
 
+  showMenu() {
+    this.menuClick.next(this.project);
+  }
 }

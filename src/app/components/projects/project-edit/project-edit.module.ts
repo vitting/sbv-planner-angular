@@ -8,6 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { ProjectListItemModule } from '../project-list-item/project-list-item.module';
+import { ProjectItemEditMenuModule } from './project-item-edit-menu/project-item-edit-menu.module';
 
 @NgModule({
   declarations: [ProjectEditComponent],
@@ -18,7 +19,8 @@ import { ProjectListItemModule } from '../project-list-item/project-list-item.mo
     MatBottomSheetModule,
     MatListModule,
     FabButtonModule,
-    ProjectListItemModule
+    ProjectListItemModule,
+    ProjectItemEditMenuModule
   ],
   exports: [ProjectEditComponent]
 })

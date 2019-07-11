@@ -1,0 +1,16 @@
+<mat-nav-list>
+  <a mat-list-item (click)="action($event, 'edit')">
+    <span mat-line>Rediger projekt</span>
+    <span mat-line>Du vil oprette et nyt projekt fra bunden.</span>
+  </a>
+  <mat-divider></mat-divider>
+  <a mat-list-item (click)="action($event, 'edittasks')">
+    <span mat-line>Rediger projekt opgaver</span>
+    <span mat-line>Du vil oprette et nyt projekt fra bunden.</span>
+  </a>
+  <mat-divider></mat-divider>
+  <a mat-list-item (click)="action($event, 'delete')">
+    <span mat-line>Slet projekt</span>
+    <span mat-line>Du vil oprette et projekt der er baseret på en projekt skabelon der.</span>
+  </a>
+</mat-nav-list>

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TasksComponent } from './tasks.component';
+import { CommentsComponent } from './comments.component';
+
 
 const routes: Routes = [{
-  path: "projects/:id/tasks",
-  component: TasksComponent
+  path: "comments",
+  component: CommentsComponent
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TasksRoutingModule { }
+export class CommentsRoutingModule { }

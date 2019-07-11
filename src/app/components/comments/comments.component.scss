@@ -1,0 +1,20 @@
+@import "../../../variables";
+
+.container {
+  box-sizing: border-box;
+  height: calc(100vh - 80px);
+  background-color: yellow;
+  display: flex;
+  flex-direction: column;
+}
+
+.row1 {
+  background-color: green;
+  height: calc(100vh - 180px);
+  overflow: auto;
+}
+
+.row2 {
+  background-color: red;
+  height: 100px;
+}

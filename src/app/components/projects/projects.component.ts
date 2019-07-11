@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ProjectMenuComponent } from './project-menu/project-menu.component';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { Observable } from 'rxjs';
+import { Project } from 'src/app/models/project.model';
 
 @Component({
   selector: 'app-projects',
@@ -9,19 +12,16 @@ import { ProjectMenuComponent } from './project-menu/project-menu.component';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
-  selectable = false;
-  constructor(private navbarService: NavbarService, private bottomSheet: MatBottomSheet) { }
+  projects$: Observable<Project[]>;
+  constructor(private navbarService: NavbarService, private firestoreService: FirestoreService, private bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next("Mine Projekter");
+    this.navbarService.navbarTitle.next("Projekter");
+    this.projects$ = this.firestoreService.getProjects();
   }
 
-  onAdd() {
-    this.bottomSheet.open(ProjectMenuComponent);
-  }
-
-  test() {
-    console.log("TEST");
+  projectItemMenuClick(project: Project) {
+    console.log(project);
 
   }
 }
