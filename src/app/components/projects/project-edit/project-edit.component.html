@@ -1,5 +1,5 @@
-<mat-nav-list>
-  <app-project-list-item (menuClick)="itemMenu($event)" [showDetailsEdit]="true" [showDetails]="false" [showUsers]="false" mat-list-item *ngFor="let project of projects$ | async" [project]="project"></app-project-list-item>
-</mat-nav-list>
+<mat-list>
+  <app-project-list-item mat-list-item (menuClick)="itemMenu($event)" [showDetailsEdit]="true" [showDetails]="false" [showUsers]="false" mat-list-item *ngFor="let project of projects$ | async" [project]="project"></app-project-list-item>
+</mat-list>
 <app-fab-button (add)="addProject()"></app-fab-button>
 

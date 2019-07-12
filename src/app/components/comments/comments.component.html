@@ -1,44 +1,33 @@
-<div class="container">
-  <div class="row1">
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
-    <div>Row1</div>
+<!-- <div>
+  <p>Vær den første til at skrive en kommentar <mat-icon>sentiment_satisfied_alt</mat-icon> </p>
+</div> -->
+<div class="comment-header">
+  <div>Projekt:</div>
+  <div>Opgave:</div>
+  <div>Del opgave:</div>
+</div>
+<mat-list>
+  <div appItemContainer="comment">
+    <div>
+      item1
+    </div>
   </div>
-  <div class="row2">
-    Row2
-  </div>
+  <div appItemContainer="comment">
+      <div>
+        item2
+      </div>
+    </div>
+    <div appItemContainer="comment">
+        <div>
+          item3
+        </div>
+      </div>
+</mat-list>
+<div class="comment-form">
+  <form [formGroup]="commentForm" (ngSubmit)="submit()">
+    <mat-form-field class="app-form-input">
+        <textarea matInput id="comment" name="comment" placeholder="Skriv kommentar" formControlName="comment" type="text"></textarea>
+        <button matSuffix mat-mini-fab type="submit" color="primary"><mat-icon>send</mat-icon></button>
+    </mat-form-field>
+  </form>
 </div>

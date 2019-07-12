@@ -57,7 +57,22 @@ form {
   margin-bottom: 5px;
   background-color: $indigo-500;
   color: white;
+
+  &.app-item-container-task {
+    background-color: $pink-500;
+  }
+
+  &.app-item-container-subtask {
+    background-color: $pink-300;
+  }
+
+  &.app-item-container-comment {
+    background-color: $indigo-50;
+    color: black;
+  }
 }
+
+
 
 /* width */
 ::-webkit-scrollbar {
