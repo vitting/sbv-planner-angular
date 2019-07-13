@@ -7,27 +7,6 @@
   <div>Del opgave:</div>
 </div>
 <mat-list>
-  <div appItemContainer="comment">
-    <div>
-      item1
-    </div>
-  </div>
-  <div appItemContainer="comment">
-      <div>
-        item2
-      </div>
-    </div>
-    <div appItemContainer="comment">
-        <div>
-          item3
-        </div>
-      </div>
+  <app-comment-item *ngFor="let comment of comments$ | async" [comment]="comment" (menuClick)="menuItemClicked($event)"></app-comment-item>
 </mat-list>
-<div class="comment-form">
-  <form [formGroup]="commentForm" (ngSubmit)="submit()">
-    <mat-form-field class="app-form-input">
-        <textarea matInput id="comment" name="comment" placeholder="Skriv kommentar" formControlName="comment" type="text"></textarea>
-        <button matSuffix mat-mini-fab type="submit" color="primary"><mat-icon>send</mat-icon></button>
-    </mat-form-field>
-  </form>
-</div>
+<app-fab-button (add)="addComment()"></app-fab-button>

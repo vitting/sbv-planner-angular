@@ -126,7 +126,11 @@ export class ProjectEditComponent implements OnInit {
 
     dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
       if (result) {
-        const projectId = await this.firestoreService.editProject(this.authService.userId, item.id, result.field1Value, result.field2Value);
+        const projectId = await this.firestoreService.updateProject(
+          this.authService.userId,
+          item.id,
+          result.field1Value,
+          result.field2Value);
       }
     });
   }

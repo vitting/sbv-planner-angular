@@ -68,7 +68,7 @@ export class SubtaskListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Dialog1FieldResult) => {
       if (result && result.fieldValue.trim()) {
-        this.firestoreService.editSubTask(this.authService.userId, result.fieldValue, subTask);
+        this.firestoreService.updateSubTask(this.authService.userId, result.fieldValue, subTask);
       }
     });
   }

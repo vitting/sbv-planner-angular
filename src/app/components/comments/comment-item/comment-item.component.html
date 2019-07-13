@@ -1,0 +1,16 @@
+<div appItemContainer="comment">
+  <div>
+    <div class="comment-name-container">
+      <div>
+        <div class="comment-name">{{ name }}</div>
+        <div class="comment-date">{{ comment.createdAt?.toDate() | amLocal:'da' | amDateFormat: 'DD. MMMM YYYY H:mm' }}</div>
+      </div>
+      <button *ngIf="showMenu" mat-icon-button (click)="menu()">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="comment-body">
+    {{comment.text}}
+  </div>
+</div>

@@ -1,0 +1,17 @@
+.comment-name-container {
+  display: flex;
+  justify-content: space-between;
+
+  .comment-name {
+    font-weight: 500;
+  }
+
+  .comment-date {
+    font-size: 0.85rem;
+  }
+}
+
+.comment-body {
+  margin-top: 10px;
+  font-weight: lighter;
+}

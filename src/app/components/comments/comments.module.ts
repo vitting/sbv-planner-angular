@@ -11,6 +11,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { ItemContainerModule } from '../shared/directives/item-container/item-container.module';
+import { CommentItemModule } from './comment-item/comment-item.module';
+import { FabButtonModule } from '../shared/fab-button/fab-button.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommentItemMenuModule } from './comment-item-menu/comment-item-menu.module';
 
 
 @NgModule({
@@ -25,7 +29,10 @@ import { ItemContainerModule } from '../shared/directives/item-container/item-co
     MatInputModule,
     MatIconModule,
     MatDividerModule,
-    ItemContainerModule
+    MatDialogModule,
+    CommentItemModule,
+    FabButtonModule,
+    CommentItemMenuModule
   ],
   exports: [CommentsComponent]
 })

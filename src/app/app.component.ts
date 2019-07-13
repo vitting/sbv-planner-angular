@@ -4,6 +4,7 @@ import { Project, ProjectItem } from './models/project.model';
 import { Observable } from 'rxjs';
 import { UtilitiesService } from './services/utilities.service';
 import { AuthService } from './services/auth.service';
+import { SplashService } from './services/splash.service';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +15,17 @@ export class AppComponent implements OnInit {
   private projectsCollection: AngularFirestoreCollection<Project>;
   projects: Observable<Project[]>;
   sidebarState = "close";
-  constructor(private db: AngularFirestore, private util: UtilitiesService, private authService: AuthService) {}
+  showSplash = true;
+  constructor(
+    private db: AngularFirestore,
+    private util: UtilitiesService,
+    private authService: AuthService,
+    private splashService: SplashService) {}
 
   ngOnInit(): void {
+    this.splashService.splashShow.subscribe((showSplash) => {
+      this.showSplash = showSplash;
+    });
 
     this.projectsCollection = this.db.collection<Project>('projects');
 

@@ -1,12 +1,12 @@
-import { CommentUser } from './comment-user.model';
-
 export interface Comment {
   id: string;
-  parentId: string; // SubtaskId or TaskId
+  parentId: string; // ProjectId or SubtaskId or TaskId
   text: string;
   createdAt: any;
+  updatedAt: any;
+  type: string;
+  userId: string;
   active: boolean;
-  user: CommentUser;
 }
 
 export class CommentItem implements Comment {
@@ -15,8 +15,10 @@ export class CommentItem implements Comment {
     public parentId: string,
     public text: string,
     public createdAt: any,
-    public active: boolean,
-    public user: CommentUser
+    public updatedAt: any,
+    public type: string,
+    public userId: string,
+    public active: boolean = true,
   ) { }
 
   toObject(): Comment {
@@ -25,8 +27,10 @@ export class CommentItem implements Comment {
       parentId: this.parentId,
       text: this.text,
       createdAt: this.createdAt,
-      active: this.active,
-      user: this.user
+      updatedAt: this.updatedAt,
+      type: this.type,
+      userId: this.userId,
+      active: this.active
     };
   }
 }

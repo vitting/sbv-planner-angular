@@ -7,6 +7,7 @@ import { take } from 'rxjs/operators';
 import { SubTaskItem, SubTask } from '../models/subtask.model';
 import { User, UserItem } from '../models/user.model';
 import { Observable } from 'rxjs';
+import { Comment, CommentItem } from '../models/comment.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +22,47 @@ export class FirestoreService {
     return this.db.createId();
   }
 
+  async addComment(user: User, text: string, type: string, itemId: string): Promise<string> {
+    const id = this.newId;
+    const timestamp = this.timestamp;
+    const comment = new CommentItem(id, itemId, text, timestamp, timestamp, type, user.id);
+    try {
+      await this.db.collection<Comment>("comments").doc(id).set(comment.toObject());
+      return id;
+    } catch (error) {
+      console.error("AddComment", error);
+      return null;
+    }
+  }
+
+  async updateComment(userId: string, commentId: string, newText: string): Promise<string> {
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<Comment>("comments").doc(commentId).update(
+        {
+          text: newText,
+          updatedAt: timestamp
+        }
+      );
+
+      return commentId;
+    } catch (error) {
+      console.error("updateComment", error);
+      return null;
+    }
+  }
+
+  deleteComment(commentId: string) {
+    return this.db.collection<Comment>("comments").doc(commentId).delete();
+  }
+
+  getComments(parentId: string, type: string): Observable<Comment[]> {
+    return this.db.collection<Comment>("comments", (ref) => {
+      return ref.where("parentId", "==", parentId).where("type", "==", type).where("active", "==", true).orderBy("createdAt");
+    }).valueChanges();
+  }
+
   async addUser(userId: string, name: string): Promise<User> {
     const timestamp = this.timestamp;
     const user: User = new UserItem(userId, name, timestamp).toObject();
@@ -28,13 +70,17 @@ export class FirestoreService {
       await this.db.collection<User>("users").doc(userId).set(user);
       return user;
     } catch (error) {
-      console.error("AddUser");
+      console.error("AddUser", error);
       return null;
     }
   }
 
   getUser(userId: string): Observable<User> {
     return this.db.collection<User>("users").doc<User>(userId).valueChanges();
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.db.collection<User>("users").valueChanges();
   }
 
   getProjects() {
@@ -57,7 +103,7 @@ export class FirestoreService {
     }
   }
 
-  async editProject(userId: string, projectId: string, newTitle: string, newDescription: string): Promise<string> {
+  async updateProject(userId: string, projectId: string, newTitle: string, newDescription: string): Promise<string> {
     const timestamp = this.timestamp;
 
     try {
@@ -72,7 +118,7 @@ export class FirestoreService {
 
       return projectId;
     } catch (error) {
-      console.error("editProject", error);
+      console.error("updateProject", error);
       return null;
     }
   }
@@ -103,7 +149,7 @@ export class FirestoreService {
     }
   }
 
-  async editTask(userId: string, newTitle: string, newDescription: string, task: Task): Promise<string> {
+  async updateTask(userId: string, newTitle: string, newDescription: string, task: Task): Promise<string> {
     const timestamp = this.timestamp;
 
     try {
@@ -118,7 +164,7 @@ export class FirestoreService {
 
       return task.id;
     } catch (error) {
-      console.error("editTask", error);
+      console.error("updateTask", error);
       return null;
     }
   }
@@ -153,7 +199,7 @@ export class FirestoreService {
     }
   }
 
-  async editSubTask(userId: string, newTitle: string, subTask: SubTask): Promise<string> {
+  async updateSubTask(userId: string, newTitle: string, subTask: SubTask): Promise<string> {
     const timestamp = this.timestamp;
 
     try {
@@ -167,7 +213,7 @@ export class FirestoreService {
 
       return subTask.id;
     } catch (error) {
-      console.error("editSubTask", error);
+      console.error("updateSubTask", error);
       return null;
     }
   }
