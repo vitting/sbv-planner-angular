@@ -36,7 +36,8 @@ export class SubtaskListComponent implements OnInit {
       title: "Ny del opgave",
       buttonText: "Tilføj",
       fieldLabel: "Titel",
-      fieldValue: null
+      fieldValue: null,
+      multiLine: 0
     };
 
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
@@ -57,7 +58,8 @@ export class SubtaskListComponent implements OnInit {
       title: "Rediger del opgave",
       buttonText: "Gem",
       fieldLabel: "Titel",
-      fieldValue: subTask.title
+      fieldValue: subTask.title,
+      multiLine: 0
     };
 
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectDetailsEditComponent } from './project-details-edit.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MomentModule } from 'ngx-moment';
 
 
 
@@ -9,7 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [ProjectDetailsEditComponent],
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MomentModule
   ],
   exports: [ProjectDetailsEditComponent]
 })

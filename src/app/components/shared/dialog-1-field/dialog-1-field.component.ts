@@ -7,6 +7,7 @@ export interface Dialog1FieldData {
   buttonText: string;
   fieldLabel: string;
   fieldValue: string;
+  multiLine: number;
 }
 
 export interface Dialog1FieldResult {
@@ -22,6 +23,8 @@ export class Dialog1FieldComponent implements OnInit {
   title = "";
   buttonText = "";
   fieldForm: FormGroup;
+  showMultiLine = false;
+  numberOfLines = 3;
   constructor(
     public dialogRef: MatDialogRef<Dialog1FieldComponent, Dialog1FieldResult>,
     @Inject(MAT_DIALOG_DATA) public data: Dialog1FieldData) { }
@@ -29,6 +32,10 @@ export class Dialog1FieldComponent implements OnInit {
   ngOnInit() {
     this.title = this.data.title;
     this.buttonText = this.data.buttonText;
+    if (this.data.multiLine !== 0) {
+      this.showMultiLine = true;
+      this.numberOfLines = this.data.multiLine;
+    }
 
     this.fieldForm = new FormGroup({
       field: new FormControl(this.data.fieldValue)

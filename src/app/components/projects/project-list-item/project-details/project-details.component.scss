@@ -1,12 +1,17 @@
 .app-project-details {
   font-weight: lighter;
   line-height: 2rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
-  mat-icon {
-    font-size: 0.9rem;
-    margin-right:-5px;
+  .app-project-details-icon {
+    font-size: 0.85rem;
+    // margin-right:-5px;
+  }
+
+  .app-project-details-icon-button {
+    font-size: 0.85rem;
   }
 }

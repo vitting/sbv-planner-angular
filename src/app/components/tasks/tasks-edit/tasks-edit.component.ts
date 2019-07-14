@@ -38,6 +38,9 @@ export class TasksEditComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private bottomSheet: MatBottomSheet
   ) {
+  }
+
+  ngOnInit() {
     this.navbarService.navbarTitle.next("Rediger opgaver");
     this.projectId = this.route.snapshot.params.id;
 
@@ -45,8 +48,6 @@ export class TasksEditComponent implements OnInit, OnDestroy {
       this.tasks = tasks;
     });
   }
-
-  ngOnInit() { }
 
   async drop(event: CdkDragDrop<string[]>) {
     moveItemInArray<Task>(this.tasks, event.previousIndex, event.currentIndex);

@@ -9,4 +9,4 @@
 <mat-list>
   <app-comment-item *ngFor="let comment of comments$ | async" [comment]="comment" (menuClick)="menuItemClicked($event)"></app-comment-item>
 </mat-list>
-<app-fab-button (add)="addComment()"></app-fab-button>
+<app-fab-button (fabClick)="addComment()"></app-fab-button>

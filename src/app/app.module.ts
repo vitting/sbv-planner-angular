@@ -16,7 +16,7 @@ import { environment } from '../environments/environment';
 import { firebaseConfig } from 'src/environments/firebase-config';
 import { ProjectsModule } from './components/projects/projects.module';
 import { LoginModule } from './components/login/login.module';
-import { HomeModule } from './components/home/home.module';
+import { ProjectHomeModule } from './components/projects/project-home/project-home.module';
 import { TasksModule } from './components/tasks/tasks.module';
 import { TemplatesModule } from './components/templates/templates.module';
 import { SignupModule } from './components/signup/signup.module';
@@ -42,7 +42,7 @@ import { SplashScreenModule } from './components/shared/splash-screen/splash-scr
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    HomeModule,
+    ProjectHomeModule,
     ProjectsModule,
     LoginModule,
     TasksModule,

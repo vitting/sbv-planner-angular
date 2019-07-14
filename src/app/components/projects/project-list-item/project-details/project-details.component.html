@@ -1,8 +1,11 @@
 <div class="app-project-details">
   <div>
-    <mat-icon>calendar_today</mat-icon>{{ projectDate | date:'d. MMMM yyyy' }}
+    <mat-icon class="app-project-details-icon">calendar_today</mat-icon>{{ projectDate | amLocal:'da' | amDateFormat: 'DD-MM-YYYY' }}
   </div>
   <div>
-    <mat-icon>done</mat-icon>{{ taskCompleted }} / {{ taskTotal }}
+    <button mat-icon-button><mat-icon class="app-project-details-icon-button">comment</mat-icon></button>{{ taskCompleted }}
+    </div>
+  <div>
+    <mat-icon class="app-project-details-icon">done</mat-icon>{{ taskCompleted }} / {{ taskTotal }}
   </div>
 </div>

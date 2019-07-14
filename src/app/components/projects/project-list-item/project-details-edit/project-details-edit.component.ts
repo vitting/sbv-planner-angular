@@ -3,6 +3,7 @@ import { Project } from 'src/app/models/project.model';
 import { User } from 'src/app/models/user.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { take } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-project-details-edit',
@@ -12,12 +13,10 @@ import { take } from 'rxjs/operators';
 export class ProjectDetailsEditComponent implements OnInit {
   @Input() project: Project;
   user: User;
-  constructor(private firestoreService: FirestoreService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.firestoreService.getUser(this.project.createdBy).pipe(take(1)).subscribe((user) => {
-      this.user = user;
-    });
+    this.user = this.authService.getUserInfo(this.project.createdBy);
   }
 
 }

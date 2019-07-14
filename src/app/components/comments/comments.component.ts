@@ -12,7 +12,9 @@ import {
   DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
-  DialogConfirmAction } from '../shared/dialog-confirm/dialog-confirm.component';
+  DialogConfirmAction
+} from '../shared/dialog-confirm/dialog-confirm.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-comments',
@@ -21,18 +23,45 @@ import {
 })
 export class CommentsComponent implements OnInit {
   comments$: Observable<Comment[]>;
+  private parentId: string;
+  private commentType: string;
   constructor(
     private authService: AuthService,
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private bottomSheet: MatBottomSheet
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.navbarService.navbarTitle.next("Kommentar");
+    this.commentType = this.route.snapshot.params.commentType;
+    this.parentId = this.getParetId();
+    this.comments$ = this.firestoreService.getComments(this.parentId, this.commentType);
+  }
 
-    this.comments$ = this.firestoreService.getComments("erwerwer", "p");
+  getParetId(): string {
+    let id: string = null;
+    const projectId = this.route.snapshot.params.projectId;
+    const taskId = this.route.snapshot.params.taskId;
+    const subTaskId = this.route.snapshot.params.subtaskId;
+
+    switch (this.commentType) {
+      case "p":
+        id = "erwerwer";
+        // id = projectId;
+        break;
+      case "t":
+        id = taskId;
+        break;
+      case "s":
+        id = subTaskId;
+        break;
+      default:
+        console.log("Comment", "Missiong CommentType");
+    }
+    return id;
   }
 
   addComment() {
@@ -40,7 +69,8 @@ export class CommentsComponent implements OnInit {
       title: "Ny kommentar",
       buttonText: "Tilføj",
       fieldLabel: "Skriv kommentar",
-      fieldValue: null
+      fieldValue: null,
+      multiLine: 3
     };
 
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
@@ -52,7 +82,12 @@ export class CommentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
       if (result) {
         console.log(result);
-        const commentId = await this.firestoreService.addComment(this.authService.authUserInfo, result.fieldValue, "p", "erwerwer");
+        const commentId = await this.firestoreService.addComment(
+          this.authService.authUserInfo,
+          result.fieldValue,
+          this.commentType,
+          this.parentId
+        );
       }
     });
   }
@@ -62,7 +97,8 @@ export class CommentsComponent implements OnInit {
       title: "Rediger kommentar",
       buttonText: "Opdater",
       fieldLabel: "Kommentar",
-      fieldValue: comment.text
+      fieldValue: comment.text,
+      multiLine: 3
     };
 
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
@@ -111,8 +147,8 @@ export class CommentsComponent implements OnInit {
             this.editComment(comment);
             break;
           case CommentItemMenuResult.delete:
-              this.deleteComment(comment);
-              break;
+            this.deleteComment(comment);
+            break;
           default:
             console.log("OTHER");
         }

@@ -1,0 +1,15 @@
+@import "../../../../colors";
+.user-chip {
+  font-weight: lighter;
+  font-size: 0.8rem;
+  border-radius: 16px;
+  background-color: $indigo-300;
+  padding: 1px 5px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  display: inline-block;
+}
+
+.user-chip-me {
+  background-color: $indigo-a100;
+}

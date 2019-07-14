@@ -1,4 +1,9 @@
 @import "../../../../colors";
+
+mat-expansion-panel {
+  background-color: $indigo-400;
+}
+
 .list-item-container {
   display: flex;
   justify-content: space-between;
@@ -15,4 +20,20 @@
     align-self: flex-start;
     margin-left: 20px;
   }
+}
+
+.tasks-container {
+  font-weight: lighter;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5px;
+}
+
+.subtask-item {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
 }

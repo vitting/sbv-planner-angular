@@ -9,6 +9,9 @@ import { ProjectUsersModule } from './project-users/project-users.module';
 import { ProjectDetailsModule } from './project-details/project-details.module';
 import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-desc.module';
 import { ProjectDetailsEditModule } from './project-details-edit/project-details-edit.module';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [ProjectListItemComponent],
@@ -17,6 +20,9 @@ import { ProjectDetailsEditModule } from './project-details-edit/project-details
     MatListModule,
     MatButtonModule,
     MatIconModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatRippleModule,
     ItemContainerModule,
     ProjectUsersModule,
     ProjectDetailsModule,

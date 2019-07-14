@@ -1,4 +1,4 @@
 <mat-list>
   <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)" *ngFor="let project of projects$ | async" [project]="project"></app-project-list-item>
 </mat-list>
-<app-fab-button (add)="onAdd()"></app-fab-button>
+<app-fab-button (fabClick)="onAdd()"></app-fab-button>

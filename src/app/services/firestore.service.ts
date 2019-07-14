@@ -89,6 +89,12 @@ export class FirestoreService {
     }).valueChanges();
   }
 
+  getProjectsByUserId(userId: string) {
+    return this.db.collection<Project>("projects", (ref) => {
+      return ref.where("active", "==", true).where("users", "array-contains", userId).orderBy("createdAt", "desc").orderBy("title");
+    }).valueChanges();
+  }
+
   async addProject(userId: string, title: string, description: string): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-fab-button',
@@ -6,13 +6,14 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./fab-button.component.scss']
 })
 export class FabButtonComponent implements OnInit {
-  @Output() add = new EventEmitter<void>();
+  @Output() fabClick = new EventEmitter<void>();
+  @Input() iconType = "add";
   constructor() { }
 
   ngOnInit() {
   }
 
-  onAdd() {
-    this.add.emit();
+  onFabClick() {
+    this.fabClick.emit();
   }
 }

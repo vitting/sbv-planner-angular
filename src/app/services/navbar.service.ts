@@ -8,4 +8,8 @@ export class NavbarService {
   navbarTitle: Subject<string> = new Subject<string>();
   showLogoutButton: Subject<boolean> = new Subject<boolean>();
   constructor() { }
+
+  setNavbarTitle(title: string) {
+    this.navbarTitle.next(title);
+  }
 }
