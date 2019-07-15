@@ -1,0 +1,4 @@
+<div class="user-chip-list">
+  <app-user-chip *ngFor="let user of users" [name]="user.name" [type]="type" [selected]="user.id === authUserId" [completed]="user.id === completedUserId" (click)="userClicked(user)">
+  </app-user-chip>
+</div>

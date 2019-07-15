@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ProjectListItemComponent } from './project-list-item.component';
 import { ItemContainerModule } from '../../shared/directives/item-container/item-container.module';
-import { ProjectUsersModule } from './project-users/project-users.module';
+import { UsersListModule } from '../../shared/users-list/users-list.module';
 import { ProjectDetailsModule } from './project-details/project-details.module';
 import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-desc.module';
 import { ProjectDetailsEditModule } from './project-details-edit/project-details-edit.module';
@@ -24,7 +24,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatCheckboxModule,
     MatRippleModule,
     ItemContainerModule,
-    ProjectUsersModule,
+    UsersListModule,
     ProjectDetailsModule,
     ProjectDetailsEditModule,
     ItemTitleDescModule

@@ -1,0 +1,10 @@
+<div class="app-sublist-item" [ngClass]="{'app-sublist-item-completed': state === 'completed' || state === 'completed-not-user'}">
+  <div>
+    <div class="app-sublist-item-title" [ngClass]="{'app-sublist-item-title-completed': state === 'completed'}">{{ subTask.title }}</div>
+    <div class="app-sublist-item-users" *ngIf="users.length">
+        <app-users-list [type]="'subtask'" [users]="users" [completedUserId]="completedUserId" (userClick)="removeUser($event)"></app-users-list>
+    </div>
+  </div>
+  <app-checkbox *ngIf="state === 'check' || state === 'completed'" [selected]="checkValue" (checkboxClick)="checkboxClicked($event)"></app-checkbox>
+  <button *ngIf="state === 'add'" mat-icon-button (click)="addMeToSubTask()"><mat-icon>person_add</mat-icon></button>
+</div>

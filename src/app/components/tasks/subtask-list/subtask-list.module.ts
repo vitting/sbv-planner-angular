@@ -7,6 +7,7 @@ import { Dialog1FieldModule } from '../../shared/dialog-1-field/dialog-1-fieldmo
 import { DialogConfirmModule } from '../../shared/dialog-confirm/dialog-confirm.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SubtaskEditListItemModule } from './subtask-edit-list-item/subtask-edit-list-item.module';
+import { SubtaskListItemModule } from './subtask-list-item/subtask-list-item.module';
 
 
 
@@ -18,6 +19,7 @@ import { SubtaskEditListItemModule } from './subtask-edit-list-item/subtask-edit
     MatIconModule,
     MatDialogModule,
     SubtaskEditListItemModule,
+    SubtaskListItemModule,
     Dialog1FieldModule,
     DialogConfirmModule
   ],

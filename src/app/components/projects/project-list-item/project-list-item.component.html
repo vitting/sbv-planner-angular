@@ -5,7 +5,7 @@
       <app-project-details *ngIf="showDetails" [projectDate]="project?.createdAt.toDate()" [taskCompleted]="5"
         [taskTotal]="10"></app-project-details>
       <app-project-details-edit *ngIf="showDetailsEdit" [project]="project"></app-project-details-edit>
-      <app-project-users *ngIf="showUsers" [projectUsers]="users"></app-project-users>
+      <app-users-list [type]="'project'" *ngIf="showUsers" [users]="users"></app-users-list>
     </div>
     <button mat-icon-button class="list-item-button" (click)="showMenu()">
       <mat-icon>more_vert</mat-icon>

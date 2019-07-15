@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectUsersComponent } from './project-users.component';
+import { UsersListComponent } from './users-list.component';
 import { UserChipModule } from 'src/app/components/shared/user-chip/user-chip.module';
 
 
 
 @NgModule({
-  declarations: [ProjectUsersComponent],
+  declarations: [UsersListComponent],
   imports: [
     CommonModule,
     UserChipModule
   ],
-  exports: [ProjectUsersComponent]
+  exports: [UsersListComponent]
 })
-export class ProjectUsersModule { }
+export class UsersListModule { }

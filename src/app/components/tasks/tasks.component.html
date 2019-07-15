@@ -1,1 +1,11 @@
-<p>tasks works!</p>
+<mat-list>
+  <div mat-list-item appItemContainer="task" *ngFor="let task of tasks$ | async">
+    <div class="task-content">
+      <div>
+        <app-item-title-desc [title]="task.title" [description]="task.description"></app-item-title-desc>
+      </div>
+      <!-- <app-checkbox (checkboxClick)="checkboxClicked($event)"></app-checkbox> -->
+    </div>
+    <app-subtask-list [showButton]="false" [task]="task" [edit]="false"></app-subtask-list>
+  </div>
+</mat-list>

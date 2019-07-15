@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user-chip',
@@ -8,9 +8,18 @@ import { Component, OnInit, Input } from '@angular/core';
 export class UserChipComponent implements OnInit {
   @Input() name = "";
   @Input() selected = false;
+  @Input() type = "project";
+  @Input() completed = false;
+  config = {};
   constructor() { }
 
   ngOnInit() {
+    this.config = {
+      'user-chip-project': this.type === 'project',
+      'user-chip-task': this.type === 'task',
+      'user-chip-subtask': this.type === 'subtask',
+      'user-chip-me': this.selected,
+      'user-chip-subtask-completed': this.completed
+    };
   }
-
 }

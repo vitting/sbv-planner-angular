@@ -224,6 +224,44 @@ export class FirestoreService {
     }
   }
 
+  async addPersonToSubTask(subTaskId: string, userId: string) {
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<SubTask>("subtasks").doc(subTaskId).update(
+        {
+          updatedAt: timestamp,
+          updatedBy: userId,
+          users: firebase.firestore.FieldValue.arrayUnion(userId)
+        }
+      );
+
+      return subTaskId;
+    } catch (error) {
+      console.error("addPersonToSubTask", error);
+      return null;
+    }
+  }
+
+  async updateSubTaskCompleteStatus(subTaskId: string, userId: string, completed: boolean) {
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<SubTask>("subtasks").doc(subTaskId).update(
+        {
+          updatedAt: timestamp,
+          updatedBy: userId,
+          completed
+        }
+      );
+
+      return subTaskId;
+    } catch (error) {
+      console.error("updateSubTaskCompleteStatus", error);
+      return null;
+    }
+  }
+
   deleteSubTask(subTaskId: string) {
     return this.db.collection<SubTask>("subtasks").doc(subTaskId).delete();
   }

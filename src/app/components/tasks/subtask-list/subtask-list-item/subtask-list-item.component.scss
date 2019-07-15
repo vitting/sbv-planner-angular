@@ -1,0 +1,31 @@
+@import "../../../../../colors";
+
+.app-sublist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  padding: 5px 2px 5px 10px;
+  background-color: $pink-700;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  min-height: 50px;
+
+  &.app-sublist-item-completed {
+    background-color: $pink-900;
+  }
+
+  .app-sublist-item-title-completed {
+    text-decoration: line-through;
+  }
+
+  .app-sublist-item-users {
+    padding-top: 5px;
+  }
+
+  button {
+    outline: none;
+  }
+}
+
+

@@ -13,6 +13,7 @@ import {
 } from '../../shared/dialog-confirm/dialog-confirm.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { take } from 'rxjs/operators';
+import { SubTaskCheckboxStateInfo } from './subtask-list-item/subtask-list-item.component';
 
 @Component({
   selector: 'app-subtask-list',
@@ -22,6 +23,7 @@ import { take } from 'rxjs/operators';
 export class SubtaskListComponent implements OnInit {
   @Input() task: Task;
   @Input() showButton = false;
+  @Input() edit = true;
   subtasks$: Observable<SubTask[]>;
   constructor(private firestoreService: FirestoreService, private authService: AuthService, private dialog: MatDialog) { }
 
@@ -96,5 +98,17 @@ export class SubtaskListComponent implements OnInit {
         this.firestoreService.deleteSubTask(subTask.id);
       }
     });
+  }
+
+  async addMe(subTask: SubTask) {
+    const userId = this.authService.userId;
+    const subTaskId = await this.firestoreService.addPersonToSubTask(subTask.id, userId);
+    console.log(subTaskId);
+  }
+
+  async checkboxClicked(status: SubTaskCheckboxStateInfo) {
+    const userId = this.authService.userId;
+    const subTaskId = await this.firestoreService.updateSubTaskCompleteStatus(status.subTask.id, userId, status.completed);
+    console.log(subTaskId);
   }
 }

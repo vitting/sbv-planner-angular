@@ -27,6 +27,9 @@ import { TasksEditModule } from './components/tasks/tasks-edit/tasks-edit.module
 import { CommentsModule } from './components/comments/comments.module';
 import 'moment/locale/da';
 import { SplashScreenModule } from './components/shared/splash-screen/splash-screen.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 @NgModule({
   declarations: [
     AppComponent
@@ -36,6 +39,7 @@ import { SplashScreenModule } from './components/shared/splash-screen/splash-scr
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
+    FontAwesomeModule,
     AngularFireModule.initializeApp(firebaseConfig.firebase, 'sbv-planner'),
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -59,4 +63,8 @@ import { SplashScreenModule } from './components/shared/splash-screen/splash-scr
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    library.add(faTimesCircle);
+  }
+}

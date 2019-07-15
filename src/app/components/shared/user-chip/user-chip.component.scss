@@ -3,13 +3,35 @@
   font-weight: lighter;
   font-size: 0.8rem;
   border-radius: 16px;
-  background-color: $indigo-300;
-  padding: 1px 5px;
+  padding: 1px 8px;
   margin-right: 3px;
   margin-bottom: 3px;
   display: inline-block;
+
+  &.user-chip-project {
+    background-color: $indigo-300;
+  }
+
+  &.user-chip-task {
+    background-color: $pink-400;
+  }
+
+  &.user-chip-subtask {
+    background-color: $pink-400;
+  }
+
+  &.user-chip-subtask-completed {
+    background-color: $pink-700;
+  }
+
+  &.user-chip-me {
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  fa-icon {
+    margin-left: 5px;
+  }
 }
 
-.user-chip-me {
-  background-color: $indigo-a100;
-}
+
