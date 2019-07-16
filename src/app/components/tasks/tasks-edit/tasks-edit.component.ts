@@ -140,7 +140,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
       if (result && result.action === DialogConfirmAction.yes) {
-        await this.firestoreService.deleteTask(task.id);
+        await this.firestoreService.deleteTask(task.id, this.projectId);
       }
     });
   }

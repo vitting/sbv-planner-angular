@@ -29,7 +29,8 @@ import 'moment/locale/da';
 import { SplashScreenModule } from './components/shared/splash-screen/splash-screen.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faComments } from '@fortawesome/free-regular-svg-icons';
 @NgModule({
   declarations: [
     AppComponent
@@ -65,6 +66,6 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 })
 export class AppModule {
   constructor() {
-    library.add(faTimesCircle);
+    library.add(faTimesCircle, faComment, faComments, faTasks);
   }
 }

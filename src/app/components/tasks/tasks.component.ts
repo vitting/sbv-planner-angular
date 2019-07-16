@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Observable } from 'rxjs';
@@ -13,8 +13,12 @@ import { Task } from 'src/app/models/task.model';
 export class TasksComponent implements OnInit {
   projectId: string;
   tasks$: Observable<Task[]>;
+  tasksTotal = 8;
+  tasksCompleted = 4;
+  comments = 23;
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private navbarService: NavbarService,
     private firebaseService: FirestoreService) { }
 
@@ -31,5 +35,9 @@ export class TasksComponent implements OnInit {
   checkboxClicked(status: boolean) {
     console.log(status);
 
+  }
+
+  goToComments(task: Task) {
+    // this.router.navigate();
   }
 }

@@ -5,6 +5,10 @@
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
+  background-color: $pink-600;
+  border-radius: 4px;
+  min-height: 50px;
+  margin-bottom: 5px;
 
   .app-sublist-item-content {
     display: flex;
@@ -16,7 +20,7 @@
   }
 
   &:hover {
-    background-color: $indigo-300;
+    background-color: $pink-300;
     border-radius: 4px;
   }
 }

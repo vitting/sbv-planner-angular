@@ -49,8 +49,7 @@ export class CommentsComponent implements OnInit {
 
     switch (this.commentType) {
       case "p":
-        id = "erwerwer";
-        // id = projectId;
+        id = projectId;
         break;
       case "t":
         id = taskId;
@@ -110,7 +109,7 @@ export class CommentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
       if (result) {
         console.log(result);
-        const commentId = await this.firestoreService.updateComment(this.authService.userId, comment.id, result.fieldValue);
+        const commentId = await this.firestoreService.updateComment(comment.id, result.fieldValue);
       }
     });
   }
@@ -132,7 +131,7 @@ export class CommentsComponent implements OnInit {
 
     dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
       if (result && result.action === DialogConfirmAction.yes) {
-        await this.firestoreService.deleteComment(comment.id);
+        await this.firestoreService.deleteComment(comment.id, this.parentId);
       }
     });
   }

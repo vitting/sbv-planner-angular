@@ -13,7 +13,7 @@ import {
 } from '../../shared/dialog-confirm/dialog-confirm.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { take } from 'rxjs/operators';
-import { SubTaskCheckboxStateInfo } from './subtask-list-item/subtask-list-item.component';
+import { SubTaskCheckboxStateInfo, SubTaskPerson } from './subtask-list-item/subtask-list-item.component';
 
 @Component({
   selector: 'app-subtask-list',
@@ -95,20 +95,27 @@ export class SubtaskListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: DialogConfirmResult) => {
       if (result && result.action === DialogConfirmAction.yes) {
         console.log(result);
-        this.firestoreService.deleteSubTask(subTask.id);
+        this.firestoreService.deleteSubTask(subTask.id, this.task.id);
       }
     });
   }
 
-  async addMe(subTask: SubTask) {
+  async addPerson(subTask: SubTask) {
     const userId = this.authService.userId;
     const subTaskId = await this.firestoreService.addPersonToSubTask(subTask.id, userId);
     console.log(subTaskId);
   }
 
+  // TODO: Check that this works
+  async removePerson(subTaskPerson: SubTaskPerson) {
+    console.log(subTaskPerson);
+    const subTaskId = await this.firestoreService.removePersonFromSubTask(subTaskPerson.subTask.id, subTaskPerson.user.id);
+    console.log(subTaskId);
+  }
+
   async checkboxClicked(status: SubTaskCheckboxStateInfo) {
     const userId = this.authService.userId;
-    const subTaskId = await this.firestoreService.updateSubTaskCompleteStatus(status.subTask.id, userId, status.completed);
+    const subTaskId = await this.firestoreService.updateSubTaskCompleteStatus(status.subTask.id, userId, status.completed, this.task.id);
     console.log(subTaskId);
   }
 }

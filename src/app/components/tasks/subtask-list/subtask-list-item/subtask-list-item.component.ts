@@ -8,6 +8,11 @@ export interface SubTaskCheckboxStateInfo {
   completed: boolean;
 }
 
+export interface SubTaskPerson {
+  subTask: SubTask;
+  user: User;
+}
+
 @Component({
   selector: 'app-subtask-list-item',
   templateUrl: './subtask-list-item.component.html',
@@ -17,6 +22,7 @@ export class SubtaskListItemComponent implements OnInit {
   private loggedInUserAdded = false;
   @Input() subTask: SubTask;
   @Output() addPersonClick: EventEmitter<SubTask> = new EventEmitter<SubTask>();
+  @Output() removePersonClick: EventEmitter<SubTaskPerson> = new EventEmitter<SubTaskPerson>();
   @Output() checkboxClick: EventEmitter<SubTaskCheckboxStateInfo> = new EventEmitter<SubTaskCheckboxStateInfo>();
   state = "add";
   users: User[] = [];
@@ -65,13 +71,14 @@ export class SubtaskListItemComponent implements OnInit {
     }
   }
 
-  addMeToSubTask() {
+  addPersonToSubTask() {
     this.addPersonClick.next(this.subTask);
   }
 
-  removeUser(user: User) {
-    // TODO: Add remove user logic
-    console.log("REMOVE USER", user);
-
+  removePersonFromSubTask(user: User) {
+    this.removePersonClick.next({
+      subTask: this.subTask,
+      user
+    });
   }
 }

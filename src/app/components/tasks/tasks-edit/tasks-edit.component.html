@@ -1,5 +1,5 @@
 <div cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="'false'">
-  <div appItemContainer class="app-list-item bg-indigo-50 noselect" *ngFor="let task of tasks; let i = index" cdkDrag
+  <div appItemContainer="task" class="app-list-item bg-indigo-50 noselect" *ngFor="let task of tasks; let i = index" cdkDrag
     cdkDragPreview>
     <div class="app-list-item-container">
       <div class="app-list-item-drag">
