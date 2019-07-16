@@ -33,6 +33,8 @@ export class SubtaskListComponent implements OnInit {
     }
   }
 
+  // TODO: Can we switch TO Edit mode for a single task
+
   addSubTask(task: Task) {
     const data: Dialog1FieldData = {
       title: "Ny del opgave",
@@ -79,10 +81,10 @@ export class SubtaskListComponent implements OnInit {
 
   deleteSubTask(subTask: SubTask) {
     const data: DialogConfirmData = {
-      header: "Slet del opgave",
+      header: "Slet opgave",
       button1Text: "Ja",
       button2Text: "Nej",
-      message1: "Vil du slette del opgaven?",
+      message1: "Vil du slette opgaven?",
       message2: subTask.title
     };
 
@@ -106,11 +108,26 @@ export class SubtaskListComponent implements OnInit {
     console.log(subTaskId);
   }
 
-  // TODO: Check that this works
   async removePerson(subTaskPerson: SubTaskPerson) {
-    console.log(subTaskPerson);
-    const subTaskId = await this.firestoreService.removePersonFromSubTask(subTaskPerson.subTask.id, subTaskPerson.user.id);
-    console.log(subTaskId);
+    const data: DialogConfirmData = {
+      header: "Fjern fra opgave",
+      button1Text: "Ja",
+      button2Text: "Nej",
+      message1: "Vil du fjerne dig fra opgaven?",
+      message2: null
+    };
+
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      maxWidth: '350',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+      if (result && result.action === DialogConfirmAction.yes) {
+        const subTaskId = await this.firestoreService.removePersonFromSubTask(subTaskPerson.subTask.id, subTaskPerson.user.id);
+      }
+    });
   }
 
   async checkboxClicked(status: SubTaskCheckboxStateInfo) {

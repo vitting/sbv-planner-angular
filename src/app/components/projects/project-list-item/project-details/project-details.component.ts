@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Summary } from 'src/app/models/summary.model';
 
 @Component({
   selector: 'app-project-details',
@@ -7,11 +8,19 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProjectDetailsComponent implements OnInit {
   @Input() projectDate: Date;
-  @Input() taskTotal = 0;
-  @Input() taskCompleted = 0;
+  @Input() summary: Summary;
+  @Output() commentsTotalClick: EventEmitter<void> = new EventEmitter<void>();
+  @Output() tasksClick: EventEmitter<void> = new EventEmitter<void>();
   constructor() { }
 
   ngOnInit() {
   }
 
+  commentClicked() {
+    this.commentsTotalClick.emit();
+  }
+
+  tasksClicked() {
+    this.tasksClick.emit();
+  }
 }

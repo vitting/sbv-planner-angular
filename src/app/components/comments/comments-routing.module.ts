@@ -4,16 +4,10 @@ import { CommentsComponent } from './comments.component';
 
 
 const routes: Routes = [{
-  path: "comments/:commentType",
+  path: "projects/:projectId/comments", // commentType = p
   component: CommentsComponent
 }, {
-  path: "projects/:projectId/comments/:commentType", // commentType = p
-  component: CommentsComponent
-}, {
-  path: "projects/:projectId/taskts/:taskId/comments/:commentType", // commentType = t
-  component: CommentsComponent
-}, {
-  path: "projects/:projectId/taskts/:taskId/subtasks/:subtaskId/comments/:commentType", // commentType = s
+  path: "projects/:projectId/tasks/:taskId/comments", // commentType = t
   component: CommentsComponent
 }];
 

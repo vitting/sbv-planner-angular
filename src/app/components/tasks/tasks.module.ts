@@ -11,20 +11,17 @@ import { CheckboxModule } from '../shared/checkbox/checkbox.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TaskListItemModule } from './task-list-item/task-list-item.module';
+import { TasksMenuModule } from './tasks-menu/tasks-menu.module';
 
 @NgModule({
   declarations: [TasksComponent],
   imports: [
     CommonModule,
     TasksRoutingModule,
-    FontAwesomeModule,
     MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    ItemContainerModule,
-    ItemTitleDescModule,
-    SubtaskListModule,
-    CheckboxModule
+    TaskListItemModule,
+    TasksMenuModule
   ],
   exports: [TasksComponent]
 })

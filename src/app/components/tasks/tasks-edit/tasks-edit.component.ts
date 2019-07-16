@@ -55,7 +55,9 @@ export class TasksEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.taskSubscribtion.unsubscribe();
+    if (this.taskSubscribtion) {
+      this.taskSubscribtion.unsubscribe();
+    }
   }
 
   addTask() {

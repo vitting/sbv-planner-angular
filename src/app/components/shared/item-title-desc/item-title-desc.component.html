@@ -1,2 +1,2 @@
-<h4>{{ title }}</h4>
-<h5 *ngIf="description">{{ description }}</h5>
+<h4 [ngClass]="{'item-completed': completed}">{{ title }}</h4>
+<h5 [ngClass]="{'item-completed': completed}" *ngIf="description">{{ description }}</h5>

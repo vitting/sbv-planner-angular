@@ -24,4 +24,12 @@ export class ProjectsComponent implements OnInit {
     console.log(project);
 
   }
+
+  commentsTotalClick(project: Project) {
+    console.log(project);
+  }
+
+  onAdd() {
+
+  }
 }

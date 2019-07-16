@@ -1,9 +1,8 @@
-<div appItemContainer matRipple>
+<div appItemContainer>
   <div class="list-item-container">
     <div class="list-item-content">
       <app-item-title-desc [title]="project.title" [description]="project.description"></app-item-title-desc>
-      <app-project-details *ngIf="showDetails" [projectDate]="project?.createdAt.toDate()" [taskCompleted]="5"
-        [taskTotal]="10"></app-project-details>
+      <app-project-details *ngIf="showDetails" [projectDate]="project?.createdAt.toDate()" [summary]="summary" (commentsTotalClick)="commentsTotalClicked()" (tasksClick)="tasksClicked()"></app-project-details>
       <app-project-details-edit *ngIf="showDetailsEdit" [project]="project"></app-project-details-edit>
       <app-users-list [type]="'project'" *ngIf="showUsers" [users]="users"></app-users-list>
     </div>

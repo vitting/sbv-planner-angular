@@ -10,10 +10,15 @@ export class UserChipComponent implements OnInit {
   @Input() selected = false;
   @Input() type = "project";
   @Input() completed = false;
+  @Input() enableRemoveButton = true;
   config = {};
   constructor() { }
 
   ngOnInit() {
+    if (this.type === "project") {
+      this.enableRemoveButton = false;
+    }
+
     this.config = {
       'user-chip-project': this.type === 'project',
       'user-chip-task': this.type === 'task',

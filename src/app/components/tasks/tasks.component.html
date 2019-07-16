@@ -1,24 +1,5 @@
-<h1>KOMMENTAR</h1>
+<h2>Kan vi lave set sådan at vi kan redigere en del opgave uden at indlæse dem igen</h2>
+<h2>Hvis vi er i edit mode, kan vi så ikke vise en blyant ud for titel og desc så vi kan redigere</h2>
 <mat-list>
-  <div mat-list-item appItemContainer="task" *ngFor="let task of tasks$ | async">
-    <div class="task-content">
-      <div>
-        <app-item-title-desc [title]="task.title" [description]="task.description"></app-item-title-desc>
-      </div>
-      <div class="task-menu">
-          <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-      </div>
-    </div>
-    <div>
-      <div class="task-action">
-          <div class="task-action-item task-action-text">
-              <fa-icon [icon]="['fas', 'tasks']"></fa-icon><span class="task-action-text">{{tasksCompleted}} / {{tasksTotal}}</span>
-          </div>
-          <div class="task-action-item">
-              <button mat-button><fa-icon [icon]="['far', 'comment']" (click)="goToComments(task)"></fa-icon><span class="task-action-text">{{comments}}</span></button>
-          </div>
-      </div>
-    </div>
-    <app-subtask-list [showButton]="false" [task]="task" [edit]="false"></app-subtask-list>
-  </div>
+  <app-task-list-item *ngFor="let task of tasks$ | async" [task]="task"></app-task-list-item>
 </mat-list>

@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ItemTitleDescComponent implements OnInit {
   @Input() title = "";
   @Input() description = null;
-
+  @Input() completed = false;
   constructor() { }
 
   ngOnInit() {

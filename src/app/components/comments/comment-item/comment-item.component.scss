@@ -2,6 +2,10 @@
   display: flex;
   justify-content: space-between;
 
+  button {
+    outline: none;
+  }
+
   .comment-name {
     font-weight: 500;
   }

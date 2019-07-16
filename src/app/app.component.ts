@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Project, ProjectItem } from './models/project.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UtilitiesService } from './services/utilities.service';
 import { AuthService } from './services/auth.service';
 import { SplashService } from './services/splash.service';
@@ -11,8 +11,9 @@ import { SplashService } from './services/splash.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   private projectsCollection: AngularFirestoreCollection<Project>;
+  private splashSub: Subscription;
   projects: Observable<Project[]>;
   sidebarState = "close";
   showSplash = true;
@@ -23,13 +24,19 @@ export class AppComponent implements OnInit {
     private splashService: SplashService) {}
 
   ngOnInit(): void {
-    this.splashService.splashShow.subscribe((showSplash) => {
+    this.splashSub = this.splashService.splashShow.subscribe((showSplash) => {
       this.showSplash = showSplash;
     });
 
     this.projectsCollection = this.db.collection<Project>('projects');
 
     this.projects = this.projectsCollection.valueChanges();
+  }
+
+  ngOnDestroy() {
+    if (this.splashSub) {
+      this.splashSub.unsubscribe();
+    }
   }
 
   onAddItem() {

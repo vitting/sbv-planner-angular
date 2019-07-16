@@ -3,16 +3,21 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { ProjectItem, Project } from '../models/project.model';
 import { TaskItem, Task } from '../models/task.model';
-import { take } from 'rxjs/operators';
+import { take, switchMap } from 'rxjs/operators';
 import { SubTaskItem, SubTask } from '../models/subtask.model';
 import { User, UserItem } from '../models/user.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Comment, CommentItem } from '../models/comment.model';
 import { Summary } from '../models/summary.model';
 
 export enum SummaryAction {
   add,
   delete
+}
+
+export interface ProjectTaskName {
+  projectName: string;
+  taskName: string;
 }
 
 @Injectable({
@@ -66,9 +71,9 @@ export class FirestoreService {
     return this.db.collection<Comment>("comments").doc(commentId).delete();
   }
 
-  getComments(parentId: string, type: string): Observable<Comment[]> {
+  getComments(parentId: string): Observable<Comment[]> {
     return this.db.collection<Comment>("comments", (ref) => {
-      return ref.where("parentId", "==", parentId).where("type", "==", type).where("active", "==", true).orderBy("createdAt");
+      return ref.where("parentId", "==", parentId).where("active", "==", true).orderBy("createdAt");
     }).valueChanges();
   }
 
@@ -82,6 +87,22 @@ export class FirestoreService {
       console.error("AddUser", error);
       return null;
     }
+  }
+
+  async getProjectTaskName(projectId: string, taskId: string): Promise<ProjectTaskName> {
+    const projectTaskName: ProjectTaskName = {
+      projectName: null,
+      taskName: null
+    };
+
+    const project: Project = await this.db.collection<Project>("projects").doc<Project>(projectId).valueChanges().pipe(take(1)).toPromise();
+    projectTaskName.projectName = project.title;
+    if (taskId) {
+      const task: Task = await this.db.collection<Task>("tasks").doc<Task>(taskId).valueChanges().pipe(take(1)).toPromise();
+      projectTaskName.taskName = task.title;
+    }
+
+    return projectTaskName;
   }
 
   getUser(userId: string): Observable<User> {
@@ -206,6 +227,45 @@ export class FirestoreService {
     return this.db.collection("tasks").doc(taskId).delete();
   }
 
+  async addPersonToTask(taskId: string, userId: string) {
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<Task>("tasks").doc(taskId).update(
+        {
+          updatedAt: timestamp,
+          updatedBy: userId,
+          users: firebase.firestore.FieldValue.arrayUnion(userId)
+        }
+      );
+
+      return taskId;
+    } catch (error) {
+      console.error("addPersonToTask", error);
+      return null;
+    }
+  }
+
+  async removePersonFromTask(taskId: string, userId: string) {
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<Task>("subtasks").doc(taskId).update(
+        {
+          updatedAt: timestamp,
+          updatedBy: userId,
+          users: firebase.firestore.FieldValue.arrayRemove(userId)
+        }
+      );
+
+      return taskId;
+    } catch (error) {
+      console.error("removePersonFromTask", error);
+      return null;
+    }
+  }
+
+
   async addSubTask(userId: string, title: string, projectId: string, taskId: string): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;
@@ -324,6 +384,10 @@ export class FirestoreService {
     });
 
     return batch.commit().catch(error => console.error("updateTasksIndex", error));
+  }
+
+  getSummary(id: string) {
+    return this.db.collection<Summary>("summaries").doc<Summary>(id).valueChanges();
   }
 
   private async addSummary(itemId: string) {

@@ -4,6 +4,8 @@ import { NavbarService } from 'src/app/services/navbar.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Observable } from 'rxjs';
 import { Task } from 'src/app/models/task.model';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { TasksMenuComponent, TasksMenuResult } from './tasks-menu/tasks-menu.component';
 
 @Component({
   selector: 'app-tasks',
@@ -13,14 +15,13 @@ import { Task } from 'src/app/models/task.model';
 export class TasksComponent implements OnInit {
   projectId: string;
   tasks$: Observable<Task[]>;
-  tasksTotal = 8;
-  tasksCompleted = 4;
-  comments = 23;
+  editMode = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private navbarService: NavbarService,
-    private firebaseService: FirestoreService) { }
+    private firebaseService: FirestoreService,
+    private bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
     this.navbarService.setNavbarTitle("Opgaver");
@@ -28,16 +29,5 @@ export class TasksComponent implements OnInit {
     if (this.projectId) {
       this.tasks$ = this.firebaseService.getTasks(this.projectId);
     }
-    console.log(this.projectId);
-
-  }
-
-  checkboxClicked(status: boolean) {
-    console.log(status);
-
-  }
-
-  goToComments(task: Task) {
-    // this.router.navigate();
   }
 }

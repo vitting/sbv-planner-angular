@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
+import { FirestoreService, ProjectTaskName } from 'src/app/services/firestore.service';
 import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../shared/dialog-1-field/dialog-1-field.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentItem, Comment } from 'src/app/models/comment.model';
@@ -23,8 +23,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CommentsComponent implements OnInit {
   comments$: Observable<Comment[]>;
+  projectTaskName: ProjectTaskName;
   private parentId: string;
   private commentType: string;
+  private projectId: string;
+  private taskId: string;
   constructor(
     private authService: AuthService,
     private navbarService: NavbarService,
@@ -35,32 +38,29 @@ export class CommentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next("Kommentar");
-    this.commentType = this.route.snapshot.params.commentType;
     this.parentId = this.getParetId();
-    this.comments$ = this.firestoreService.getComments(this.parentId, this.commentType);
+    this.setTitle();
+    this.setProjectTaskName();
+    this.comments$ = this.firestoreService.getComments(this.parentId);
+  }
+
+  async setProjectTaskName() {
+    this.projectTaskName = await this.firestoreService.getProjectTaskName(this.projectId, this.taskId);
+  }
+
+  setTitle() {
+    if (this.commentType === "task") {
+      this.navbarService.navbarTitle.next("Opgave kommentar");
+    } else {
+      this.navbarService.navbarTitle.next("Projekt kommentar");
+    }
   }
 
   getParetId(): string {
-    let id: string = null;
-    const projectId = this.route.snapshot.params.projectId;
-    const taskId = this.route.snapshot.params.taskId;
-    const subTaskId = this.route.snapshot.params.subtaskId;
-
-    switch (this.commentType) {
-      case "p":
-        id = projectId;
-        break;
-      case "t":
-        id = taskId;
-        break;
-      case "s":
-        id = subTaskId;
-        break;
-      default:
-        console.log("Comment", "Missiong CommentType");
-    }
-    return id;
+    this.projectId = this.route.snapshot.params.projectId;
+    this.taskId = this.route.snapshot.params.taskId;
+    this.commentType = this.taskId ? "task" : "project";
+    return this.taskId ? this.taskId : this.projectId;
   }
 
   addComment() {

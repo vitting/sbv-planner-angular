@@ -1,1 +1,1 @@
-<div class="user-chip" [ngClass]="config">{{name}}<fa-icon icon="times-circle" *ngIf="selected && !completed"></fa-icon></div>
+<div class="user-chip" [ngClass]="config">{{name}}<fa-icon icon="times-circle" *ngIf="(selected && !completed) && enableRemoveButton"></fa-icon></div>

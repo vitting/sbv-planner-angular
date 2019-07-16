@@ -31,19 +31,12 @@ export class ProjectHomeComponent implements OnInit {
     console.log(project);
   }
 
-  projectItemClick(project: Project) {
+  gotoComments(project: Project) {
+    this.router.navigate(["/projects", project.id, "comments"]);
     console.log(project);
-    this.router.navigate(["/projects", project.id, "tasks"]);
   }
 
-  // async test(project: Project) {
-  //   // this.firestoreService.addSummary(project.id);
-  //   // await this.firestoreService.updateSummaryComments(project.id, SummaryAction.delete);
-  //   // console.log(item);
-
-  //   // item.subscribe((result) => {
-  //   //   console.log(result);
-
-  //   // });
-  // }
+  gotoTasks(project: Project) {
+    this.router.navigate(["/projects", project.id, "tasks"]);
+  }
 }

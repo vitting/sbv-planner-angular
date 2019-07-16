@@ -1,11 +1,11 @@
 <div class="app-project-details">
   <div>
-    <mat-icon class="app-project-details-icon">calendar_today</mat-icon>{{ projectDate | amLocal:'da' | amDateFormat: 'DD-MM-YYYY' }}
+    <fa-icon [icon]="['far', 'calendar']" class="app-project-details-icon"></fa-icon>{{ projectDate | amLocal:'da' | amDateFormat: 'DD-MM-YYYY' }}
   </div>
   <div>
-    <button mat-icon-button><mat-icon class="app-project-details-icon-button">comment</mat-icon></button>{{ taskCompleted }}
+      <button mat-button (click)="commentClicked()"><fa-icon [icon]="['far', 'comment']" class="app-project-details-icon"></fa-icon><span class="task-action-text">{{summary?.numberOfComments}}</span></button>
     </div>
   <div>
-    <mat-icon class="app-project-details-icon">done</mat-icon>{{ taskCompleted }} / {{ taskTotal }}
+      <button mat-button (click)="tasksClicked()"><fa-icon [icon]="['fas', 'tasks']" class="app-project-details-icon"></fa-icon><span class="task-action-text">{{ summary?.numberOfItemsCompleted }} / {{ summary?.numberOfItems }}</span></button>
   </div>
 </div>

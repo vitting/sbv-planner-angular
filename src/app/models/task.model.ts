@@ -10,9 +10,9 @@ export interface Task {
   title: string;
   description: string;
   index: number;
-  colorCode: string;
   completed: boolean;
-  users: string [];
+  users: string[];
+  colorCode: string;
 }
 
 export class TaskItem implements Task {
@@ -26,9 +26,9 @@ export class TaskItem implements Task {
     public title: string,
     public description: string,
     public index: number,
-    public colorCode: string = null,
     public completed: boolean = false,
     public users: string[] = [],
+    public colorCode: string = null
     ) {}
 
     static fromObject(item: Task) {
@@ -42,8 +42,9 @@ export class TaskItem implements Task {
         item.title,
         item.description,
         item.index,
-        item.colorCode,
-        item.completed, item.users
+        item.completed,
+        item.users,
+        item.colorCode
         );
     }
 
@@ -58,9 +59,9 @@ export class TaskItem implements Task {
       title: this.title,
       description: this.description,
       index: this.index,
-      colorCode: this.colorCode,
       completed: this.completed,
-      users: this.users
+      users: this.users,
+      colorCode: this.colorCode
     };
   }
 }
