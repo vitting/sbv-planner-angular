@@ -16,10 +16,10 @@ export class SubtaskEditListItemComponent implements OnInit {
   }
 
   onDelete() {
-    this.delete.next(this.subTask);
+    this.delete.emit(this.subTask);
   }
 
   onEdit() {
-    this.edit.next(this.subTask);
+    this.edit.emit(this.subTask);
   }
 }

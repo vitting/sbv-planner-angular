@@ -27,6 +27,6 @@ export class CommentItemComponent implements OnInit {
   }
 
   menu() {
-    this.menuClick.next(this.comment);
+    this.menuClick.emit(this.comment);
   }
 }

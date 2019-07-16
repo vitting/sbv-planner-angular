@@ -27,6 +27,6 @@ export class ProjectListItemComponent implements OnInit {
   }
 
   showMenu() {
-    this.menuClick.next(this.project);
+    this.menuClick.emit(this.project);
   }
 }

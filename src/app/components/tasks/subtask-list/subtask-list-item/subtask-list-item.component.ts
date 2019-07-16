@@ -59,7 +59,7 @@ export class SubtaskListItemComponent implements OnInit {
   }
 
   checkboxClicked(status: boolean) {
-    this.checkboxClick.next({
+    this.checkboxClick.emit({
       subTask: this.subTask,
       completed: status
     });
@@ -72,11 +72,11 @@ export class SubtaskListItemComponent implements OnInit {
   }
 
   addPersonToSubTask() {
-    this.addPersonClick.next(this.subTask);
+    this.addPersonClick.emit(this.subTask);
   }
 
   removePersonFromSubTask(user: User) {
-    this.removePersonClick.next({
+    this.removePersonClick.emit({
       subTask: this.subTask,
       user
     });

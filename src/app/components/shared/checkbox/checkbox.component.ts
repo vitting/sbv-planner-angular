@@ -15,6 +15,6 @@ export class CheckboxComponent implements OnInit {
 
   checkboxClicked() {
     this.selected = !this.selected;
-    this.checkboxClick.next(this.selected);
+    this.checkboxClick.emit(this.selected);
   }
 }
