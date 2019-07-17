@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 import { SidebarModule } from './components/sidebar/sidebar.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,7 +38,6 @@ import { faComment, faComments, faCalendar } from '@fortawesome/free-regular-svg
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     FontAwesomeModule,
@@ -59,9 +59,10 @@ import { faComment, faComments, faCalendar } from '@fortawesome/free-regular-svg
     ProjectEditModule,
     TasksEditModule,
     CommentsModule,
-    SplashScreenModule
+    SplashScreenModule,
+    AppRoutingModule // Keep this routing module last to make wildcard work correct
   ],
-  providers: [],
+  providers: [AngularFireAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

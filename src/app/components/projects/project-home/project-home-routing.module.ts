@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProjectHomeComponent } from './project-home.component';
-import { AuthGuard } from 'src/app/services/auth-guard.service';
+import { redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard';
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(["login"]);
 
 const routes: Routes = [{
   path: '',
   component: ProjectHomeComponent,
-  canActivate: [AuthGuard]
+  canActivate: [AngularFireAuthGuard],
+  data: { authGuardPipe: redirectUnauthorizedToLogin }
 }];
 
 @NgModule({
