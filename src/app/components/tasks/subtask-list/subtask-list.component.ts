@@ -23,7 +23,7 @@ import { SubTaskCheckboxStateInfo, SubTaskPerson } from './subtask-list-item/sub
 export class SubtaskListComponent implements OnInit {
   @Input() task: Task;
   @Input() showButton = false;
-  @Input() edit = true;
+  @Input() editMode = true;
   subtasks$: Observable<SubTask[]>;
   constructor(private firestoreService: FirestoreService, private authService: AuthService, private dialog: MatDialog) { }
 

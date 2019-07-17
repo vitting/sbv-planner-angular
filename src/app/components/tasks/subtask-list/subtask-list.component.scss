@@ -1,7 +1,11 @@
 .app-sublist-item-container {
-  margin: 0 10px 0 20px;
+  margin: 0 10px 0 10px;
 
   .app-sublist-item-add-button {
     margin-bottom: 5px;
+  }
+
+  button {
+    outline: none;
   }
 }

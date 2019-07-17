@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TasksMenuComponent, TasksMenuResult } from '../tasks-menu/tasks-menu.component';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Dialog2FieldsData, Dialog2FieldsComponent, Dialog2FieldsResult } from '../../shared/dialog-2-fields/dialog-2-fields.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-task-list-item',
@@ -15,12 +18,15 @@ import { Router } from '@angular/router';
 export class TaskListItemComponent implements OnInit, OnDestroy {
   @Input() task: Task;
   @Input() editMode = false;
-  // @Output() commentsClick = new EventEmitter<Task>();
-  // @Output() menuClick = new EventEmitter<Task>();
   summary: Summary;
   completed = false;
   private summarySub: Subscription;
-  constructor(private firestoreService: FirestoreService, private router: Router, private bottomSheet: MatBottomSheet) { }
+  constructor(
+    private firestoreService: FirestoreService,
+    private authService: AuthService,
+    private router: Router,
+    private bottomSheet: MatBottomSheet,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.summarySub = this.firestoreService.getSummary(this.task.id).subscribe((summary) => {
@@ -39,8 +45,31 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToComments() {
+  commentsClick() {
     this.router.navigate(["/projects", this.task.projectId, "tasks", this.task.id, "comments"]);
+  }
+
+  editTitleDescClick() {
+    const data: Dialog2FieldsData = {
+      title: "Rediger opgave",
+      buttonText: "Gem",
+      field1Label: "Titel",
+      field1Value: this.task.title,
+      field2Label: "Beskrivelse",
+      field2Value: this.task.description
+    };
+
+    const dialogRef = this.dialog.open(Dialog2FieldsComponent, {
+      maxWidth: '350',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe((result: Dialog2FieldsResult) => {
+      if (result) {
+        this.firestoreService.updateTask(this.authService.userId, result.field1Value, result.field2Value, this.task);
+      }
+    });
   }
 
   menuClick() {

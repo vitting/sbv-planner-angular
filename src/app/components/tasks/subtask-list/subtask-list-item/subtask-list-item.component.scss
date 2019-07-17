@@ -6,7 +6,7 @@
   align-items: center;
   font-size: 14px;
   padding: 5px 2px 5px 10px;
-  background-color: $pink-600;
+  background-color: $pink-500;
   margin-bottom: 5px;
   border-radius: 4px;
   min-height: 50px;
@@ -28,4 +28,19 @@
   }
 }
 
+.app-sublist-item-edit-container {
+  padding-left: 0;
+  .app-sublist-item-edit {
+    display: flex;
+    align-items: center;
 
+    button {
+      margin-right: 5px;
+    }
+  }
+
+  &:hover {
+    background-color: $pink-300;
+    border-radius: 4px;
+  }
+}

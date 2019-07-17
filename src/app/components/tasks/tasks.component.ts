@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { Task } from 'src/app/models/task.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TasksMenuComponent, TasksMenuResult } from './tasks-menu/tasks-menu.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Dialog2FieldsData, Dialog2FieldsComponent, Dialog2FieldsResult } from '../shared/dialog-2-fields/dialog-2-fields.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tasks',
@@ -20,14 +23,16 @@ export class TasksComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private navbarService: NavbarService,
-    private firebaseService: FirestoreService,
-    private bottomSheet: MatBottomSheet) { }
+    private firestoreService: FirestoreService,
+    private authService: AuthService,
+    private bottomSheet: MatBottomSheet,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.navbarService.setNavbarTitle("Opgaver");
     this.projectId = this.route.snapshot.params.projectId;
     if (this.projectId) {
-      this.tasks$ = this.firebaseService.getTasks(this.projectId);
+      this.tasks$ = this.firestoreService.getTasks(this.projectId);
     }
   }
 }

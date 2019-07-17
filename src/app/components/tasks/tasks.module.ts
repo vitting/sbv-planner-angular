@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TaskListItemModule } from './task-list-item/task-list-item.module';
 import { TasksMenuModule } from './tasks-menu/tasks-menu.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [TasksComponent],
@@ -20,6 +21,7 @@ import { TasksMenuModule } from './tasks-menu/tasks-menu.module';
     CommonModule,
     TasksRoutingModule,
     MatListModule,
+    MatDialogModule,
     TaskListItemModule,
     TasksMenuModule
   ],

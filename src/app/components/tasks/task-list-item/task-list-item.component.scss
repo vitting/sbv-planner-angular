@@ -6,6 +6,15 @@
     flex-direction: row;
     align-items: center;
 
+    .task-content-edit {
+      display: flex;
+      align-items: center;
+
+      button {
+        margin-right: 5px;
+      }
+    }
+
     .task-menu {
         align-self: flex-start;
 

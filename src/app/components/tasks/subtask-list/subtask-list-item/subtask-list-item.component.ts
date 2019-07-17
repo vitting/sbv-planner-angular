@@ -21,9 +21,12 @@ export interface SubTaskPerson {
 export class SubtaskListItemComponent implements OnInit {
   private loggedInUserAdded = false;
   @Input() subTask: SubTask;
+  @Input() editMode = false;
   @Output() addPersonClick: EventEmitter<SubTask> = new EventEmitter<SubTask>();
   @Output() removePersonClick: EventEmitter<SubTaskPerson> = new EventEmitter<SubTaskPerson>();
   @Output() checkboxClick: EventEmitter<SubTaskCheckboxStateInfo> = new EventEmitter<SubTaskCheckboxStateInfo>();
+  @Output() delete: EventEmitter<SubTask> = new EventEmitter<SubTask>();
+  @Output() edit: EventEmitter<SubTask> = new EventEmitter<SubTask>();
   state = "add";
   users: User[] = [];
   checkValue = false;
@@ -80,5 +83,13 @@ export class SubtaskListItemComponent implements OnInit {
       subTask: this.subTask,
       user
     });
+  }
+
+  onDelete() {
+    this.delete.emit(this.subTask);
+  }
+
+  onEdit() {
+    this.edit.emit(this.subTask);
   }
 }
