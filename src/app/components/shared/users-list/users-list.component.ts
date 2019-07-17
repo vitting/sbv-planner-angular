@@ -20,7 +20,7 @@ export class UsersListComponent implements OnInit {
   }
 
   userClicked(user: User) {
-    if (user.id === this.authUserId) {
+    if (this.completedUserId === null && user.id === this.authUserId) {
       this.userClick.emit(user);
     }
   }

@@ -367,6 +367,10 @@ export class FirestoreService {
     }).valueChanges();
   }
 
+  getTask(taskId: string) {
+    return this.db.collection<Task>("tasks").doc<Task>(taskId).valueChanges().pipe(take(1)).toPromise();
+  }
+
   getSubTasks(taskId: string) {
     return this.db.collection<SubTask>("subtasks", (ref) => {
       return ref.where("taskId", "==", taskId);

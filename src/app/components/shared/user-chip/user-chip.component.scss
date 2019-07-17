@@ -20,14 +20,16 @@
     background-color: $pink-700;
   }
 
-  &.user-chip-subtask-completed {
-    background-color: $pink-700;
-  }
-
   &.user-chip-me {
     font-weight: 500;
     cursor: pointer;
   }
+
+  &.user-chip-subtask-completed {
+    background-color: $pink-700;
+    cursor: default;
+  }
+
 
   fa-icon {
     margin-left: 5px;

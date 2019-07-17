@@ -96,7 +96,6 @@ export class SubtaskListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: DialogConfirmResult) => {
       if (result && result.action === DialogConfirmAction.yes) {
-        console.log(result);
         this.firestoreService.deleteSubTask(subTask.id, this.task.id);
       }
     });
@@ -133,6 +132,5 @@ export class SubtaskListComponent implements OnInit {
   async checkboxClicked(status: SubTaskCheckboxStateInfo) {
     const userId = this.authService.userId;
     const subTaskId = await this.firestoreService.updateSubTaskCompleteStatus(status.subTask.id, userId, status.completed, this.task.id);
-    console.log(subTaskId);
   }
 }

@@ -65,9 +65,10 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
       data
     });
 
-    dialogRef.afterClosed().subscribe((result: Dialog2FieldsResult) => {
+    dialogRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
       if (result) {
-        this.firestoreService.updateTask(this.authService.userId, result.field1Value, result.field2Value, this.task);
+        await this.firestoreService.updateTask(this.authService.userId, result.field1Value, result.field2Value, this.task);
+        this.task = await   this.firestoreService.getTask(this.task.id);
       }
     });
   }

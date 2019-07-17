@@ -9,7 +9,7 @@ import { TasksMenuComponent, TasksMenuResult } from './tasks-menu/tasks-menu.com
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog2FieldsData, Dialog2FieldsComponent, Dialog2FieldsResult } from '../shared/dialog-2-fields/dialog-2-fields.component';
 import { AuthService } from 'src/app/services/auth.service';
-import { tap, shareReplay, takeLast, publishReplay, refCount } from 'rxjs/operators';
+import { tap, shareReplay, takeLast, publishReplay, refCount, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks',
@@ -34,9 +34,7 @@ export class TasksComponent implements OnInit {
     this.projectId = this.route.snapshot.params.projectId;
 
     if (this.projectId) {
-      this.tasks$ = this.firestoreService.getTasks(this.projectId).pipe(tap((tasks) => {
-        console.log("TASK SUBSCRIPE", tasks);
-      }));
+      this.tasks$ = this.firestoreService.getTasks(this.projectId).pipe(take(1));
     }
   }
 }

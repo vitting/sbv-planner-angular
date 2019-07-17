@@ -17,10 +17,6 @@
 
     .task-menu {
         align-self: flex-start;
-
-        button {
-            outline: none;
-        }
     }
 }
 
@@ -45,4 +41,8 @@
 
 .task-completed {
   background-color: $pink-a700;
+}
+
+button {
+  outline: none;
 }
