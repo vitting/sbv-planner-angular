@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Task } from 'src/app/models/task.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TasksMenuComponent, TasksMenuResult } from './tasks-menu/tasks-menu.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog2FieldsData, Dialog2FieldsComponent, Dialog2FieldsResult } from '../shared/dialog-2-fields/dialog-2-fields.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { tap, shareReplay, takeLast, publishReplay, refCount } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks',
@@ -31,8 +32,11 @@ export class TasksComponent implements OnInit {
   ngOnInit() {
     this.navbarService.setNavbarTitle("Opgaver");
     this.projectId = this.route.snapshot.params.projectId;
+
     if (this.projectId) {
-      this.tasks$ = this.firestoreService.getTasks(this.projectId);
+      this.tasks$ = this.firestoreService.getTasks(this.projectId).pipe(tap((tasks) => {
+        console.log("TASK SUBSCRIPE", tasks);
+      }));
     }
   }
 }

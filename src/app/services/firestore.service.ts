@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { ProjectItem, Project } from '../models/project.model';
 import { TaskItem, Task } from '../models/task.model';
-import { take, switchMap } from 'rxjs/operators';
+import { take, switchMap, tap } from 'rxjs/operators';
 import { SubTaskItem, SubTask } from '../models/subtask.model';
 import { User, UserItem } from '../models/user.model';
 import { Observable, of } from 'rxjs';
@@ -191,7 +191,6 @@ export class FirestoreService {
 
   async updateTask(userId: string, newTitle: string, newDescription: string, task: Task): Promise<string> {
     const timestamp = this.timestamp;
-
     try {
       await this.db.collection<Task>("tasks").doc(task.id).update(
         {
