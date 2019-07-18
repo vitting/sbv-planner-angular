@@ -8,15 +8,19 @@ import { FabButtonModule } from '../../shared/fab-button/fab-button.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ProjectHomeItemMenuModule } from './project-home-item-menu/project-home-item-menu.module';
 import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
+import { ProjectHomeMenuModule } from './project-home-menu/project-home-menu.module';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [ProjectHomeComponent],
   imports: [
     CommonModule,
     ProjectHomeRoutingModule,
     MatListModule,
+    MatDialogModule,
     ProjectListItemModule,
     FabButtonModule,
     ProjectHomeItemMenuModule,
+    ProjectHomeMenuModule,
     NoDataBoxModule
   ],
   providers: [],

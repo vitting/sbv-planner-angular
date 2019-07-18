@@ -14,7 +14,6 @@ import {
   DialogConfirmResult,
   DialogConfirmAction
 } from '../../shared/dialog-confirm/dialog-confirm.component';
-import { ProjectItemEditMenuComponent, ProjectEditMenuResult } from './project-item-edit-menu/project-item-edit-menu.component';
 
 @Component({
   selector: 'app-project-edit',
@@ -23,13 +22,13 @@ import { ProjectItemEditMenuComponent, ProjectEditMenuResult } from './project-i
 })
 export class ProjectEditComponent implements OnInit {
   projects$: Observable<Project[]>;
+  editMode = true;
   constructor(
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
     private authService: AuthService,
     private router: Router,
-    private dialog: MatDialog,
-    private bottomSheet: MatBottomSheet
+    private dialog: MatDialog
     ) { }
 
   ngOnInit() {
@@ -86,28 +85,6 @@ export class ProjectEditComponent implements OnInit {
     });
   }
 
-  itemMenu(item: Project) {
-    const bottomSheetRef = this.bottomSheet.open(ProjectItemEditMenuComponent);
-
-    bottomSheetRef.afterDismissed().subscribe((result) => {
-      if (result) {
-        switch (result.action) {
-          case ProjectEditMenuResult.edit:
-            this.editProject(item);
-            break;
-          case ProjectEditMenuResult.editTasks:
-              this.editProjectTasks(item);
-              break;
-          case ProjectEditMenuResult.delete:
-            this.deleteProject(item);
-            break;
-          default:
-            console.log("OTHER");
-        }
-      }
-    });
-  }
-
   editProject(item: Project) {
     const dialogEditData: Dialog2FieldsData = {
       title: "Rediger Projekt",
@@ -159,5 +136,17 @@ export class ProjectEditComponent implements OnInit {
         await this.firestoreService.deleteProject(item.id);
       }
     });
+  }
+
+  editTitleDescClick(project: Project) {
+    this.editProject(project);
+  }
+
+  editTasksClick(project: Project) {
+    this.editProjectTasks(project);
+  }
+
+  deleteProjectClick(project: Project) {
+    this.deleteProject(project);
   }
 }

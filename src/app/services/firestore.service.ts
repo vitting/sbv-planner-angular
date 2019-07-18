@@ -174,6 +174,44 @@ export class FirestoreService {
     return this.db.collection<Project>("projects").doc(projectId).delete();
   }
 
+  async addPersonToProject(projectId: string, userId: string) {
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<Project>("projects").doc(projectId).update(
+        {
+          updatedAt: timestamp,
+          updatedBy: userId,
+          users: firebase.firestore.FieldValue.arrayUnion(userId)
+        }
+      );
+
+      return projectId;
+    } catch (error) {
+      console.error("addPersonToProject", error);
+      return null;
+    }
+  }
+
+  async removePersonFromProject(projectId: string, userId: string) {
+    const timestamp = this.timestamp;
+
+    try {
+      await this.db.collection<Project>("projects").doc(projectId).update(
+        {
+          updatedAt: timestamp,
+          updatedBy: userId,
+          users: firebase.firestore.FieldValue.arrayRemove(userId)
+        }
+      );
+
+      return projectId;
+    } catch (error) {
+      console.error("removePersonFromProject", error);
+      return null;
+    }
+  }
+
   async addTask(userId: string, title: string, description: string, projectId: string, index: number): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;

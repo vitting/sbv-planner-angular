@@ -12,4 +12,10 @@
   text-align: center;
   font-size: 1.2rem;
   color: $no-data-text;
+
+  &.no-data-small {
+    height: calc(100vh - #{$used-vertical-area-space} - 100px);
+  }
 }
+
+

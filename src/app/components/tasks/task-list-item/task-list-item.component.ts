@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class TaskListItemComponent implements OnInit, OnDestroy {
   @Input() task: Task;
   @Input() editMode = false;
+  @Output() deleteTaskClick = new EventEmitter<Task>();
   summary: Summary;
   completed = false;
   private summarySub: Subscription;
@@ -79,11 +80,8 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
     bottomSheetRef.afterDismissed().subscribe((result) => {
       if (result) {
         switch (result.action) {
-          case TasksMenuResult.edit:
-            // this.editTask(task);
-            break;
           case TasksMenuResult.delete:
-            // this.deleteTask(task);
+            this.deleteTaskClick.emit(this.task);
             break;
           case TasksMenuResult.addAndRemove:
             this.editMode = !this.editMode;

@@ -13,6 +13,8 @@ import { FabButtonModule } from '../shared/fab-button/fab-button.module';
 import { ProjectMenuComponent } from './project-menu/project-menu.component';
 import { RouterModule } from '@angular/router';
 import { ProjectListItemModule } from './project-list-item/project-list-item.module';
+import { DialogConfirmModule } from '../shared/dialog-confirm/dialog-confirm.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectMenuComponent],
@@ -26,9 +28,11 @@ import { ProjectListItemModule } from './project-list-item/project-list-item.mod
     MatDividerModule,
     MatChipsModule,
     MatIconModule,
+    MatDialogModule,
     ProjectsRoutingModule,
     FabButtonModule,
-    ProjectListItemModule
+    ProjectListItemModule,
+    DialogConfirmModule
   ],
   exports: [ProjectsComponent],
   entryComponents: [ProjectMenuComponent]

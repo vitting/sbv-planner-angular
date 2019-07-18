@@ -14,6 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TaskListItemModule } from './task-list-item/task-list-item.module';
 import { TasksMenuModule } from './tasks-menu/tasks-menu.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DialogConfirmModule } from '../shared/dialog-confirm/dialog-confirm.module';
 
 @NgModule({
   declarations: [TasksComponent],
@@ -23,7 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatDialogModule,
     TaskListItemModule,
-    TasksMenuModule
+    TasksMenuModule,
+    DialogConfirmModule
   ],
   exports: [TasksComponent]
 })

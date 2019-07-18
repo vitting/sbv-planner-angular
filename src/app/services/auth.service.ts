@@ -28,15 +28,13 @@ export class AuthService {
     combineLatest([userAuth$, users$]).subscribe(([authUser, users]) => {
       this.user = authUser;
       this.id = authUser ? authUser.id : null;
-      console.log("AUTHSERVICE", authUser);
       this.isAuthenticated.next(authUser ? true : false);
+
       if (authUser) {
         users.forEach((user) => {
           this.users[user.id] = user;
         });
       }
-
-      console.log(users);
 
       this.splashService.splashShow.next(false);
     }, (error) => {

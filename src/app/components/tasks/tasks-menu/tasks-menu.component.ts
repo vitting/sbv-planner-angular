@@ -3,7 +3,6 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 export enum TasksMenuResult {
   addAndRemove,
-  edit,
   delete
 }
 
@@ -19,7 +18,7 @@ export class TasksMenuComponent implements OnInit {
   }
 
   action(event: MouseEvent, action: string): void {
-    let result = TasksMenuResult.edit;
+    let result = TasksMenuResult.addAndRemove;
     if (action === "delete") {
       result = TasksMenuResult.delete;
     } else if (action === "addremove") {

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ProjectDetailsEditComponent } from './project-details-edit.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MomentModule } from 'ngx-moment';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -11,6 +13,8 @@ import { MomentModule } from 'ngx-moment';
   imports: [
     CommonModule,
     MatIconModule,
+    MatButtonModule,
+    FontAwesomeModule,
     MomentModule
   ],
   exports: [ProjectDetailsEditComponent]

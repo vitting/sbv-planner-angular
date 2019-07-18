@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 export enum ProjectHomeMenuResult {
-  edit,
-  delete
+  joinProject,
+  newProject,
+  newTemplate
 }
 
 @Component({
@@ -19,9 +20,18 @@ export class ProjectHomeMenuComponent implements OnInit {
   }
 
   action(event: MouseEvent, action: string): void {
-    let result = ProjectHomeMenuResult.edit;
-    if (action === "delete") {
-      result = ProjectHomeMenuResult.delete;
+    let result: ProjectHomeMenuResult;
+
+    switch (action) {
+      case "joinProject":
+        result = ProjectHomeMenuResult.joinProject;
+        break;
+      case "newProject":
+        result = ProjectHomeMenuResult.newProject;
+        break;
+      case "newTemplate":
+        result = ProjectHomeMenuResult.newTemplate;
+        break;
     }
 
     this.bottomSheetRef.dismiss({

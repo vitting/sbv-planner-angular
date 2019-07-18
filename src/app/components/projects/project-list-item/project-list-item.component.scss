@@ -10,6 +10,16 @@ mat-expansion-panel {
 
   .list-item-content {
     width: 100%;
+
+    .list-item-title-desc {
+      display: flex;
+      align-items: flex-start;
+
+      .list-item-title-desc-edit {
+        margin-right: 5px;
+        margin-left: -5px;
+      }
+    }
   }
 
   app-project-users {
@@ -36,4 +46,13 @@ mat-expansion-panel {
   display: flex;
   justify-content: space-between;
   margin-left: 20px;
+}
+
+.empty-space {
+  width: 67px;
+  height: 40px;
+}
+
+button {
+  outline: none;
 }

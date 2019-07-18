@@ -15,6 +15,8 @@ import {
   DialogConfirmAction
 } from '../shared/dialog-confirm/dialog-confirm.component';
 import { ActivatedRoute } from '@angular/router';
+import { NoDataBoxData } from '../shared/no-data-box/no-data-box.component';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comments',
@@ -24,6 +26,8 @@ import { ActivatedRoute } from '@angular/router';
 export class CommentsComponent implements OnInit {
   comments$: Observable<Comment[]>;
   projectTaskName: ProjectTaskName;
+  nodata: NoDataBoxData;
+  showNoData = false;
   private parentId: string;
   private commentType: string;
   private projectId: string;
@@ -38,10 +42,17 @@ export class CommentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.nodata = {
+      textline1: "Der er endnu ikke nogen kommentarere.",
+      textline2: "Vær den første til at skrive en kommentar."
+    };
+
     this.parentId = this.getParetId();
     this.setTitle();
     this.setProjectTaskName();
-    this.comments$ = this.firestoreService.getComments(this.parentId);
+    this.comments$ = this.firestoreService.getComments(this.parentId).pipe(tap((tasks) => {
+      this.showNoData = tasks.length === 0;
+    }));
   }
 
   async setProjectTaskName() {
@@ -80,7 +91,6 @@ export class CommentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
       if (result) {
-        console.log(result);
         const commentId = await this.firestoreService.addComment(
           this.authService.authUserInfo,
           result.fieldValue,

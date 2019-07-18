@@ -1,10 +1,8 @@
-<!-- <div>
-  <p>Vær den første til at skrive en kommentar <mat-icon>sentiment_satisfied_alt</mat-icon> </p>
-</div> -->
 <div class="comment-header">
     <div class="comment-header-project">{{projectTaskName?.projectName}}</div>
     <div class="comment-header-task" *ngIf="projectTaskName?.taskName">{{projectTaskName?.taskName}}</div>
 </div>
+<app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>
 <mat-list>
   <app-comment-item *ngFor="let comment of comments$ | async" [comment]="comment" (menuClick)="menuItemClicked($event)"></app-comment-item>
 </mat-list>

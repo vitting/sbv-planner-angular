@@ -1,11 +1,18 @@
 <div class="app-project-details">
   <div>
-    <fa-icon [icon]="['far', 'calendar']" class="app-project-details-icon"></fa-icon>{{ projectDate | amLocal:'da' | amDateFormat: 'DD-MM-YYYY' }}
+    <fa-icon [icon]="['far', 'calendar']" class="app-project-details-icon"></fa-icon>
+    {{ projectDate | amLocal:'da' | amDateFormat: 'DD-MM-YYYY' }}
   </div>
   <div>
-      <button mat-button (click)="commentClicked()"><fa-icon [icon]="['far', 'comment']" class="app-project-details-icon"></fa-icon><span class="task-action-text">{{summary?.numberOfComments}}</span></button>
-    </div>
+    <button mat-button (click)="commentClicked()">
+      <fa-icon [icon]="['far', 'comment']" class="app-project-details-icon"></fa-icon><span
+        class="task-action-text">{{summary?.numberOfComments}}</span>
+    </button>
+  </div>
   <div>
-      <button mat-button (click)="tasksClicked()"><fa-icon [icon]="['fas', 'tasks']" class="app-project-details-icon"></fa-icon><span class="task-action-text">{{ summary?.numberOfItemsCompleted }} / {{ summary?.numberOfItems }}</span></button>
+    <button mat-button (click)="tasksClicked()">
+      <fa-icon [icon]="['fas', 'tasks']" class="app-project-details-icon"></fa-icon><span
+        class="task-action-text">{{ summary?.numberOfItemsCompleted }} / {{ summary?.numberOfItems }}</span>
+    </button>
   </div>
 </div>

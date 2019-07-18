@@ -12,6 +12,7 @@ export interface NoDataBoxData {
 })
 export class NoDataBoxComponent implements OnInit {
   @Input() data: NoDataBoxData;
+  @Input() small = false;
   constructor() { }
 
   ngOnInit() {

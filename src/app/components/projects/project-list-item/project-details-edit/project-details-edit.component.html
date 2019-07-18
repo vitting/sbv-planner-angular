@@ -1,9 +1,16 @@
 <div class="app-project-details-edit">
-  <div>
-    <mat-icon>calendar_today</mat-icon><span
-      *ngIf="project.createdAt">{{ project.createdAt?.toDate() | amLocal:'da' | amDateFormat: 'DD. MMMM YYYY' }}</span>
-  </div>
-  <div>
-    <mat-icon>person</mat-icon>{{ user?.name }}
+  <fa-icon [icon]="['fas', 'user-edit']" class="app-project-details-icon"></fa-icon>{{ user?.name }}
+  <div class="app-project-details-edit-content">
+    <div>
+      <fa-icon [icon]="['far', 'calendar']" class="app-project-details-icon"></fa-icon><span
+        *ngIf="project.createdAt">{{ project.createdAt?.toDate() | amLocal:'da' | amDateFormat: 'DD. MMMM YYYY' }}</span>
+    </div>
+    <div>
+      <button *ngIf="editMode" mat-icon-button (click)="editProjectTasksClicked()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <fa-icon [icon]="['fas', 'tasks']" class="app-project-details-icon"></fa-icon><span
+        class="task-action-text">{{ summary?.numberOfItems }}</span>
+    </div>
   </div>
 </div>

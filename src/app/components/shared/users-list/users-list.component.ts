@@ -11,6 +11,7 @@ export class UsersListComponent implements OnInit {
   @Input() users: User[] = [];
   @Input() type = "project";
   @Input() completedUserId: string = null;
+  @Input() enableRemoveUserButton = false;
   @Output() userClick: EventEmitter<User> = new EventEmitter<User>();
   authUserId = "";
   constructor(private authService: AuthService) { }
