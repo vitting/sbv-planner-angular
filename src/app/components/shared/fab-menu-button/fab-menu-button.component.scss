@@ -1,0 +1,33 @@
+.fab-container {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+
+  button {
+    outline: none;
+  }
+}
+
+.fab-menu-item {
+  position: fixed;
+  right: 25px;
+  background-color: red;
+  color: white;
+  border-radius: 4px;
+  padding: 5px;
+  opacity: 1;
+
+  &.fab-menu-item1 {
+    bottom: 95px;
+  }
+
+  &.fab-menu-item2 {
+    bottom: 145px;
+  }
+
+  &.fab-menu-item3 {
+    bottom: 195px;
+  }
+}
+
+

@@ -1,0 +1,6 @@
+<div class="fab-menu-item fab-menu-item1">Gå til Projekter</div>
+  <div class="fab-menu-item fab-menu-item2">Opret nyt projekt</div>
+  <div class="fab-menu-item fab-menu-item3">Opret nyt projekt</div>
+  <button class="fab-container" [@buttonMove]="state" color="accent" mat-fab aria-label="Tilføj" (tap)="onFabClick()" (press)="moveButton()">
+    <mat-icon>{{iconType}}</mat-icon>
+  </button>

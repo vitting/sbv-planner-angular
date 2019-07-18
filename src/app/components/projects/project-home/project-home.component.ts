@@ -65,4 +65,9 @@ export class ProjectHomeComponent implements OnInit {
     console.log("PRESS");
 
   }
+
+  testMenu() {
+    console.log("FAB TEST");
+
+  }
 }

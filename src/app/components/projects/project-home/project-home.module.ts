@@ -7,6 +7,7 @@ import { ProjectListItemModule } from '../project-list-item/project-list-item.mo
 import { FabButtonModule } from '../../shared/fab-button/fab-button.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ProjectHomeItemMenuModule } from './project-home-item-menu/project-home-item-menu.module';
+import { FabMenuButtonModule } from '../../shared/fab-menu-button/fab-menu-button.module';
 @NgModule({
   declarations: [ProjectHomeComponent],
   imports: [
@@ -15,7 +16,8 @@ import { ProjectHomeItemMenuModule } from './project-home-item-menu/project-home
     MatListModule,
     ProjectListItemModule,
     FabButtonModule,
-    ProjectHomeItemMenuModule
+    ProjectHomeItemMenuModule,
+    FabMenuButtonModule
   ],
   providers: [],
   exports: [
