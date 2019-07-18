@@ -1,10 +1,5 @@
-<div>
-  <p>Du har endnu ikke nogen projekter.</p>
-  <p>Du kan tilslutte dig et eksiterende projekt eller oprette dit eget projekt.  </p>
-</div>
-
+<app-no-data-box [data]="nodata"></app-no-data-box>
 <mat-list>
   <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)" (commentsTotalClick)="gotoComments($event)" (tasksTotalClick)="gotoTasks($event)" *ngFor="let project of projects$ | async" [project]="project"></app-project-list-item>
 </mat-list>
-<!-- <app-fab-button (fabClick)="showMenu()" iconType="menu"></app-fab-button> -->
-<app-fab-menu-button (fabClick)="testMenu()" iconType="menu"></app-fab-menu-button>
+<app-fab-button (fabClick)="addMenu()" iconType="add"></app-fab-button>

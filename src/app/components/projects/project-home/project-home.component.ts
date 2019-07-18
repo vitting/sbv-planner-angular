@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ProjectHomeItemMenuComponent, ProjectHomeItemMenuResult } from './project-home-item-menu/project-home-item-menu.component';
+import { NoDataBoxData } from '../../shared/no-data-box/no-data-box.component';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,8 @@ import { ProjectHomeItemMenuComponent, ProjectHomeItemMenuResult } from './proje
 export class ProjectHomeComponent implements OnInit {
   projects$: Observable<Project[]>;
   userId: string = null;
+  nodata: NoDataBoxData;
+
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
@@ -23,13 +26,18 @@ export class ProjectHomeComponent implements OnInit {
     private bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
+    this.nodata  = {
+      textline1: "Du har endnu ikke nogen aktive projekter.",
+      textline2: "Du kan tilslutte dig et eksisterende projekt eller oprette dit eget projekt."
+    };
+
     this.userId = this.authService.userId;
     if (this.userId) {
       this.projects$ = this.firestoreService.getProjectsByUserId(this.userId);
     }
   }
 
-  showMenu() {
+  addMenu() {
     console.log("Show Fab Menu");
   }
 

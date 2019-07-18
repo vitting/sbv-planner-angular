@@ -1,0 +1,15 @@
+@import "../../../../colors";
+@import "../../../../variables";
+.no-data-container {
+  box-sizing: border-box;
+  font-weight: lighter;
+  padding: 0 20px;
+  height: calc(100vh - #{$used-vertical-area-space});
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2rem;
+  color: $no-data-text;
+}
