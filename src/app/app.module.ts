@@ -10,7 +10,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
-import { SidebarModule } from './components/sidebar/sidebar.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -32,6 +31,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimesCircle, faTasks, faUser, faAddressBook, faUserEdit, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faComment, faComments, faCalendar, faLightbulb } from '@fortawesome/free-regular-svg-icons';
+import { AuthService } from './services/auth.service';
 @NgModule({
   declarations: [
     AppComponent
@@ -53,7 +53,6 @@ import { faComment, faComments, faCalendar, faLightbulb } from '@fortawesome/fre
     TasksModule,
     TemplatesModule,
     SignupModule,
-    SidebarModule,
     NavbarModule,
     SettingsModule,
     ProjectEditModule,

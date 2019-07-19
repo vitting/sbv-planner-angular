@@ -12,9 +12,9 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { TaskEditMenuModule } from './task-edit-menu/task-edit-menu.module';
 import { DialogConfirmModule } from '../../shared/dialog-confirm/dialog-confirm.module';
-import { ItemContainerDirective } from '../../shared/directives/item-container/item-container.directive';
 import { ItemContainerModule } from '../../shared/directives/item-container/item-container.module';
 import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-desc.module';
+import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
 
 @NgModule({
   declarations: [TasksEditComponent],
@@ -32,7 +32,8 @@ import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-des
     SubtaskListModule,
     TaskEditMenuModule,
     ItemContainerModule,
-    ItemTitleDescModule
+    ItemTitleDescModule,
+    NoDataBoxModule
   ],
   exports: [TasksEditComponent],
 })

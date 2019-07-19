@@ -76,7 +76,12 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
   }
 
   menuClick() {
-    const bottomSheetRef = this.bottomSheet.open(TasksMenuComponent);
+    const bottomSheetRef = this.bottomSheet.open(TasksMenuComponent, {
+      data: {
+        inEditMode: this.editMode,
+        taskCompleted: this.completed
+      }
+    });
 
     bottomSheetRef.afterDismissed().subscribe((result) => {
       if (result) {

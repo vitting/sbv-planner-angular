@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { SubTask } from 'src/app/models/subtask.model';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../../shared/dialog-1-field/dialog-1-field.component';
 import { MatDialog } from '@angular/material/dialog';
 import {

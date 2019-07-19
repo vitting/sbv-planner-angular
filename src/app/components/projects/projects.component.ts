@@ -1,20 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { ProjectMenuComponent } from './project-menu/project-menu.component';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/models/user.model';
-import { RemovePersonFromProjectResult } from './project-list-item/project-list-item.component';
 import { take } from 'rxjs/operators';
-import {
-  DialogConfirmResult,
-  DialogConfirmComponent,
-  DialogConfirmAction,
-  DialogConfirmData } from '../shared/dialog-confirm/dialog-confirm.component';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,8 +20,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
-    private router: Router,
-    private dialog: MatDialog) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.navbarService.navbarTitle.next({

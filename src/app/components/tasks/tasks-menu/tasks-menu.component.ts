@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 export enum TasksMenuResult {
   addAndRemove,
   delete,
   markAllSubTasksCompleted
+}
+
+export interface TasksMenuData {
+  inEditMode: boolean;
+  taskCompleted: boolean;
 }
 
 @Component({
@@ -13,7 +18,7 @@ export enum TasksMenuResult {
   styleUrls: ['./tasks-menu.component.scss']
 })
 export class TasksMenuComponent implements OnInit {
-  constructor(private bottomSheetRef: MatBottomSheetRef<TasksMenuComponent>) { }
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: TasksMenuData, private bottomSheetRef: MatBottomSheetRef<TasksMenuComponent>) { }
 
   ngOnInit() {
   }

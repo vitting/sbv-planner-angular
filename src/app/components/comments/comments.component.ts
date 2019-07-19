@@ -3,7 +3,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
 import { FirestoreService, ProjectTaskName } from 'src/app/services/firestore.service';
 import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../shared/dialog-1-field/dialog-1-field.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CommentItem, Comment } from 'src/app/models/comment.model';
+import { Comment } from 'src/app/models/comment.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';

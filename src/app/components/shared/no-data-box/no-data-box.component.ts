@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 export interface NoDataBoxData {
   textline1: string;
@@ -13,9 +13,14 @@ export interface NoDataBoxData {
 export class NoDataBoxComponent implements OnInit {
   @Input() data: NoDataBoxData;
   @Input() small = false;
+  @Input() showButton = false;
+  @Output() noDataAddClick = new EventEmitter<void>();
   constructor() { }
 
   ngOnInit() {
   }
 
+  NoDataAddButton() {
+    this.noDataAddClick.emit();
+  }
 }

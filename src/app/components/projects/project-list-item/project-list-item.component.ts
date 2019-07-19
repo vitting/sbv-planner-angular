@@ -5,7 +5,6 @@ import { User } from 'src/app/models/user.model';
 import { Summary } from 'src/app/models/summary.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 export interface RemovePersonFromProjectResult {
   user: User;

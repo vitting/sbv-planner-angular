@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { MatDialog } from '@angular/material/dialog';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Dialog2FieldsData, Dialog2FieldsComponent, Dialog2FieldsResult } from '../../shared/dialog-2-fields/dialog-2-fields.component';
 import { Observable } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
@@ -109,11 +108,6 @@ export class ProjectEditComponent implements OnInit {
 
     dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
       if (result) {
-        const projectId = await this.firestoreService.updateProject(
-          this.authService.userId,
-          item.id,
-          result.field1Value,
-          result.field2Value);
       }
     });
   }

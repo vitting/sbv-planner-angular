@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
-import { FirestoreService, SummaryAction } from 'src/app/services/firestore.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -85,7 +85,7 @@ export class ProjectHomeComponent implements OnInit {
     });
   }
 
-  projectItemMenuClick(project: Project) {
+  projectItemMenuClick() {
     const bottomSheetRef = this.bottomSheet.open(ProjectHomeItemMenuComponent);
 
     bottomSheetRef.afterDismissed().subscribe((result) => {

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
-import { map, switchMap } from 'rxjs/operators';
-import { EMPTY, Observable, of, forkJoin, combineLatest, Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { of, combineLatest, Subject } from 'rxjs';
 import { SplashService } from './splash.service';
 
 @Injectable({

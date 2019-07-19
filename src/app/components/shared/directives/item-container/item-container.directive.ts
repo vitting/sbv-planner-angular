@@ -9,7 +9,7 @@ export class ItemContainerDirective implements OnInit {
 
   ngOnInit(): void {
     this.render.addClass(this.elemRef.nativeElement, "app-item-container");
-    switch(this.backgroundColor) {
+    switch (this.backgroundColor) {
       case "task":
         this.render.addClass(this.elemRef.nativeElement, "app-item-container-task");
         break;

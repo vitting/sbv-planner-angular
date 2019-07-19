@@ -5,7 +5,6 @@ import { ProjectHomeRoutingModule } from './project-home-routing.module';
 import { MatListModule } from '@angular/material/list';
 import { ProjectListItemModule } from '../project-list-item/project-list-item.module';
 import { FabButtonModule } from '../../shared/fab-button/fab-button.module';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ProjectHomeItemMenuModule } from './project-home-item-menu/project-home-item-menu.module';
 import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
 import { ProjectHomeMenuModule } from './project-home-menu/project-home-menu.module';

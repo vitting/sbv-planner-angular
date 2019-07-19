@@ -6,8 +6,7 @@ import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog2FieldsComponent, Dialog2FieldsResult, Dialog2FieldsData } from '../../shared/dialog-2-fields/dialog-2-fields.component';
 import { Task } from 'src/app/models/task.model';
-import { SubTask } from 'src/app/models/subtask.model';
-import { Subscription, Observable, forkJoin, zip } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TaskEditMenuComponent, TaskEditMenuResult } from './task-edit-menu/task-edit-menu.component';
 import {
@@ -17,7 +16,7 @@ import {
   DialogConfirmAction
 } from '../../shared/dialog-confirm/dialog-confirm.component';
 import { AuthService } from 'src/app/services/auth.service';
-import { switchMap, catchError } from 'rxjs/operators';
+import { NoDataBoxData } from '../../shared/no-data-box/no-data-box.component';
 
 @Component({
   selector: 'app-tasks-edit',
@@ -27,6 +26,8 @@ import { switchMap, catchError } from 'rxjs/operators';
 export class TasksEditComponent implements OnInit, OnDestroy {
   projectId: string = null;
   tasks: Task[] = [];
+  nodata: NoDataBoxData;
+  showNoData = false;
   private taskSubscribtion: Subscription;
 
   constructor(
@@ -40,6 +41,11 @@ export class TasksEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.nodata = {
+      textline1: "Der er endnu ikke nogen opgaver.",
+      textline2: "Vær den første til at oprette en opgave."
+    };
+
     this.navbarService.navbarTitle.next({
       title: "Rediger opgaver",
       icon: {
@@ -51,6 +57,10 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
     this.taskSubscribtion = this.firestoreService.getTasks(this.projectId).subscribe((tasks) => {
       this.tasks = tasks;
+
+      if (this.tasks.length === 0) {
+        this.showNoData = true;
+      }
     });
   }
 
