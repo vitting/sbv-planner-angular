@@ -118,7 +118,6 @@ export class CommentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
       if (result) {
-        console.log(result);
         const commentId = await this.firestoreService.updateComment(comment.id, result.fieldValue);
       }
     });
@@ -130,7 +129,7 @@ export class CommentsComponent implements OnInit {
       button1Text: "Ja",
       button2Text: "Nej",
       message1: "Vil du slette din kommentar?",
-      message2: comment.text
+      message2: null
     };
 
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {

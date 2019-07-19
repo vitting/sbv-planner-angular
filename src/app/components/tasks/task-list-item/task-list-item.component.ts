@@ -19,6 +19,7 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
   @Input() task: Task;
   @Input() editMode = false;
   @Output() deleteTaskClick = new EventEmitter<Task>();
+  @Output() markAllSubTasksAsCompletedClick = new EventEmitter<Task>();
   summary: Summary;
   completed = false;
   private summarySub: Subscription;
@@ -69,7 +70,7 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
       if (result) {
         await this.firestoreService.updateTask(this.authService.userId, result.field1Value, result.field2Value, this.task);
-        this.task = await   this.firestoreService.getTask(this.task.id);
+        this.task = await this.firestoreService.getTask(this.task.id);
       }
     });
   }
@@ -85,6 +86,9 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
             break;
           case TasksMenuResult.addAndRemove:
             this.editMode = !this.editMode;
+            break;
+          case TasksMenuResult.markAllSubTasksCompleted:
+            this.markAllSubTasksAsCompletedClick.emit(this.task);
             break;
           default:
             console.log("OTHER");

@@ -1,3 +1,4 @@
 <mat-list>
-  <app-task-list-item *ngFor="let task of tasks$ | async" [task]="task" (deleteTaskClick)="deleteTaskClick($event)"></app-task-list-item>
+  <app-task-list-item *ngFor="let task of tasks$ | async" [task]="task" (deleteTaskClick)="deleteTaskClick($event)"
+    (markAllSubTasksAsCompletedClick)="markAllSubTasksAsCompletedClick($event)"></app-task-list-item>
 </mat-list>

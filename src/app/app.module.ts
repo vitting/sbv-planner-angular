@@ -31,7 +31,7 @@ import { SplashScreenModule } from './components/shared/splash-screen/splash-scr
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimesCircle, faTasks, faUser, faAddressBook, faUserEdit } from '@fortawesome/free-solid-svg-icons';
-import { faComment, faComments, faCalendar } from '@fortawesome/free-regular-svg-icons';
+import { faComment, faComments, faCalendar, faLightbulb } from '@fortawesome/free-regular-svg-icons';
 @NgModule({
   declarations: [
     AppComponent
@@ -67,6 +67,6 @@ import { faComment, faComments, faCalendar } from '@fortawesome/free-regular-svg
 })
 export class AppModule {
   constructor() {
-    library.add(faTimesCircle, faComment, faComments, faTasks, faCalendar, faUser, faAddressBook, faUserEdit);
+    library.add(faTimesCircle, faComment, faComments, faTasks, faCalendar, faUser, faAddressBook, faUserEdit, faLightbulb);
   }
 }

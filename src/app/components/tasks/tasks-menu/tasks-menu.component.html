@@ -1,4 +1,8 @@
 <mat-nav-list>
+  <a mat-list-item (click)="action($event, 'markAllSubTasksCompleted')">
+    <span>Markere alle opgaver som fuldført</span>
+  </a>
+  <mat-divider></mat-divider>
   <a mat-list-item (click)="action($event, 'addremove')">
     <span>Rediger opgaven</span>
   </a>

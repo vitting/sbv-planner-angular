@@ -302,6 +302,32 @@ export class FirestoreService {
     }
   }
 
+  async markAllSubTasksAsCompleted(userId: string, taskId: string) {
+    const subTasks = await this.getSubTasks(taskId).pipe(take(1)).toPromise();
+
+    if (subTasks) {
+      const batch = this.db.firestore.batch();
+      subTasks.forEach((subTask) => {
+        const taskRef = this.db.collection('subtasks').doc(subTask.id).ref;
+        batch.update(taskRef, {
+          users: firebase.firestore.FieldValue.arrayUnion(userId),
+          completed: true
+        });
+      });
+
+      const summaryRef = this.db.collection<Summary>("summaries").doc<Summary>(taskId).ref;
+      batch.update(summaryRef, {
+        numberOfItemsCompleted: subTasks.length
+      });
+
+      try {
+        return batch.commit();
+      } catch (error) {
+        console.error("markAllSubTasksAsCompleted", error);
+        return;
+      }
+    }
+  }
 
   async addSubTask(userId: string, title: string, projectId: string, taskId: string): Promise<string> {
     const id = this.newId;

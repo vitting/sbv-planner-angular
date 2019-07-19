@@ -6,11 +6,12 @@
       <mat-icon>edit</mat-icon>
     </button>
     <div>
-      <div class="app-sublist-item-title" [ngClass]="{'app-sublist-item-title-completed': !editMode && state === 'completed'}">
+      <div class="app-sublist-item-title"
+        [ngClass]="{'app-sublist-item-title-completed': !editMode && state === 'completed'}">
         {{ subTask.title }}</div>
       <div class="app-sublist-item-users" *ngIf="users.length && !editMode">
         <app-users-list [type]="'subtask'" [users]="users" [completedUserId]="completedUserId"
-          (userClick)="removePersonFromSubTask($event)"></app-users-list>
+          (userClick)="removePersonFromSubTask($event)" [enableRemoveUserButton]="true"></app-users-list>
       </div>
     </div>
   </div>
