@@ -35,7 +35,7 @@ export class ProjectEditComponent implements OnInit {
       title: "Rediger Projekter",
       icon: {
         collection: "far",
-        icon: "lightbulb"
+        icon: "clipboard"
       }
     });
 

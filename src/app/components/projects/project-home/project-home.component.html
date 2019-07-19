@@ -1,5 +1,8 @@
 <app-no-data-box *ngIf="showNoData" [data]="nodata"></app-no-data-box>
 <mat-list *ngIf="!showNoData">
-  <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)" (commentsTotalClick)="gotoComments($event)" (tasksTotalClick)="gotoTasks($event)" (userClick)="removeUserClick($event)" [enableRemoveUserButton]="true" *ngFor="let project of projects" [project]="project"></app-project-list-item>
+  <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)"
+    (commentsTotalClick)="gotoComments($event)" (tasksTotalClick)="gotoTasks($event)"
+    (userClick)="removeUserClick($event)" [enableRemoveUserButton]="true" *ngFor="let project of projects"
+    [project]="project" [projectButtonState]="'menu'"></app-project-list-item>
 </mat-list>
 <app-fab-button (fabClick)="addMenu()" iconType="add"></app-fab-button>

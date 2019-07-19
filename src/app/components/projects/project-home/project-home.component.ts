@@ -47,7 +47,7 @@ export class ProjectHomeComponent implements OnInit {
       title: "Mine projekter",
       icon: {
         collection: "far",
-        icon: "lightbulb"
+        icon: "clipboard"
       }
     });
     this.userId = this.authService.userId;

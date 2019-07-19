@@ -27,7 +27,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       title: "Tilslut til projekt",
       icon: {
         collection: "far",
-        icon: "lightbulb"
+        icon: "clipboard"
       }
     });
     this.getProjects();

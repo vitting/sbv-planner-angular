@@ -29,8 +29,23 @@ import 'moment/locale/da';
 import { SplashScreenModule } from './components/shared/splash-screen/splash-screen.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimesCircle, faTasks, faUser, faAddressBook, faUserEdit, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { faComment, faComments, faCalendar, faLightbulb } from '@fortawesome/free-regular-svg-icons';
+import {
+  faTimesCircle,
+  faTasks,
+  faUser,
+  faAddressBook,
+  faUserEdit,
+  faSignInAlt,
+  faSignOutAlt,
+  faClipboardList,
+  faBook,
+  faArchive } from '@fortawesome/free-solid-svg-icons';
+import {
+  faComment,
+  faComments,
+  faCalendar,
+  faLightbulb,
+  faClipboard } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from './services/auth.service';
 @NgModule({
   declarations: [
@@ -77,6 +92,10 @@ export class AppModule {
       faUserEdit,
       faLightbulb,
       faSignInAlt,
+      faClipboardList,
+      faBook,
+      faArchive,
+      faClipboard,
       faSignOutAlt);
   }
 }
