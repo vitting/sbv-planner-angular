@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { ProjectItem, Project } from '../models/project.model';
 import { TaskItem, Task } from '../models/task.model';
-import { take, switchMap, tap } from 'rxjs/operators';
+import { take, switchMap, tap, map } from 'rxjs/operators';
 import { SubTaskItem, SubTask } from '../models/subtask.model';
 import { User, UserItem } from '../models/user.model';
 import { Observable, of } from 'rxjs';
@@ -117,6 +117,21 @@ export class FirestoreService {
     return this.db.collection<Project>("projects", (ref) => {
       return ref.where("active", "==", true).orderBy("createdAt", "desc").orderBy("title");
     }).valueChanges();
+  }
+
+  getProjectsNotContainingUserId(userId: string) {
+    return this.db.collection<Project>("projects", (ref) => {
+      return ref.where("active", "==", true).orderBy("createdAt", "desc").orderBy("title");
+    }).valueChanges().pipe(map((projects) => {
+      const newProjects: Project[] = [];
+      projects.forEach((project: Project) => {
+        if (project.users.indexOf(userId) === -1) {
+          newProjects.push(project);
+        }
+      });
+
+      return newProjects;
+    }));
   }
 
   getProjectsByUserId(userId: string) {

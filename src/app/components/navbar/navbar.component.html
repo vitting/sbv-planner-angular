@@ -1,11 +1,11 @@
 <nav class="app-appbar">
   <div>
-    <!-- <button mat-icon-button><mat-icon>arrow_back_ios</mat-icon></button> -->
+    <button mat-icon-button><mat-icon>arrow_back_ios</mat-icon></button>
     <a [routerLink]="['/']" routerLinkActive="router-link-active">
       <img src="assets/images/sbv_logo_250x250.png" alt="Logo" class="brand">
     </a>
   </div>
-  <div>{{title}}</div>
+  <div class="app-appbar-title"><div><fa-icon [icon]="[navbarTitleData?.icon.collection, navbarTitleData?.icon.icon]"></fa-icon></div> <div>{{navbarTitleData?.title}}</div></div>
   <div>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
       <mat-icon>menu</mat-icon>

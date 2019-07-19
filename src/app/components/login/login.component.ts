@@ -14,7 +14,13 @@ export class LoginComponent implements OnInit {
   constructor(private navbarService: NavbarService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next("Login");
+    this.navbarService.navbarTitle.next({
+      title: "Login",
+      icon: {
+        collection: "fas",
+        icon: "sign-in-alt"
+      }
+    });
 
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),

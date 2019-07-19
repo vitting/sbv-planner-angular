@@ -1,6 +1,6 @@
 <div class="comment-header">
-    <div class="comment-header-project">{{projectTaskName?.projectName}}</div>
-    <div class="comment-header-task" *ngIf="projectTaskName?.taskName">{{projectTaskName?.taskName}}</div>
+    <div class="comment-header-project"><fa-icon [icon]="['far', 'lightbulb']"></fa-icon> {{projectTaskName?.projectName}}</div>
+    <div class="comment-header-task" *ngIf="projectTaskName?.taskName"><fa-icon [icon]="['fas', 'tasks']"></fa-icon> {{projectTaskName?.taskName}}</div>
 </div>
 <app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>
 <mat-list>

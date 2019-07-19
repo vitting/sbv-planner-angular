@@ -1,5 +1,5 @@
 <mat-list>
-  <app-project-list-item mat-list-item (menuClick)="itemMenu($event)" [showDetailsEdit]="true" [showDetails]="false"
+  <app-project-list-item mat-list-item [showDetailsEdit]="true" [showDetails]="false"
     [showUsers]="false" mat-list-item *ngFor="let project of projects$ | async" [project]="project"
     [projectButtonState]="'delete'" [editMode]="editMode" (editTasksClick)="editTasksClick($event)"
     (editTitleDescClick)="editTitleDescClick($event)" (deleteProjectClick)="deleteProjectClick($event)">

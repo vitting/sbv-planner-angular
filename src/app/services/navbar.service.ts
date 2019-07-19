@@ -2,11 +2,19 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 
+export interface NavbarTitleConfig {
+  title: string;
+  icon: {
+    collection: string;
+    icon: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class NavbarService {
-  navbarTitle: Subject<string> = new Subject<string>();
+  navbarTitle: Subject<NavbarTitleConfig> = new Subject<NavbarTitleConfig>();
   showLogoutButton: Subject<boolean> = new Subject<boolean>();
   private prevRoute: string;
   private currentRoute: string;
@@ -32,7 +40,7 @@ export class NavbarService {
     return this.currentRoute;
   }
 
-  setNavbarTitle(title: string) {
-    this.navbarTitle.next(title);
+  setNavbarTitle(navbarTitleConfig: NavbarTitleConfig) {
+    this.navbarTitle.next(navbarTitleConfig);
   }
 }

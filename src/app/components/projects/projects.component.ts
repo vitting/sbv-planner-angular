@@ -34,7 +34,13 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next("Projekter");
+    this.navbarService.navbarTitle.next({
+      title: "Tilslut til projekt",
+      icon: {
+        collection: "far",
+        icon: "lightbulb"
+      }
+    });
     this.getProjects();
   }
 
@@ -43,7 +49,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   getProjects() {
-    this.projectSub = this.firestoreService.getProjects().pipe(take(1)).subscribe((projects) => {
+    // this.projectSub = this.firestoreService.getProjects().pipe(take(1)).subscribe((projects) => {
+    //   this.projects = projects;
+    // });
+    this.projectSub = this.firestoreService.getProjectsNotContainingUserId(this.authService.userId).pipe(take(1)).subscribe((projects) => {
       this.projects = projects;
     });
   }
@@ -54,13 +63,5 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     if (result) {
       this.router.navigate(["/"]);
     }
-  }
-
-  commentsTotalClick(project: Project) {
-    console.log(project);
-  }
-
-  tasksTotalClick(project: Project) {
-    console.log(project);
   }
 }

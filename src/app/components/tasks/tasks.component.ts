@@ -30,7 +30,13 @@ export class TasksComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.navbarService.setNavbarTitle("Opgaver");
+    this.navbarService.setNavbarTitle({
+      title: "Opgaver",
+      icon: {
+        collection: "fas",
+        icon: "tasks"
+      }
+    });
     this.projectId = this.route.snapshot.params.projectId;
 
     if (this.projectId) {

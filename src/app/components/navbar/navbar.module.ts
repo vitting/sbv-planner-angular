@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -13,7 +14,8 @@ import {MatMenuModule} from '@angular/material/menu';
     CommonModule,
     MatButtonModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    FontAwesomeModule
   ],
   exports: [NavbarComponent]
 })

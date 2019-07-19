@@ -33,8 +33,6 @@ export class SubtaskListComponent implements OnInit {
     }
   }
 
-  // TODO: Can we switch TO Edit mode for a single task
-
   addSubTask(task: Task) {
     const data: Dialog1FieldData = {
       title: "Ny del opgave",
@@ -59,7 +57,7 @@ export class SubtaskListComponent implements OnInit {
 
   editSubTask(subTask: SubTask) {
     const data: Dialog1FieldData = {
-      title: "Rediger del opgave",
+      title: "Rediger opgaven",
       buttonText: "Gem",
       fieldLabel: "Titel",
       fieldValue: subTask.title,
@@ -81,7 +79,7 @@ export class SubtaskListComponent implements OnInit {
 
   deleteSubTask(subTask: SubTask) {
     const data: DialogConfirmData = {
-      header: "Slet opgave",
+      header: "Slet opgaven",
       button1Text: "Ja",
       button2Text: "Nej",
       message1: "Vil du slette opgaven?",
@@ -109,7 +107,7 @@ export class SubtaskListComponent implements OnInit {
 
   async removePerson(subTaskPerson: SubTaskPerson) {
     const data: DialogConfirmData = {
-      header: "Fjern fra opgave",
+      header: "Fjern fra opgaven",
       button1Text: "Ja",
       button2Text: "Nej",
       message1: "Vil du fjerne dig fra opgaven?",

@@ -1,6 +1,6 @@
 <div class="app-sublist-item-container">
   <button class="app-sublist-item-add-button" *ngIf="showButton" mat-button type="button"
-    (click)="addSubTask(task)">Tilføj en del opgave <mat-icon>add_circle</mat-icon></button>
+    (click)="addSubTask(task)">Tilføj en opgave <mat-icon>add_circle</mat-icon></button>
   <app-subtask-list-item class="app-sublist-item" *ngFor="let subtask of subtasks$ | async" [subTask]="subtask"
     (addPersonClick)="addPerson($event)" (removePersonClick)="removePerson($event)"
     (checkboxClick)="checkboxClicked($event)" (delete)="deleteSubTask($event)" (edit)="editSubTask($event)"

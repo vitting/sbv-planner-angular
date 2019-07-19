@@ -43,7 +43,13 @@ export class ProjectHomeComponent implements OnInit {
       textline1: "Du har endnu ikke nogen aktive projekter.",
       textline2: "Du kan tilslutte dig et eksisterende projekt eller oprette dit eget projekt."
     };
-    this.navbarService.navbarTitle.next("Mine projekter");
+    this.navbarService.navbarTitle.next({
+      title: "Mine projekter",
+      icon: {
+        collection: "far",
+        icon: "lightbulb"
+      }
+    });
     this.userId = this.authService.userId;
     this.getProjects();
   }
@@ -67,7 +73,7 @@ export class ProjectHomeComponent implements OnInit {
             this.gotoProjects();
             break;
           case ProjectHomeMenuResult.newProject:
-            // this.deleteTask(task);
+            this.gotoNewProjects();
             break;
           case ProjectHomeMenuResult.newTemplate:
             // this.deleteTask(task);
@@ -86,7 +92,6 @@ export class ProjectHomeComponent implements OnInit {
       if (result) {
         switch (result.action) {
           case ProjectHomeItemMenuResult.edit:
-            // this.editTask(task);
             break;
           case ProjectHomeItemMenuResult.delete:
             // this.deleteTask(task);
@@ -96,6 +101,10 @@ export class ProjectHomeComponent implements OnInit {
         }
       }
     });
+  }
+
+  gotoNewProjects() {
+    this.router.navigate(["/projects/edit"]);
   }
 
   gotoProjects() {

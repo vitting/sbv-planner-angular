@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { NavbarService, NavbarTitleConfig } from 'src/app/services/navbar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
@@ -11,6 +11,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   title = "Mine projekter";
+  navbarTitleData: NavbarTitleConfig;
   showLogout = true;
   private navbarTitleSub: Subscription;
   private navbarShowLogoutButtonSub: Subscription;
@@ -20,8 +21,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    this.navbarTitleSub = this.navbarService.navbarTitle.subscribe((title: string) => {
-      this.title = title;
+    this.navbarTitleSub = this.navbarService.navbarTitle.subscribe((navbarTitleConfig: NavbarTitleConfig) => {
+      this.navbarTitleData = navbarTitleConfig;
     });
 
     this.navbarShowLogoutButtonSub = this.navbarService.showLogoutButton.subscribe((showLogout) => {

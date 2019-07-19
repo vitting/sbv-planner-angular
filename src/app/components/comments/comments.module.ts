@@ -16,6 +16,7 @@ import { FabButtonModule } from '../shared/fab-button/fab-button.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommentItemMenuModule } from './comment-item-menu/comment-item-menu.module';
 import { NoDataBoxModule } from '../shared/no-data-box/no-data-box.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { NoDataBoxModule } from '../shared/no-data-box/no-data-box.module';
     CommentItemModule,
     FabButtonModule,
     CommentItemMenuModule,
-    NoDataBoxModule
+    NoDataBoxModule,
+    FontAwesomeModule
   ],
   exports: [CommentsComponent]
 })

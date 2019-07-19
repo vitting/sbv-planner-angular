@@ -15,6 +15,16 @@
     height: 30px;
     margin: 10px 0;
   }
+
+  .app-appbar-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    fa-icon {
+      font-size: 0.8rem;
+    }
+  }
 }
 
 button {

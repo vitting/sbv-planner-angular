@@ -27,7 +27,6 @@ import { switchMap, catchError } from 'rxjs/operators';
 export class TasksEditComponent implements OnInit, OnDestroy {
   projectId: string = null;
   tasks: Task[] = [];
-  // subTasks: Observable<SubTask[]>[] = [];
   private taskSubscribtion: Subscription;
 
   constructor(
@@ -41,7 +40,13 @@ export class TasksEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next("Rediger opgaver");
+    this.navbarService.navbarTitle.next({
+      title: "Rediger opgaver",
+      icon: {
+        collection: "fas",
+        icon: "tasks"
+      }
+    });
     this.projectId = this.route.snapshot.params.id;
 
     this.taskSubscribtion = this.firestoreService.getTasks(this.projectId).subscribe((tasks) => {
@@ -62,7 +67,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
   addTask() {
     const data: Dialog2FieldsData = {
-      title: "Ny opgave",
+      title: "Ny opgave gruppe",
       buttonText: "Tilføj",
       field1Label: "Titel",
       field1Value: null,
@@ -104,7 +109,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
   private editTask(task: Task) {
     const data: Dialog2FieldsData = {
-      title: "Rediger opgave",
+      title: "Rediger opgave gruppe",
       buttonText: "Gem",
       field1Label: "Titel",
       field1Value: task.title,
@@ -127,11 +132,11 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
   private deleteTask(task: Task) {
     const data: DialogConfirmData = {
-      header: "Slet opgaven",
+      header: "Slet opgave gruppen",
       button1Text: "Ja",
       button2Text: "Nej",
-      message1: "Vil du slette opgaven?",
-      message2: task.title
+      message1: "Vil du slette opgave gruppen?",
+      message2: "Gruppen og alle opgaver bliver slettet!"
     };
 
     const dialogRef = this.dialog.open(DialogConfirmComponent, {

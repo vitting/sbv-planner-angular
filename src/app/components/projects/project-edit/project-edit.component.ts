@@ -32,7 +32,13 @@ export class ProjectEditComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next("Rediger Projekter");
+    this.navbarService.navbarTitle.next({
+      title: "Rediger Projekter",
+      icon: {
+        collection: "far",
+        icon: "lightbulb"
+      }
+    });
 
     this.projects$ = this.firestoreService.getProjects();
   }
@@ -122,7 +128,7 @@ export class ProjectEditComponent implements OnInit {
       button1Text: "Ja",
       button2Text: "Nej",
       message1: "Vil du projektet?",
-      message2: item.title
+      message2: "Alle opgaver og kommentarer bliver også slettet!"
     };
 
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {

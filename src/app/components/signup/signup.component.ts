@@ -23,7 +23,13 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next("Opret ny bruger");
+    this.navbarService.navbarTitle.next({
+      title: "Opret ny bruger",
+      icon: {
+        collection: "fas",
+        icon: "sign-up-alt"
+      }
+    });
 
     this.signupForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
