@@ -24,6 +24,7 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
   @Input() enableRemoveUserButton = false;
   @Input() projectButtonState = "none"; // none menu addperso
   @Input() editMode = false;
+  @Input() passiveMode = false;
   @Output() editTitleDescClick = new EventEmitter<Project>();
   @Output() editTasksClick = new EventEmitter<Project>();
   @Output() userClick = new EventEmitter<RemoveUserFromProjectResult>();

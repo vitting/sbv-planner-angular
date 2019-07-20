@@ -25,20 +25,26 @@ export class SubtaskListComponent implements OnInit {
   }
 
   async addSubTask(task: Task) {
+    const result = await this.taskService.addSubTask(task);
   }
 
   async editSubTask(subTask: SubTask) {
+    const result = await this.taskService.editSubTask(subTask);
   }
 
   async deleteSubTask(subTask: SubTask) {
+    const result = await this.taskService.deleteSubTask(subTask);
   }
 
   async addPerson(subTask: SubTask) {
+    const result = await this.taskService.addUserToSubTask(subTask.id);
   }
 
   async removePerson(subTaskPerson: SubTaskPerson) {
+    const result = await this.taskService.removeUserFromSubTask(subTaskPerson.subTask.id, subTaskPerson.user.id);
   }
 
   async checkboxClicked(status: SubTaskCheckboxStateInfo) {
+    const result = await this.taskService.updateSubTaskCompleteStatus(this.task.id, status.subTask.id, status.completed);
   }
 }

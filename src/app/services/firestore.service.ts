@@ -451,11 +451,14 @@ export class FirestoreService {
     }
   }
 
-  async deleteSubTask(subTaskId: string, taskId: string): Promise<string> {
+  async deleteSubTask(subTask: SubTask): Promise<string> {
     try {
-      await this.updateSummaryItemsTotal(taskId, SummaryAction.delete);
-      await this.db.collection<SubTask>("subtasks").doc(subTaskId).delete();
-      return Promise.resolve(subTaskId);
+      await this.updateSummaryItemsTotal(subTask.taskId, SummaryAction.delete);
+      if (subTask.completed) {
+        await this.updateSummaryItemsCompleted(subTask.taskId, SummaryAction.delete);
+      }
+      await this.db.collection<SubTask>("subtasks").doc(subTask.id).delete();
+      return Promise.resolve(subTask.id);
     } catch (error) {
       return Promise.reject(error) ;
     }

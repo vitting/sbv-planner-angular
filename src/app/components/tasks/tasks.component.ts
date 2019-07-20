@@ -69,6 +69,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   async markAllSubTasksAsCompletedClick(task: Task) {
+    const result = this.taskService.markAllSubTasksAsCompleted(task);
   }
 
   gotoAddTasks() {

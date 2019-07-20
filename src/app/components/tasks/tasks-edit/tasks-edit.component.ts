@@ -67,7 +67,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
   async drop(event: CdkDragDrop<string[]>) {
     moveItemInArray<Task>(this.tasks, event.previousIndex, event.currentIndex);
     await this.taskService.updateTasksIndex(this.tasks);
-    this.getTasks();
+    // this.getTasks();
   }
 
   async addTask() {

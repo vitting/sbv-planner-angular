@@ -19,7 +19,6 @@ import { CommentService } from 'src/app/services/comment.service';
 })
 export class CommentsComponent implements OnInit {
   comments$: Observable<Comment[]>;
-  projectTaskName: ProjectTaskName;
   nodata: NoDataBoxData;
   showNoData = false;
   private parentId: string;
@@ -41,7 +40,6 @@ export class CommentsComponent implements OnInit {
 
     this.parentId = this.getParetId();
     this.setTitle();
-    this.setProjectTaskName();
     this.getComments();
   }
 
@@ -49,10 +47,6 @@ export class CommentsComponent implements OnInit {
     this.comments$ = this.commentService.getComments(this.parentId).pipe(tap((tasks) => {
       this.showNoData = tasks.length === 0;
     }));
-  }
-
-  private async setProjectTaskName() {
-    this.projectTaskName = await this.commentService.getProjectAndTaskTitle(this.projectId, this.taskId);
   }
 
   private setTitle() {
@@ -83,12 +77,15 @@ export class CommentsComponent implements OnInit {
   }
 
   private async editComment(comment: Comment) {
+    const result = this.commentService.editComment(comment);
   }
 
   private async deleteComment(comment: Comment) {
+    const result = this.commentService.deleteComment(comment);
   }
 
   async addComment() {
+    const result = this.commentService.addComment(this.parentId, this.commentType);
   }
 
   menuItemClicked(comment: Comment) {

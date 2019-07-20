@@ -123,7 +123,7 @@ export class TaskService {
     });
   }
 
-  markAllSubTasksAsCompleted(task: Task) {
+  markAllSubTasksAsCompleted(task: Task): Promise<string> {
     const data: DialogConfirmData = {
       header: "Opgaver",
       button1Text: "Ja",
@@ -226,7 +226,7 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         if (result && result.action === DialogConfirmAction.yes) {
-          const subTaskId = await this.firestoreService.deleteSubTask(subTask.id, subTask.taskId);
+          const subTaskId = await this.firestoreService.deleteSubTask(subTask);
           resolve(subTaskId);
         } else {
           resolve(null);

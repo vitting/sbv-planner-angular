@@ -4,7 +4,7 @@
   box-sizing: border-box;
   font-weight: lighter;
   padding: 0 20px;
-  height: calc(100vh - #{$used-vertical-area-space});
+  height: calc(100vh - #{$used-vertical-area-space} - 20px);
   display: flex;
   flex-direction: column;
   justify-content: center;

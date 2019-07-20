@@ -14,7 +14,7 @@
       </div>
       <app-project-details *ngIf="showDetails" [projectDate]="project?.createdAt.toDate()" [summary]="summary"
         (commentsTotalClick)="commentsTotalClicked()" (tasksClick)="tasksClicked()"
-        (editTasksClick)="editTasksClicked()" [editMode]="editMode"></app-project-details>
+        (editTasksClick)="editTasksClicked()" [editMode]="editMode" [passiveMode]="passiveMode"></app-project-details>
       <app-project-details-edit *ngIf="showDetailsEdit" [project]="project" [summary]="summary" [editMode]="editMode"
         (editTasksClick)="editTasksClicked($event)">
       </app-project-details-edit>
