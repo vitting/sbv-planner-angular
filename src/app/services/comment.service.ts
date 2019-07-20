@@ -24,10 +24,6 @@ export class CommentService {
     return this.firestoreService.getComments(parentId);
   }
 
-  getProjectAndTaskTitle(projectId: string, taskId: string) {
-    return this.firestoreService.getProjectTaskName(projectId, taskId);
-  }
-
   addComment(parentId: string, commentType: string): Promise<string> {
     const data: Dialog1FieldData = {
       title: "Ny kommentar",
