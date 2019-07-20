@@ -3,16 +3,15 @@ import { Router } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Dialog2FieldsData, Dialog2FieldsComponent, Dialog2FieldsResult } from '../../shared/dialog-2-fields/dialog-2-fields.component';
 import { Observable } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
-import { AuthService } from 'src/app/services/auth.service';
 import {
   DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
   DialogConfirmAction
 } from '../../shared/dialog-confirm/dialog-confirm.component';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-project-edit',
@@ -25,9 +24,9 @@ export class ProjectEditComponent implements OnInit {
   constructor(
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
-    private authService: AuthService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private projectService: ProjectService
     ) { }
 
   ngOnInit() {
@@ -42,33 +41,14 @@ export class ProjectEditComponent implements OnInit {
     this.projects$ = this.firestoreService.getProjects();
   }
 
-  addProject() {
-    const dialogCreateData: Dialog2FieldsData = {
-      title: "Nyt Projekt",
-      buttonText: "Tilføj",
-      field1Label: "Titel",
-      field1Value: null,
-      field2Label: "Beskrivelse",
-      field2Value: null
-    };
-
-    const dialogCreateRef = this.dialog.open(Dialog2FieldsComponent, {
-      maxWidth: '350',
-      autoFocus: false,
-      data: dialogCreateData
-    });
-
-    dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-      if (result) {
-        const projectId = await this.firestoreService.addProject(this.authService.userId, result.field1Value, result.field2Value);
-        if (projectId) {
-          this.showConfirmDialog(projectId);
-        }
-      }
-    });
+  async addProject() {
+    const projectId = await this.projectService.addProject();
+    if (projectId) {
+      this.showAddTasksDialog(projectId);
+    }
   }
 
-  showConfirmDialog(projectId: string) {
+  showAddTasksDialog(projectId: string) {
     const dialogConfirmData: DialogConfirmData = {
       header: "Tilføj opgaver",
       button1Text: "Ja",
@@ -84,30 +64,8 @@ export class ProjectEditComponent implements OnInit {
     });
 
     dialogConfirmRef.afterClosed().subscribe((result: DialogConfirmResult) => {
-      if (result.action === DialogConfirmAction.yes) {
+      if (result && result.action === DialogConfirmAction.yes) {
         this.router.navigate(["/projects", projectId, "tasks", "edit"]);
-      }
-    });
-  }
-
-  editProject(item: Project) {
-    const dialogEditData: Dialog2FieldsData = {
-      title: "Rediger Projekt",
-      buttonText: "Gem",
-      field1Label: "Titel",
-      field1Value: item.title,
-      field2Label: "Beskrivelse",
-      field2Value: item.description
-    };
-
-    const dialogEditRef = this.dialog.open(Dialog2FieldsComponent, {
-      maxWidth: '350',
-      autoFocus: false,
-      data: dialogEditData
-    });
-
-    dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-      if (result) {
       }
     });
   }
@@ -116,30 +74,8 @@ export class ProjectEditComponent implements OnInit {
     this.router.navigate(["/projects", item.id, "tasks", "edit"]);
   }
 
-  deleteProject(item: Project) {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Slet projekt",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du projektet?",
-      message2: "Alle opgaver og kommentarer bliver også slettet!"
-    };
-
-    const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
-      width: '300px',
-      autoFocus: false,
-      data: dialogConfirmData
-    });
-
-    dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      if (result && result.action === DialogConfirmAction.yes) {
-        await this.firestoreService.deleteProject(item.id);
-      }
-    });
-  }
-
   editTitleDescClick(project: Project) {
-    this.editProject(project);
+    this.projectService.editProject(project);
   }
 
   editTasksClick(project: Project) {
@@ -147,6 +83,6 @@ export class ProjectEditComponent implements OnInit {
   }
 
   deleteProjectClick(project: Project) {
-    this.deleteProject(project);
+    this.projectService.deleteProject(project);
   }
 }

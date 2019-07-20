@@ -3,10 +3,10 @@ import { Project } from 'src/app/models/project.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user.model';
 import { Summary } from 'src/app/models/summary.model';
-import { FirestoreService } from 'src/app/services/firestore.service';
 import { Subscription } from 'rxjs';
+import { ProjectService } from 'src/app/services/project.service';
 
-export interface RemovePersonFromProjectResult {
+export interface RemoveUserFromProjectResult {
   user: User;
   project: Project;
 }
@@ -26,7 +26,7 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
   @Input() editMode = false;
   @Output() editTitleDescClick = new EventEmitter<Project>();
   @Output() editTasksClick = new EventEmitter<Project>();
-  @Output() userClick = new EventEmitter<RemovePersonFromProjectResult>();
+  @Output() userClick = new EventEmitter<RemoveUserFromProjectResult>();
   @Output() menuClick = new EventEmitter<Project>();
   @Output() addPersonClick = new EventEmitter<Project>();
   @Output() commentsTotalClick = new EventEmitter<Project>();
@@ -40,10 +40,26 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
     numberOfItemsCompleted: 0
   };
   private summarySub: Subscription;
-  constructor(private authService: AuthService, private firestoreService: FirestoreService) { }
+  constructor(
+    private authService: AuthService,
+    private projectService: ProjectService) { }
 
   ngOnInit() {
-    if (this.project.users) {
+    this.getProjectUsers();
+
+    this.summarySub = this.projectService.getProjectSummary((this.project.id)).subscribe((summary) => {
+      this.summary = summary;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.summarySub) {
+      this.summarySub.unsubscribe();
+    }
+  }
+
+  private getProjectUsers() {
+    if (this.showUsers && this.project.users) {
       this.project.users.forEach((userId) => {
         const user = this.authService.getUserInfo(userId);
         this.users.push(user);
@@ -54,16 +70,6 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
           }
         }
       });
-    }
-
-    this.summarySub = this.firestoreService.getSummary(this.project.id).subscribe((summary) => {
-      this.summary = summary;
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.summarySub) {
-      this.summarySub.unsubscribe();
     }
   }
 

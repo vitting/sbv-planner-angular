@@ -66,9 +66,15 @@ export class FirestoreService {
     }
   }
 
-  async deleteComment(commentId: string, itemId: string) {
-    await this.updateSummaryComments(itemId, SummaryAction.delete);
-    return this.db.collection<Comment>("comments").doc(commentId).delete();
+  async deleteComment(commentId: string, itemId: string): Promise<string> {
+    try {
+      await this.updateSummaryComments(itemId, SummaryAction.delete);
+      await this.db.collection<Comment>("comments").doc(commentId).delete();
+      return Promise.resolve(commentId);
+    } catch (error) {
+      console.error("deleteComment", error);
+      return Promise.reject(error);
+    }
   }
 
   getComments(parentId: string): Observable<Comment[]> {
@@ -155,7 +161,11 @@ export class FirestoreService {
     }
   }
 
-  async updateProject(userId: string, projectId: string, newTitle: string, newDescription: string): Promise<string> {
+  async updateProject(
+    userId: string,
+    projectId: string,
+    newTitle: string,
+    newDescription: string): Promise<string> {
     const timestamp = this.timestamp;
 
     try {
@@ -261,22 +271,27 @@ export class FirestoreService {
     }
   }
 
-  async deleteTask(taskId: string, projectId: string) {
-    const subtasks$ = this.getSubTasks(taskId);
-    subtasks$.pipe(take(1)).subscribe((subTasks: SubTask[]) => {
-      if (subTasks) {
-        const batch = this.db.firestore.batch();
-        subTasks.forEach((subTask) => {
-          const subTaskRef = this.db.collection("subtasks").doc(subTask.id).ref;
-          batch.delete(subTaskRef);
-        });
+  async deleteTask(taskId: string, projectId: string): Promise<string> {
+    try {
+      const subtasks$ = this.getSubTasks(taskId);
+      subtasks$.pipe(take(1)).subscribe((subTasks: SubTask[]) => {
+        if (subTasks) {
+          const batch = this.db.firestore.batch();
+          subTasks.forEach((subTask) => {
+            const subTaskRef = this.db.collection("subtasks").doc(subTask.id).ref;
+            batch.delete(subTaskRef);
+          });
 
-        batch.commit();
-      }
-    });
-    await this.deleteSummary(taskId);
-    await this.updateSummaryItemsTotal(projectId, SummaryAction.delete);
-    return this.db.collection("tasks").doc(taskId).delete();
+          batch.commit();
+        }
+      });
+      await this.deleteSummary(taskId);
+      await this.updateSummaryItemsTotal(projectId, SummaryAction.delete);
+      await this.db.collection("tasks").doc(taskId).delete();
+      return Promise.resolve(taskId);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   async addPersonToTask(taskId: string, userId: string) {
@@ -317,7 +332,7 @@ export class FirestoreService {
     }
   }
 
-  async markAllSubTasksAsCompleted(userId: string, taskId: string) {
+  async markAllSubTasksAsCompleted(userId: string, taskId: string): Promise<string> {
     const subTasks = await this.getSubTasks(taskId).pipe(take(1)).toPromise();
 
     if (subTasks) {
@@ -336,10 +351,11 @@ export class FirestoreService {
       });
 
       try {
-        return batch.commit();
+        await batch.commit();
+        return Promise.resolve(taskId);
       } catch (error) {
         console.error("markAllSubTasksAsCompleted", error);
-        return;
+        return Promise.reject(error);
       }
     }
   }
@@ -435,9 +451,14 @@ export class FirestoreService {
     }
   }
 
-  async deleteSubTask(subTaskId: string, taskId: string) {
-    await this.updateSummaryItemsTotal(taskId, SummaryAction.delete);
-    return this.db.collection<SubTask>("subtasks").doc(subTaskId).delete();
+  async deleteSubTask(subTaskId: string, taskId: string): Promise<string> {
+    try {
+      await this.updateSummaryItemsTotal(taskId, SummaryAction.delete);
+      await this.db.collection<SubTask>("subtasks").doc(subTaskId).delete();
+      return Promise.resolve(subTaskId);
+    } catch (error) {
+      return Promise.reject(error) ;
+    }
   }
 
   getTasks(projectId: string) {

@@ -1,22 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { ActivatedRoute } from '@angular/router';
-import { FirestoreService } from 'src/app/services/firestore.service';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { MatDialog } from '@angular/material/dialog';
-import { Dialog2FieldsComponent, Dialog2FieldsResult, Dialog2FieldsData } from '../../shared/dialog-2-fields/dialog-2-fields.component';
 import { Task } from 'src/app/models/task.model';
 import { Subscription } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TaskEditMenuComponent, TaskEditMenuResult } from './task-edit-menu/task-edit-menu.component';
-import {
-  DialogConfirmData,
-  DialogConfirmComponent,
-  DialogConfirmResult,
-  DialogConfirmAction
-} from '../../shared/dialog-confirm/dialog-confirm.component';
-import { AuthService } from 'src/app/services/auth.service';
 import { NoDataBoxData } from '../../shared/no-data-box/no-data-box.component';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-tasks-edit',
@@ -33,9 +24,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
   constructor(
     private navbarService: NavbarService,
     private route: ActivatedRoute,
-    private firestoreService: FirestoreService,
-    private authService: AuthService,
-    private dialog: MatDialog,
+    private taskService: TaskService,
     private bottomSheet: MatBottomSheet
   ) {
   }
@@ -53,9 +42,20 @@ export class TasksEditComponent implements OnInit, OnDestroy {
         icon: "tasks"
       }
     });
+
     this.projectId = this.route.snapshot.params.id;
 
-    this.taskSubscribtion = this.firestoreService.getTasks(this.projectId).subscribe((tasks) => {
+    this.getTasks();
+  }
+
+  ngOnDestroy(): void {
+    if (this.taskSubscribtion) {
+      this.taskSubscribtion.unsubscribe();
+    }
+  }
+
+  private getTasks() {
+    this.taskSubscribtion = this.taskService.getTasksOnce(this.projectId).subscribe((tasks) => {
       this.tasks = tasks;
 
       if (this.tasks.length === 0) {
@@ -66,36 +66,15 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
   async drop(event: CdkDragDrop<string[]>) {
     moveItemInArray<Task>(this.tasks, event.previousIndex, event.currentIndex);
-    await this.firestoreService.updateTasksIndex(this.tasks);
+    await this.taskService.updateTasksIndex(this.tasks);
+    this.getTasks();
   }
 
-  ngOnDestroy(): void {
-    if (this.taskSubscribtion) {
-      this.taskSubscribtion.unsubscribe();
+  async addTask() {
+    const taskId = await this.taskService.addTask(this.projectId, this.tasks.length);
+    if (taskId) {
+      this.getTasks();
     }
-  }
-
-  addTask() {
-    const data: Dialog2FieldsData = {
-      title: "Ny opgave gruppe",
-      buttonText: "Tilføj",
-      field1Label: "Titel",
-      field1Value: null,
-      field2Label: "Beskrivelse",
-      field2Value: null
-    };
-
-    const dialogRef = this.dialog.open(Dialog2FieldsComponent, {
-      maxWidth: '350',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe((result: Dialog2FieldsResult) => {
-      if (result) {
-        this.firestoreService.addTask(this.authService.userId, result.field1Value, result.field2Value, this.projectId, this.tasks.length);
-      }
-    });
   }
 
   menuTask(task: Task) {
@@ -117,48 +96,13 @@ export class TasksEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private editTask(task: Task) {
-    const data: Dialog2FieldsData = {
-      title: "Rediger opgave gruppe",
-      buttonText: "Gem",
-      field1Label: "Titel",
-      field1Value: task.title,
-      field2Label: "Beskrivelse",
-      field2Value: task.description
-    };
-
-    const dialogRef = this.dialog.open(Dialog2FieldsComponent, {
-      maxWidth: '350',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe((result: Dialog2FieldsResult) => {
-      if (result) {
-        this.firestoreService.updateTask(this.authService.userId, result.field1Value, result.field2Value, task);
-      }
-    });
+  private async editTask(task: Task) {
+    const taskId = await this.taskService.editTask(task);
+    if (taskId) {
+      this.getTasks();
+    }
   }
 
-  private deleteTask(task: Task) {
-    const data: DialogConfirmData = {
-      header: "Slet opgave gruppen",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du slette opgave gruppen?",
-      message2: "Gruppen og alle opgaver bliver slettet!"
-    };
-
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      maxWidth: '350',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      if (result && result.action === DialogConfirmAction.yes) {
-        await this.firestoreService.deleteTask(task.id, this.projectId);
-      }
-    });
+  private async deleteTask(task: Task) {
   }
 }

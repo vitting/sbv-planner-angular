@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
-import { AuthService } from 'src/app/services/auth.service';
-import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-projects',
@@ -17,9 +15,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   projectSub: Subscription;
 
   constructor(
-    private authService: AuthService,
     private navbarService: NavbarService,
-    private firestoreService: FirestoreService,
+    private projectService: ProjectService,
     private router: Router) { }
 
   ngOnInit() {
@@ -30,25 +27,18 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         icon: "clipboard"
       }
     });
-    this.getProjects();
+
+    this.projectSub = this.projectService.getProjectsNotContainingUserId().subscribe((projects) => {
+      this.projects = projects;
+    });
   }
 
   ngOnDestroy(): void {
     this.projectSub.unsubscribe();
   }
 
-  getProjects() {
-    // this.projectSub = this.firestoreService.getProjects().pipe(take(1)).subscribe((projects) => {
-    //   this.projects = projects;
-    // });
-    this.projectSub = this.firestoreService.getProjectsNotContainingUserId(this.authService.userId).pipe(take(1)).subscribe((projects) => {
-      this.projects = projects;
-    });
-  }
-
   async projectAddPersonClick(project: Project) {
-    const userId = this.authService.userId;
-    const result = await this.firestoreService.addPersonToProject(project.id, userId);
+    const result = await this.projectService.addUserToProject(project);
     if (result) {
       this.router.navigate(["/"]);
     }

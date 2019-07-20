@@ -1,18 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
 import { Observable, Subscription } from 'rxjs';
 import { Task } from 'src/app/models/task.model';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from 'src/app/services/auth.service';
-import { take } from 'rxjs/operators';
-import {
-  DialogConfirmData,
-  DialogConfirmComponent,
-  DialogConfirmResult,
-  DialogConfirmAction } from '../shared/dialog-confirm/dialog-confirm.component';
 import { NoDataBoxData } from '../shared/no-data-box/no-data-box.component';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-tasks',
@@ -31,9 +23,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private navbarService: NavbarService,
-    private firestoreService: FirestoreService,
-    private authService: AuthService,
-    private dialog: MatDialog) { }
+    private taskService: TaskService) { }
 
   ngOnInit() {
     this.navbarService.setNavbarTitle({
@@ -51,14 +41,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
     this.projectId = this.route.snapshot.params.projectId;
 
-    if (this.projectId) {
-      this.tasksSub = this.firestoreService.getTasks(this.projectId).pipe(take(1)).subscribe((tasks) => {
-        this.tasks = tasks;
-        if (this.tasks.length === 0) {
-          this.showNoData = true;
-        }
-      });
-    }
+    this.getTasks();
   }
 
   ngOnDestroy(): void {
@@ -67,50 +50,25 @@ export class TasksComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  deleteTaskClick(task: Task) {
-    const data: DialogConfirmData = {
-      header: "Slet opgaven",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du slette opgaven?",
-      message2: task.title
-    };
-
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      maxWidth: '350',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      if (result && result.action === DialogConfirmAction.yes) {
-        await this.firestoreService.deleteTask(task.id, this.projectId);
-      }
-    });
+  private getTasks() {
+    if (this.projectId) {
+      this.tasksSub = this.taskService.getTasksOnce(this.projectId).subscribe((tasks) => {
+        this.tasks = tasks;
+        if (this.tasks.length === 0) {
+          this.showNoData = true;
+        }
+      });
+    }
   }
 
-  markAllSubTasksAsCompletedClick(task: Task) {
-    const data: DialogConfirmData = {
-      header: "Opgaver",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Er du sikker på du vil markere alle opgaver som udført?",
-      message2: null
-    };
+  async deleteTaskClick(task: Task) {
+    const taskId = await this.taskService.deleteTask(task);
+    if (taskId) {
+      this.getTasks();
+    }
+  }
 
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      maxWidth: '350',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      if (result && result.action === DialogConfirmAction.yes) {
-        const userId = this.authService.userId;
-        await this.firestoreService.markAllSubTasksAsCompleted(userId, task.id);
-      }
-    });
+  async markAllSubTasksAsCompletedClick(task: Task) {
   }
 
   gotoAddTasks() {

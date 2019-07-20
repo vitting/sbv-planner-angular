@@ -8,7 +8,12 @@ const routes: Routes = [{
   path: "projects/edit",
   component: ProjectEditComponent,
   canActivate: [AngularFireAuthGuard],
-data: { authGuardPipe: redirectUnauthorizedToLogin }
+  data: { authGuardPipe: redirectUnauthorizedToLogin }
+}, {
+  path: "projects/:projectId/edit",
+  component: ProjectEditComponent,
+  canActivate: [AngularFireAuthGuard],
+  data: { authGuardPipe: redirectUnauthorizedToLogin }
 }];
 
 @NgModule({
