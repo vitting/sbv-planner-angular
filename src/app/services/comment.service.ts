@@ -9,6 +9,7 @@ import {
   DialogConfirmComponent,
   DialogConfirmResult,
   DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
+import { NavbarService } from './navbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class CommentService {
   constructor(
     private firestoreService: FirestoreService,
     private authService: AuthService,
+    private navbarService: NavbarService,
     private dialog: MatDialog) { }
 
   getComments(parentId: string) {
@@ -42,14 +44,17 @@ export class CommentService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
         if (result) {
+          this.navbarService.showProgressbar = true;
           const commentId = await this.firestoreService.addComment(
             this.authService.authUserInfo,
             result.fieldValue,
             commentType,
             parentId
           );
+          this.navbarService.showProgressbar = false;
           resolve(commentId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -74,9 +79,12 @@ export class CommentService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
         if (result) {
+          this.navbarService.showProgressbar = true;
           const commentId = await this.firestoreService.updateComment(comment.id, result.fieldValue);
+          this.navbarService.showProgressbar = false;
           resolve(commentId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -101,9 +109,12 @@ export class CommentService {
     return new Promise((resolve, reject) => {
       dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         if (result && result.action === DialogConfirmAction.yes) {
+          this.navbarService.showProgressbar = true;
           const commentId = await this.firestoreService.deleteComment(comment.id, comment.parentId);
+          this.navbarService.showProgressbar = false;
           resolve(commentId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });

@@ -16,6 +16,7 @@ import { take } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { Subject } from 'rxjs';
 import { Summary } from '../models/summary.model';
+import { NavbarService } from './navbar.service';
 
 export interface ProjectItemEditModeChange {
   projectId: string;
@@ -29,7 +30,11 @@ export class ProjectService {
   private itemEditMode: Subject<string> = new Subject<string>();
   private itemsInEditMode: string[] = [];
   private summaryCache: { [key: string]: Summary } = {};
-  constructor(private dialog: MatDialog, private firestoreService: FirestoreService, private authService: AuthService) { }
+  constructor(
+    private dialog: MatDialog,
+    private firestoreService: FirestoreService,
+    private navbarService: NavbarService,
+    private authService: AuthService) { }
 
   addSummaryToCache(projectId: string, summary: Summary) {
     this.summaryCache[projectId] = summary;
@@ -90,9 +95,12 @@ export class ProjectService {
     return new Promise<string>((resolve, reject) => {
       dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
         if (result) {
+          this.navbarService.showProgressbar = true;
           const projectId = await this.firestoreService.addProject(this.authService.userId, result.field1Value, result.field2Value);
+          this.navbarService.showProgressbar = false;
           resolve(projectId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -118,13 +126,16 @@ export class ProjectService {
     return new Promise((resolve, reject) => {
       dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
         if (result) {
+          this.navbarService.showProgressbar = true;
           const projectId = await this.firestoreService.updateProject(
             this.authService.userId,
             project.id,
             result.field1Value,
             result.field2Value);
+          this.navbarService.showProgressbar = false;
           resolve(projectId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -148,7 +159,9 @@ export class ProjectService {
 
     dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
       if (result && result.action === DialogConfirmAction.yes) {
+        this.navbarService.showProgressbar = true;
         await this.firestoreService.deleteProject(project.id);
+        this.navbarService.showProgressbar = false;
       }
     });
   }

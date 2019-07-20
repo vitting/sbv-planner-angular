@@ -6,22 +6,29 @@ import {
   DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
-  DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
+  DialogConfirmAction
+} from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import {
   Dialog2FieldsData,
   Dialog2FieldsComponent,
-  Dialog2FieldsResult } from '../components/shared/dialog-2-fields/dialog-2-fields.component';
+  Dialog2FieldsResult
+} from '../components/shared/dialog-2-fields/dialog-2-fields.component';
 import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
 import { SubTask } from '../models/subtask.model';
+import { NavbarService } from './navbar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  constructor(private firestoreService: FirestoreService, private authService: AuthService, private dialog: MatDialog) { }
+  constructor(
+    private firestoreService: FirestoreService,
+    private authService: AuthService,
+    private navbarService: NavbarService,
+    private dialog: MatDialog) { }
 
   getTasksOnce(projectId: string) {
     return this.firestoreService.getTasks(projectId).pipe(take(1));
@@ -54,15 +61,17 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
         if (result) {
+          this.navbarService.showProgressbar = true;
           const taskId = await this.firestoreService.addTask(
             this.authService.userId,
             result.field1Value,
             result.field2Value,
             projectId,
             taskIndex);
-
+          this.navbarService.showProgressbar = false;
           resolve(taskId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -88,9 +97,12 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
         if (result) {
+          this.navbarService.showProgressbar = true;
           const taskId = await this.firestoreService.updateTask(this.authService.userId, result.field1Value, result.field2Value, task);
+          this.navbarService.showProgressbar = false;
           resolve(taskId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -115,8 +127,12 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         if (result && result.action === DialogConfirmAction.yes) {
-          resolve(await this.firestoreService.deleteTask(task.id, task.projectId));
+          this.navbarService.showProgressbar = true;
+          const taskId = await this.firestoreService.deleteTask(task.id, task.projectId);
+          this.navbarService.showProgressbar = false;
+          resolve(taskId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -141,9 +157,12 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         if (result && result.action === DialogConfirmAction.yes) {
+          this.navbarService.showProgressbar = true;
           const taskId = await this.firestoreService.markAllSubTasksAsCompleted(this.authService.userId, task.id);
+          this.navbarService.showProgressbar = false;
           resolve(taskId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -172,9 +191,12 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe((result: Dialog1FieldResult) => {
         if (result) {
+          this.navbarService.showProgressbar = true;
           const subTaskId = this.firestoreService.addSubTask(this.authService.userId, result.fieldValue, task.projectId, task.id);
+          this.navbarService.showProgressbar = false;
           resolve(subTaskId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -199,9 +221,12 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe((result: Dialog1FieldResult) => {
         if (result && result.fieldValue.trim()) {
+          this.navbarService.showProgressbar = true;
           const subTaskId = this.firestoreService.updateSubTask(this.authService.userId, result.fieldValue, subTask);
+          this.navbarService.showProgressbar = false;
           resolve(subTaskId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });
@@ -226,9 +251,12 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         if (result && result.action === DialogConfirmAction.yes) {
+          this.navbarService.showProgressbar = true;
           const subTaskId = await this.firestoreService.deleteSubTask(subTask);
+          this.navbarService.showProgressbar = false;
           resolve(subTaskId);
         } else {
+          this.navbarService.showProgressbar = false;
           resolve(null);
         }
       });

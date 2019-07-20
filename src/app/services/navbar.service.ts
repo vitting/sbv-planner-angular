@@ -15,7 +15,7 @@ export interface NavbarTitleConfig {
 })
 export class NavbarService {
   navbarTitle: Subject<NavbarTitleConfig> = new Subject<NavbarTitleConfig>();
-  showLogoutButton: Subject<boolean> = new Subject<boolean>();
+  private navbarshowProgress: Subject<boolean> = new Subject<boolean>();
   private prevRoute: string;
   private currentRoute: string;
   constructor(private router: Router) {
@@ -42,5 +42,13 @@ export class NavbarService {
 
   setNavbarTitle(navbarTitleConfig: NavbarTitleConfig) {
     this.navbarTitle.next(navbarTitleConfig);
+  }
+
+  set showProgressbar(show: boolean) {
+    this.navbarshowProgress.next(show);
+  }
+
+  get navbarProgress$() {
+    return this.navbarshowProgress;
   }
 }

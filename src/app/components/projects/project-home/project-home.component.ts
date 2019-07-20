@@ -22,7 +22,7 @@ export class ProjectHomeComponent implements OnInit {
   userId: string = null;
   nodata: NoDataBoxData;
   showNoData = false;
-
+  showna = false;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -56,6 +56,8 @@ export class ProjectHomeComponent implements OnInit {
   }
 
   addMenu() {
+    this.showna = !this.showna;
+    this.navbarService.showProgressbar = this.showna;
     const bottomSheetRef = this.bottomSheet.open(ProjectHomeMenuComponent);
 
     bottomSheetRef.afterDismissed().subscribe((result) => {

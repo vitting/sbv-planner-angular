@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -15,6 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
+    MatProgressBarModule,
     FontAwesomeModule
   ],
   exports: [NavbarComponent]

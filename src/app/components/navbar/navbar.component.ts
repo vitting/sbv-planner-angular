@@ -12,9 +12,10 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit, OnDestroy {
   title = "Mine projekter";
   navbarTitleData: NavbarTitleConfig;
-  showLogout = true;
+  showNavBack = false;
+  showProgressbar = false;
   private navbarTitleSub: Subscription;
-  private navbarShowLogoutButtonSub: Subscription;
+  private navbarShowProgressSub: Subscription;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -25,8 +26,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.navbarTitleData = navbarTitleConfig;
     });
 
-    this.navbarShowLogoutButtonSub = this.navbarService.showLogoutButton.subscribe((showLogout) => {
-      this.showLogout = showLogout;
+    this.navbarShowProgressSub = this.navbarService.navbarProgress$.subscribe((show: boolean) => {
+      this.showProgressbar = show;
     });
   }
 
@@ -35,13 +36,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.navbarTitleSub.unsubscribe();
     }
 
-    if (this.navbarShowLogoutButtonSub) {
-      this.navbarShowLogoutButtonSub.unsubscribe();
+    if (this.navbarShowProgressSub) {
+      this.navbarShowProgressSub.unsubscribe();
     }
   }
 
   async logout() {
     await this.authService.logout();
-    this.showLogout = false;
+    this.router.navigate(["/login"]);
+  }
+
+  menuItemClick(action: string) {
+    switch (action) {
+      case "home":
+
+        break;
+      case "help":
+
+        break;
+      case "logout":
+
+        break;
+      default:
+        break;
+    }
   }
 }

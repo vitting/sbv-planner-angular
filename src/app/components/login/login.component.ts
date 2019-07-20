@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
       const password = this.loginForm.get("password").value;
       try {
         await this.authService.login(email, password);
-        this.navbarService.showLogoutButton.next(true);
       } catch (error) {
         console.log(error);
         this.showLoginError(error.code);

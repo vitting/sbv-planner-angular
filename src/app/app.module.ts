@@ -9,6 +9,27 @@ import { MatIconModule } from '@angular/material/icon';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faTimesCircle,
+  faTasks,
+  faUser,
+  faAddressBook,
+  faUserEdit,
+  faSignInAlt,
+  faSignOutAlt,
+  faClipboardList,
+  faBook,
+  faArchive
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faComment,
+  faComments,
+  faCalendar,
+  faLightbulb,
+  faClipboard
+} from '@fortawesome/free-regular-svg-icons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,26 +48,7 @@ import { TasksEditModule } from './components/tasks/tasks-edit/tasks-edit.module
 import { CommentsModule } from './components/comments/comments.module';
 import 'moment/locale/da';
 import { SplashScreenModule } from './components/shared/splash-screen/splash-screen.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faTimesCircle,
-  faTasks,
-  faUser,
-  faAddressBook,
-  faUserEdit,
-  faSignInAlt,
-  faSignOutAlt,
-  faClipboardList,
-  faBook,
-  faArchive } from '@fortawesome/free-solid-svg-icons';
-import {
-  faComment,
-  faComments,
-  faCalendar,
-  faLightbulb,
-  faClipboard } from '@fortawesome/free-regular-svg-icons';
-import { AuthService } from './services/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent
