@@ -9,8 +9,10 @@ import { Summary } from 'src/app/models/summary.model';
 export class ProjectDetailsComponent implements OnInit {
   @Input() projectDate: Date;
   @Input() summary: Summary;
+  @Input() editMode = false;
   @Output() commentsTotalClick: EventEmitter<void> = new EventEmitter<void>();
   @Output() tasksClick: EventEmitter<void> = new EventEmitter<void>();
+  @Output() editTasksClick: EventEmitter<void> = new EventEmitter<void>();
   constructor() { }
 
   ngOnInit() {
@@ -22,5 +24,9 @@ export class ProjectDetailsComponent implements OnInit {
 
   tasksClicked() {
     this.tasksClick.emit();
+  }
+
+  editTasksClicked() {
+    this.editTasksClick.emit();
   }
 }

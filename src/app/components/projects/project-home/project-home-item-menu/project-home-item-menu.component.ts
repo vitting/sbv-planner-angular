@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 export enum ProjectHomeItemMenuResult {
   editProject,
-  editTasks,
   gotoTasks,
   gotoComments
 }
@@ -15,7 +14,9 @@ export enum ProjectHomeItemMenuResult {
 })
 export class ProjectHomeItemMenuComponent implements OnInit {
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<ProjectHomeItemMenuComponent>) { }
+  constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public inEditMode: boolean,
+    private bottomSheetRef: MatBottomSheetRef<ProjectHomeItemMenuComponent>) { }
 
   ngOnInit() {
   }
@@ -31,9 +32,6 @@ export class ProjectHomeItemMenuComponent implements OnInit {
         break;
       case "editProject":
         result = ProjectHomeItemMenuResult.editProject;
-        break;
-      case "editTasks":
-        result = ProjectHomeItemMenuResult.editTasks;
         break;
     }
 

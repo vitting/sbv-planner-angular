@@ -17,11 +17,11 @@ export interface RemoveUserFromProjectResult {
   styleUrls: ['./project-list-item.component.scss']
 })
 export class ProjectListItemComponent implements OnInit, OnDestroy {
+  @Input() project: Project;
   @Input() showDetails = true;
   @Input() showDetailsEdit = false;
   @Input() showUsers = true;
   @Input() enableRemoveUserButton = false;
-  @Input() project: Project;
   @Input() projectButtonState = "none"; // none menu addperso
   @Input() editMode = false;
   @Output() editTitleDescClick = new EventEmitter<Project>();
@@ -40,15 +40,29 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
     numberOfItemsCompleted: 0
   };
   private summarySub: Subscription;
+  private projectItemEditModeSub: Subscription;
   constructor(
     private authService: AuthService,
     private projectService: ProjectService) { }
 
   ngOnInit() {
     this.getProjectUsers();
+    this.setEditModeState(this.projectService.isProjectItemInEditMode(this.project.id));
 
-    this.summarySub = this.projectService.getProjectSummary((this.project.id)).subscribe((summary) => {
-      this.summary = summary;
+    if (!this.editMode) {
+      this.summarySub = this.projectService.getProjectSummary((this.project.id)).subscribe((summary) => {
+        this.summary = summary;
+        this.projectService.addSummaryToCache(this.project.id, summary);
+      });
+    } else {
+      this.summary = this.projectService.getSummaryFromCache(this.project.id);
+    }
+
+    this.projectItemEditModeSub = this.projectService.projectItemEditMode$.subscribe((projectId: string) => {
+      if (projectId && projectId === this.project.id) {
+        this.setEditModeState(!this.editMode);
+        this.projectService.setProjectItemEditModeChange(projectId, this.editMode);
+      }
     });
   }
 
@@ -56,6 +70,15 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
     if (this.summarySub) {
       this.summarySub.unsubscribe();
     }
+
+    if (this.projectItemEditModeSub) {
+      this.projectItemEditModeSub.unsubscribe();
+    }
+  }
+
+  private setEditModeState(editMode: boolean) {
+    this.editMode = editMode;
+    this.enableRemoveUserButton = !editMode;
   }
 
   private getProjectUsers() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -78,7 +78,9 @@ export class ProjectHomeComponent implements OnInit {
   }
 
   projectItemMenuClick(project: Project) {
-    const bottomSheetRef = this.bottomSheet.open(ProjectHomeItemMenuComponent);
+    const bottomSheetRef = this.bottomSheet.open(ProjectHomeItemMenuComponent, {
+      data: this.projectService.isProjectItemInEditMode(project.id)
+    });
 
     bottomSheetRef.afterDismissed().subscribe((result) => {
       if (result) {
@@ -92,9 +94,6 @@ export class ProjectHomeComponent implements OnInit {
           case ProjectHomeItemMenuResult.editProject:
             this.gotoEditProject(project);
             break;
-          case ProjectHomeItemMenuResult.editTasks:
-            this.gotoEditTasks(project);
-            break;
           default:
             console.log("OTHER");
         }
@@ -103,7 +102,7 @@ export class ProjectHomeComponent implements OnInit {
   }
 
   gotoEditProject(project: Project) {
-    this.router.navigate(["/projects", project.id, "edit"]);
+    this.projectService.setProjectItemEditMode(project.id);
   }
 
   gotoEditTasks(project: Project) {
@@ -129,6 +128,17 @@ export class ProjectHomeComponent implements OnInit {
 
   async removeUserClick(removeUserResult: RemoveUserFromProjectResult) {
     const projectId = await this.projectService.removeUserFromProject(removeUserResult.project, removeUserResult.user);
+    if (projectId) {
+      this.getProjects();
+    }
+  }
+
+  editTasksClick(project: Project) {
+    this.gotoEditTasks(project);
+  }
+
+  async editTitleDescClick(project: Project) {
+    const projectId = await this.projectService.editProject(project);
     if (projectId) {
       this.getProjects();
     }

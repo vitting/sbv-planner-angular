@@ -14,13 +14,50 @@ import {
   DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { take } from 'rxjs/operators';
 import { User } from '../models/user.model';
+import { Subject } from 'rxjs';
+import { Summary } from '../models/summary.model';
+
+export interface ProjectItemEditModeChange {
+  projectId: string;
+  editMode: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-
+  private itemEditMode: Subject<string> = new Subject<string>();
+  private itemsInEditMode: string[] = [];
+  private summaryCache: { [key: string]: Summary } = {};
   constructor(private dialog: MatDialog, private firestoreService: FirestoreService, private authService: AuthService) { }
+
+  addSummaryToCache(projectId: string, summary: Summary) {
+    this.summaryCache[projectId] = summary;
+  }
+
+  getSummaryFromCache(projectId: string) {
+    return this.summaryCache[projectId];
+  }
+
+  isProjectItemInEditMode(projectId: string) {
+    return this.itemsInEditMode.indexOf(projectId) !== -1;
+  }
+
+  setProjectItemEditModeChange(projectId: string, editMode: boolean) {
+    if (editMode && this.itemsInEditMode.indexOf(projectId) === -1) {
+      this.itemsInEditMode.push(projectId);
+    } else {
+      this.itemsInEditMode.splice(this.itemsInEditMode.indexOf(projectId));
+    }
+  }
+
+  setProjectItemEditMode(projectId: string) {
+    this.itemEditMode.next(projectId);
+  }
+
+  get projectItemEditMode$() {
+    return this.itemEditMode;
+  }
 
   getProjectSummary(projectId: string) {
     return this.firestoreService.getSummary(projectId);
@@ -78,14 +115,19 @@ export class ProjectService {
       data: dialogEditData
     });
 
-    dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-      if (result) {
-        const projectId = await this.firestoreService.updateProject(
-          this.authService.userId,
-          project.id,
-          result.field1Value,
-          result.field2Value);
-      }
+    return new Promise((resolve, reject) => {
+      dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
+        if (result) {
+          const projectId = await this.firestoreService.updateProject(
+            this.authService.userId,
+            project.id,
+            result.field1Value,
+            result.field2Value);
+          resolve(projectId);
+        } else {
+          resolve(null);
+        }
+      });
     });
   }
 

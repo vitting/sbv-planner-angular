@@ -1,18 +1,17 @@
 <mat-nav-list>
-  <a mat-list-item (click)="action($event, 'gotoTasks')">
-    <span>Gå til opgaver</span>
-  </a>
-  <mat-divider></mat-divider>
-  <a mat-list-item (click)="action($event, 'gotoComments')">
-    <span>Gå til kommentare</span>
-  </a>
-  <mat-divider></mat-divider>
   <a mat-list-item (click)="action($event, 'editProject')">
-    <span>Redigere projektet</span>
+    <span *ngIf="!inEditMode">Redigere projektet</span>
+    <span *ngIf="inEditMode">Afslut redigering</span>
   </a>
-  <mat-divider></mat-divider>
-  <a mat-list-item (click)="action($event, 'editTasks')">
-    <span>Redigere opgaver</span>
-  </a>
-</mat-nav-list>
+  <div *ngIf="!inEditMode">
+    <mat-divider></mat-divider>
+    <a mat-list-item (click)="action($event, 'gotoTasks')">
+      <span>Gå til opgaver</span>
+    </a>
+    <mat-divider></mat-divider>
+    <a mat-list-item (click)="action($event, 'gotoComments')">
+      <span>Gå til kommentare</span>
+    </a>
+  </div>
 
+</mat-nav-list>

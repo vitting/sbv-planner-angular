@@ -13,8 +13,10 @@
 
       </div>
       <app-project-details *ngIf="showDetails" [projectDate]="project?.createdAt.toDate()" [summary]="summary"
-        (commentsTotalClick)="commentsTotalClicked()" (tasksClick)="tasksClicked()"></app-project-details>
-      <app-project-details-edit *ngIf="showDetailsEdit" [project]="project" [summary]="summary" [editMode]="editMode" (editTasksClick)="editTasksClicked($event)">
+        (commentsTotalClick)="commentsTotalClicked()" (tasksClick)="tasksClicked()"
+        (editTasksClick)="editTasksClicked()" [editMode]="editMode"></app-project-details>
+      <app-project-details-edit *ngIf="showDetailsEdit" [project]="project" [summary]="summary" [editMode]="editMode"
+        (editTasksClick)="editTasksClicked($event)">
       </app-project-details-edit>
       <app-users-list [type]="'project'" *ngIf="showUsers" [users]="users"
         [enableRemoveUserButton]="enableRemoveUserButton" (userClick)="userClicked($event)"></app-users-list>
@@ -25,9 +27,10 @@
     <button mat-icon-button *ngIf="projectButtonState === 'addperson'" class="list-item-button" (click)="addPerson()">
       <mat-icon>person_add</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="projectButtonState === 'delete'" class="list-item-button" (click)="deleteProjectClicked()">
-        <mat-icon>delete</mat-icon>
-      </button>
+    <button mat-icon-button *ngIf="projectButtonState === 'delete'" class="list-item-button"
+      (click)="deleteProjectClicked()">
+      <mat-icon>delete</mat-icon>
+    </button>
     <div class="empty-space" *ngIf="projectButtonState === 'none'"></div>
   </div>
 </div>

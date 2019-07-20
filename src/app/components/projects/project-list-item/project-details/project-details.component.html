@@ -4,15 +4,24 @@
     {{ projectDate | amLocal:'da' | amDateFormat: 'DD-MM-YYYY' }}
   </div>
   <div>
-    <button mat-button (click)="commentClicked()">
+    <button *ngIf="!editMode" mat-button (click)="commentClicked()">
       <fa-icon [icon]="['far', 'comment']" class="app-project-details-icon"></fa-icon><span
         class="task-action-text">{{summary?.numberOfComments}}</span>
     </button>
+    <span *ngIf="editMode">
+        <fa-icon [icon]="['far', 'comment']" class="app-project-details-icon"></fa-icon><span
+        class="task-action-text">{{summary?.numberOfComments}}</span>
+    </span>
   </div>
   <div>
-    <button mat-button (click)="tasksClicked()">
-      <fa-icon [icon]="['fas', 'tasks']" class="app-project-details-icon"></fa-icon><span
+    <button *ngIf="editMode" mat-icon-button (click)="editTasksClicked()"><mat-icon>edit</mat-icon></button>
+    <button *ngIf="!editMode" mat-button (click)="tasksClicked()">
+        <fa-icon [icon]="['fas', 'tasks']" class="app-project-details-icon"></fa-icon><span
         class="task-action-text">{{ summary?.numberOfItemsCompleted }} / {{ summary?.numberOfItems }}</span>
     </button>
+    <span *ngIf="editMode">
+        <fa-icon [icon]="['fas', 'tasks']" class="app-project-details-icon"></fa-icon><span
+        class="task-action-text">{{ summary?.numberOfItemsCompleted }} / {{ summary?.numberOfItems }}</span>
+    </span>
   </div>
 </div>
