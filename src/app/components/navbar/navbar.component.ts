@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavbarService, NavbarTitleConfig } from 'src/app/services/navbar.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -11,23 +11,34 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   title = "Mine projekter";
-  navbarTitleData: NavbarTitleConfig;
+  navbarTitle: string;
   showNavBack = false;
   showProgressbar = false;
   private navbarTitleSub: Subscription;
   private navbarShowProgressSub: Subscription;
+  private navbarRouteChangeSub: Subscription;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
-    this.navbarTitleSub = this.navbarService.navbarTitle.subscribe((navbarTitleConfig: NavbarTitleConfig) => {
-      this.navbarTitleData = navbarTitleConfig;
+    this.navbarTitleSub = this.navbarService.navbarTitle.subscribe((title: string) => {
+      this.navbarTitle = title;
     });
 
     this.navbarShowProgressSub = this.navbarService.navbarProgress$.subscribe((show: boolean) => {
       this.showProgressbar = show;
+    });
+
+    this.navbarRouteChangeSub = this.navbarService.navbarRouteChange$.subscribe(() => {
+      if (this.navbarService.prevRoutesIndex.length) {
+        console.log(this.navbarService.prevRoutesIndex);
+        this.showNavBack = true;
+      } else {
+        this.showNavBack = false;
+      }
+
     });
   }
 
@@ -39,6 +50,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.navbarShowProgressSub) {
       this.navbarShowProgressSub.unsubscribe();
     }
+
+    if (this.navbarRouteChangeSub) {
+      this.navbarRouteChangeSub.unsubscribe();
+    }
+  }
+
+  backButtonClick() {
+    this.navbarService.emitRouteBackChange();
   }
 
   async logout() {

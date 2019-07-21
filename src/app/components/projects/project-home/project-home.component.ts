@@ -23,7 +23,6 @@ export class ProjectHomeComponent implements OnInit {
   userId: string = null;
   nodata: NoDataBoxData;
   showNoData = false;
-  showna = false;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -36,13 +35,7 @@ export class ProjectHomeComponent implements OnInit {
       textline1: "Du har endnu ikke nogen aktive projekter.",
       textline2: "Du kan tilslutte dig et eksisterende projekt eller oprette dit eget projekt."
     };
-    this.navbarService.navbarTitle.next({
-      title: "Mine projekter",
-      icon: {
-        collection: "far",
-        icon: "clipboard"
-      }
-    });
+    this.navbarService.navbarTitle.next("Mine projekter");
     this.userId = this.authService.userId;
     this.getProjects();
   }
@@ -57,8 +50,6 @@ export class ProjectHomeComponent implements OnInit {
   }
 
   addMenu() {
-    this.showna = !this.showna;
-    this.navbarService.showProgressbar = this.showna;
     const bottomSheetRef = this.bottomSheet.open(ProjectHomeMenuComponent);
 
     bottomSheetRef.afterDismissed().subscribe((result) => {
@@ -125,7 +116,6 @@ export class ProjectHomeComponent implements OnInit {
 
   gotoComments(project: Project) {
     this.router.navigate(["/projects", project.id, "comments"]);
-    console.log(project);
   }
 
   gotoTasks(project: Project) {

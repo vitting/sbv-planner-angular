@@ -1,14 +1,14 @@
 <nav class="app-appbar">
   <div>
-    <button mat-icon-button *ngIf="showNavBack">
+    <button mat-icon-button *ngIf="showNavBack" (tap)="backButtonClick()">
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
     <a [routerLink]="['/']" routerLinkActive="router-link-active">
       <img src="assets/images/sbv_logo_250x250.png" alt="Logo" class="brand">
     </a>
   </div>
-  <div *ngIf="navbarTitleData">
-    <fa-icon [icon]="[navbarTitleData?.icon.collection, navbarTitleData?.icon.icon]"></fa-icon> {{navbarTitleData?.title}}
+  <div *ngIf="navbarTitle">
+    {{navbarTitle}}
   </div>
   <div>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">

@@ -10,6 +10,7 @@ import {
   DialogConfirmResult,
   DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { NavbarService } from './navbar.service';
+import { FabButtonService } from './fab-button.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class CommentService {
     private firestoreService: FirestoreService,
     private authService: AuthService,
     private navbarService: NavbarService,
+    private fabButtonService: FabButtonService,
     private dialog: MatDialog) { }
 
   getComments(parentId: string) {
@@ -35,6 +37,7 @@ export class CommentService {
       multiLine: 3
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
       autoFocus: true,
@@ -43,6 +46,7 @@ export class CommentService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result) {
           this.navbarService.showProgressbar = true;
           const commentId = await this.firestoreService.addComment(
@@ -70,6 +74,7 @@ export class CommentService {
       multiLine: 3
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
       autoFocus: true,
@@ -78,6 +83,7 @@ export class CommentService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result) {
           this.navbarService.showProgressbar = true;
           const commentId = await this.firestoreService.updateComment(comment.id, result.fieldValue);
@@ -100,6 +106,7 @@ export class CommentService {
       message2: null
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
@@ -108,6 +115,7 @@ export class CommentService {
 
     return new Promise((resolve, reject) => {
       dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           this.navbarService.showProgressbar = true;
           const commentId = await this.firestoreService.deleteComment(comment.id, comment.parentId);

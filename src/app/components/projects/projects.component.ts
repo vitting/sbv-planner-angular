@@ -20,13 +20,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next({
-      title: "Tilslut til projekt",
-      icon: {
-        collection: "far",
-        icon: "clipboard"
-      }
-    });
+    this.navbarService.navbarTitle.next("Tilslut til projekt");
 
     this.projectSub = this.projectService.getProjectsNotContainingUserId().subscribe((projects) => {
       this.projects = projects;

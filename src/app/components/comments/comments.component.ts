@@ -51,21 +51,9 @@ export class CommentsComponent implements OnInit {
 
   private setTitle() {
     if (this.commentType === "task") {
-      this.navbarService.navbarTitle.next({
-        title: "Opgave kommentar",
-        icon: {
-          collection: "far",
-          icon: "comment"
-        }
-      });
+      this.navbarService.navbarTitle.next("Opgave kommentar");
     } else {
-      this.navbarService.navbarTitle.next({
-        title: "Projekt kommentar",
-        icon: {
-          collection: "far",
-          icon: "comment"
-        }
-      });
+      this.navbarService.navbarTitle.next("Projekt kommentar");
     }
   }
 

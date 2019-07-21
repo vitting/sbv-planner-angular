@@ -35,13 +35,7 @@ export class TasksEditComponent implements OnInit, OnDestroy {
       textline2: "Vær den første til at oprette en opgave."
     };
 
-    this.navbarService.navbarTitle.next({
-      title: "Rediger opgaver",
-      icon: {
-        collection: "fas",
-        icon: "tasks"
-      }
-    });
+    this.navbarService.navbarTitle.next("Rediger opgaver");
 
     this.projectId = this.route.snapshot.params.id;
 

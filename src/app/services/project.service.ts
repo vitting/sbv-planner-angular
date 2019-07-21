@@ -17,6 +17,7 @@ import { User } from '../models/user.model';
 import { Subject } from 'rxjs';
 import { Summary } from '../models/summary.model';
 import { NavbarService } from './navbar.service';
+import { FabButtonService } from './fab-button.service';
 
 export interface ProjectItemEditModeChange {
   projectId: string;
@@ -34,6 +35,7 @@ export class ProjectService {
     private dialog: MatDialog,
     private firestoreService: FirestoreService,
     private navbarService: NavbarService,
+    private fabuttonService: FabButtonService,
     private authService: AuthService) { }
 
   addSummaryToCache(projectId: string, summary: Summary) {
@@ -86,14 +88,16 @@ export class ProjectService {
       field2Value: null
     };
 
+    this.fabuttonService.showFabButton = false;
     const dialogCreateRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
-      autoFocus: false,
+      autoFocus: true,
       data: dialogCreateData
     });
 
     return new Promise<string>((resolve, reject) => {
       dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
+        this.fabuttonService.showFabButton = true;
         if (result) {
           this.navbarService.showProgressbar = true;
           const projectId = await this.firestoreService.addProject(this.authService.userId, result.field1Value, result.field2Value);
@@ -117,6 +121,7 @@ export class ProjectService {
       field2Value: project.description
     };
 
+    this.fabuttonService.showFabButton = false;
     const dialogEditRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: false,
@@ -125,6 +130,7 @@ export class ProjectService {
 
     return new Promise((resolve, reject) => {
       dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
+        this.fabuttonService.showFabButton = true;
         if (result) {
           this.navbarService.showProgressbar = true;
           const projectId = await this.firestoreService.updateProject(
@@ -151,6 +157,7 @@ export class ProjectService {
       message2: "Alle opgaver og kommentarer bliver også slettet!"
     };
 
+    this.fabuttonService.showFabButton = false;
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
@@ -158,6 +165,7 @@ export class ProjectService {
     });
 
     dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+      this.fabuttonService.showFabButton = true;
       if (result && result.action === DialogConfirmAction.yes) {
         this.navbarService.showProgressbar = true;
         await this.firestoreService.deleteProject(project.id);
@@ -179,6 +187,7 @@ export class ProjectService {
       message2: null
     };
 
+    this.fabuttonService.showFabButton = false;
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       maxWidth: '350',
       autoFocus: false,
@@ -187,6 +196,7 @@ export class ProjectService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        this.fabuttonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           const projectId = await this.firestoreService.removePersonFromProject(project.id, user.id);
           resolve(projectId);

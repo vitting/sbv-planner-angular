@@ -26,13 +26,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     private taskService: TaskService) { }
 
   ngOnInit() {
-    this.navbarService.setNavbarTitle({
-      title: "Opgaver",
-      icon: {
-        collection: "fas",
-        icon: "tasks"
-      }
-    });
+    this.navbarService.setNavbarTitle("Opgaver");
 
     this.nodata = {
       textline1: "Der er endnu ikke nogen opgaver.",

@@ -18,6 +18,7 @@ import {
 import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
 import { SubTask } from '../models/subtask.model';
 import { NavbarService } from './navbar.service';
+import { FabButtonService } from './fab-button.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class TaskService {
     private firestoreService: FirestoreService,
     private authService: AuthService,
     private navbarService: NavbarService,
+    private fabButtonService: FabButtonService,
     private dialog: MatDialog) { }
 
   getTasksOnce(projectId: string) {
@@ -52,6 +54,7 @@ export class TaskService {
       field2Value: null
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: false,
@@ -60,6 +63,7 @@ export class TaskService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result) {
           this.navbarService.showProgressbar = true;
           const taskId = await this.firestoreService.addTask(
@@ -88,6 +92,7 @@ export class TaskService {
       field2Value: task.description
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: false,
@@ -96,6 +101,7 @@ export class TaskService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result) {
           this.navbarService.showProgressbar = true;
           const taskId = await this.firestoreService.updateTask(this.authService.userId, result.field1Value, result.field2Value, task);
@@ -118,6 +124,7 @@ export class TaskService {
       message2: "Gruppen og alle opgaver bliver slettet!"
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       maxWidth: '350',
       autoFocus: false,
@@ -126,6 +133,7 @@ export class TaskService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           this.navbarService.showProgressbar = true;
           const taskId = await this.firestoreService.deleteTask(task.id, task.projectId);
@@ -148,6 +156,7 @@ export class TaskService {
       message2: null
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       maxWidth: '350',
       autoFocus: false,
@@ -156,6 +165,7 @@ export class TaskService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           this.navbarService.showProgressbar = true;
           const taskId = await this.firestoreService.markAllSubTasksAsCompleted(this.authService.userId, task.id);
@@ -182,6 +192,7 @@ export class TaskService {
       multiLine: 0
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
       autoFocus: true,
@@ -190,6 +201,7 @@ export class TaskService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe((result: Dialog1FieldResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result) {
           this.navbarService.showProgressbar = true;
           const subTaskId = this.firestoreService.addSubTask(this.authService.userId, result.fieldValue, task.projectId, task.id);
@@ -212,6 +224,7 @@ export class TaskService {
       multiLine: 0
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
       autoFocus: false,
@@ -220,6 +233,7 @@ export class TaskService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe((result: Dialog1FieldResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result && result.fieldValue.trim()) {
           this.navbarService.showProgressbar = true;
           const subTaskId = this.firestoreService.updateSubTask(this.authService.userId, result.fieldValue, subTask);
@@ -242,6 +256,7 @@ export class TaskService {
       message2: subTask.title
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       maxWidth: '350',
       autoFocus: false,
@@ -250,6 +265,7 @@ export class TaskService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           this.navbarService.showProgressbar = true;
           const subTaskId = await this.firestoreService.deleteSubTask(subTask);
@@ -280,6 +296,7 @@ export class TaskService {
       message2: null
     };
 
+    this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       maxWidth: '350',
       autoFocus: false,
@@ -288,6 +305,7 @@ export class TaskService {
 
     return new Promise((resolve, reject) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           const resultId = await this.firestoreService.removePersonFromSubTask(subTaskId, userId);
           resolve(resultId);

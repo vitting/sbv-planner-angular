@@ -2,34 +2,77 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 
-export interface NavbarTitleConfig {
-  title: string;
-  icon: {
-    collection: string;
-    icon: string;
-  };
+// export interface NavbarTitleConfig {
+//   title: string;
+//   icon: {
+//     collection: string;
+//     icon: string;
+//   };
+// }
+
+export interface NavbarRoutes {
+  prevRoute: string;
+  currentRoute: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavbarService {
-  navbarTitle: Subject<NavbarTitleConfig> = new Subject<NavbarTitleConfig>();
+  navbarTitle: Subject<string> = new Subject<string>();
+  private navbarRouteChange: Subject<void> = new Subject<void>();
+  private navbarRouteBackChange: Subject<void> = new Subject<void>();
   private navbarshowProgress: Subject<boolean> = new Subject<boolean>();
-  private prevRoute: string;
-  private currentRoute: string;
+  private backRouteClicked = false;
+  prevRoute: string = null;
+  currentRoute: string = null;
+  prevRoutesIndex: string[] = [];
   constructor(private router: Router) {
     this.currentRoute = this.router.url;
-    console.log("PREV URL", this.prevRoute);
-    console.log("CURRENT URL", this.currentRoute);
+    this.prevRoute = this.currentRoute;
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.prevRoute = this.currentRoute;
         this.currentRoute = event.url;
-        console.log("PREV URL", this.prevRoute);
-        console.log("CURRENT URL", this.currentRoute);
+        // console.log("PrevRoute", this.prevRoute);
+        // console.log("CurrentRoute", this.currentRoute);
+        // console.log("BackButtonClicked", this.backRouteClicked);
+
+
+        if (this.currentRoute && this.currentRoute === "/") {
+          this.prevRoutesIndex = [];
+          this.prevRoute = null;
+        } else {
+          if (!this.backRouteClicked && this.prevRoute) {
+            this.prevRoutesIndex.push(this.prevRoute);
+          }
+
+        }
+        console.log(this.prevRoutesIndex);
+
+        this.emitRouteChange();
+        this.backRouteClicked = false;
       }
     });
+
+    this.navbarRouteBackChange.subscribe(async () => {
+      this.backRouteClicked = true;
+      const route = this.prevRoutesIndex.pop();
+      await this.router.navigate([route]);
+    });
+  }
+
+  private emitRouteChange() {
+    this.navbarRouteChange.next();
+  }
+
+  emitRouteBackChange() {
+    this.navbarRouteBackChange.next();
+  }
+
+  get navbarRouteChange$() {
+    return this.navbarRouteChange;
   }
 
   get previousUrl() {
@@ -40,8 +83,8 @@ export class NavbarService {
     return this.currentRoute;
   }
 
-  setNavbarTitle(navbarTitleConfig: NavbarTitleConfig) {
-    this.navbarTitle.next(navbarTitleConfig);
+  setNavbarTitle(title: string) {
+    this.navbarTitle.next(title);
   }
 
   set showProgressbar(show: boolean) {
