@@ -10,6 +10,7 @@ import { ProjectHomeMenuComponent, ProjectHomeMenuResult } from './project-home-
 import { RemoveUserFromProjectResult } from '../project-list-item/project-list-item.component';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { ProjectService } from 'src/app/services/project.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-home',
@@ -96,6 +97,9 @@ export class ProjectHomeComponent implements OnInit {
           case ProjectHomeItemMenuResult.editProject:
             this.gotoEditProject(project);
             break;
+          case ProjectHomeItemMenuResult.removeFromProject:
+            this.removeUserFromProject(project, this.authService.authUserInfo);
+            break;
           default:
             console.log("OTHER");
         }
@@ -128,11 +132,15 @@ export class ProjectHomeComponent implements OnInit {
     this.router.navigate(["/projects", project.id, "tasks"]);
   }
 
-  async removeUserClick(removeUserResult: RemoveUserFromProjectResult) {
-    const projectId = await this.projectService.removeUserFromProject(removeUserResult.project, removeUserResult.user);
+  async removeUserFromProject(project: Project, user: User) {
+    const projectId = await this.projectService.removeUserFromProject(project, user);
     if (projectId) {
       this.getProjects();
     }
+  }
+
+  async removeUserClick(removeUserResult: RemoveUserFromProjectResult) {
+    this.removeUserFromProject(removeUserResult.project, removeUserResult.user);
   }
 
   editTasksClick(project: Project) {

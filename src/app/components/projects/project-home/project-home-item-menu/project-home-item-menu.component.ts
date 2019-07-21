@@ -3,6 +3,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
 
 export enum ProjectHomeItemMenuResult {
   editProject,
+  removeFromProject,
   gotoTasks,
   gotoComments
 }
@@ -32,6 +33,9 @@ export class ProjectHomeItemMenuComponent implements OnInit {
         break;
       case "editProject":
         result = ProjectHomeItemMenuResult.editProject;
+        break;
+      case "removeFromProject":
+        result = ProjectHomeItemMenuResult.removeFromProject;
         break;
     }
 

@@ -172,10 +172,10 @@ export class ProjectService {
 
   removeUserFromProject(project: Project, user: User) {
     const data: DialogConfirmData = {
-      header: "Fjern fra projekt",
+      header: "Forlad projekt",
       button1Text: "Ja",
       button2Text: "Nej",
-      message1: "Vil du fjerne dig fra projektet?",
+      message1: "Vil du forlade projektet?",
       message2: null
     };
 
