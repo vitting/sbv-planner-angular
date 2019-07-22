@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FirestoreService } from 'src/app/services/firestore.service';
-import { Observable, interval, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,10 +11,10 @@ import { UserService } from 'src/app/services/user.service';
 export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
   private usersSub: Subscription;
-  constructor(private firestoreService: FirestoreService, private userService: UserService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.usersSub = this.firestoreService.getUsersWaitingForApproval().subscribe((users) => {
+    this.usersSub = this.userService.getUsersWaitingForApproval().subscribe((users) => {
       this.users = users;
     });
   }

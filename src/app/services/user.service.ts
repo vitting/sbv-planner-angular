@@ -35,4 +35,8 @@ export class UserService {
     this.navbarService.showProgressbar = false;
     return Promise.resolve(result);
   }
+
+  getUsersWaitingForApproval() {
+    return this.firestoreService.getUsersWaitingForApproval();
+  }
 }

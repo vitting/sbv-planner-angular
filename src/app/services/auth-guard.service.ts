@@ -14,11 +14,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
     ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-      console.log("AuthGuard");
-
       return this.authService.isUserAuthenticated.pipe(map((result) => {
-        console.log("AuthGuard", this.authService.authUserInfo);
-        console.log("AuthGuard", result);
         if (result && this.authService.authUserInfo.accepted) {
           if (route.data && route.data.onlyAdmin) {
             if (this.authService.authUserInfo.admin) {
