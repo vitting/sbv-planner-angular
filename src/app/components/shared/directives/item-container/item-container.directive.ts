@@ -17,8 +17,11 @@ export class ItemContainerDirective implements OnInit {
         this.render.addClass(this.elemRef.nativeElement, "app-item-container-subtask");
         break;
       case "comment":
-          this.render.addClass(this.elemRef.nativeElement, "app-item-container-comment");
-          break;
+        this.render.addClass(this.elemRef.nativeElement, "app-item-container-comment");
+        break;
+      case "user":
+        this.render.addClass(this.elemRef.nativeElement, "app-item-container-user");
+        break;
     }
   }
 }

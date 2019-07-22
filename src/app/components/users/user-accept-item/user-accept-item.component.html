@@ -1,0 +1,14 @@
+<div mat-list-item appItemContainer="user" class="accept-user-item">
+  <div>{{user.name}}</div>
+  <div class="accept-user-item-buttons" *ngIf="!showUndo">
+    <button mat-icon-button (tap)="acceptUserClick(user, false)">
+      <mat-icon>remove_circle_outline</mat-icon>
+    </button>
+    <button mat-icon-button (tap)="acceptUserClick(user, true)">
+      <mat-icon>check_circle_outline</mat-icon>
+    </button>
+  </div>
+  <div *ngIf="showUndo">
+    <button mat-button (tap)="undoAction()">Fortryd ({{count}})</button>
+  </div>
+</div>

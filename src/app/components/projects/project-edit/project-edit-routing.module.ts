@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProjectEditComponent } from './project-edit.component';
 import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { AuthGuard } from 'src/app/services/auth-guard.service';
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(["login"]);
 
 const routes: Routes = [{
@@ -12,8 +13,8 @@ const routes: Routes = [{
 }, {
   path: "projects/:projectId/edit",
   component: ProjectEditComponent,
-  canActivate: [AngularFireAuthGuard],
-  data: { authGuardPipe: redirectUnauthorizedToLogin }
+  canActivate: [AuthGuard],
+  data: { onlyAdmin: false }
 }];
 
 @NgModule({

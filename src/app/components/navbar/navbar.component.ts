@@ -14,9 +14,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navbarTitle: string;
   showNavBack = false;
   showProgressbar = false;
+  showIndicator = false;
   private navbarTitleSub: Subscription;
   private navbarShowProgressSub: Subscription;
   private navbarRouteChangeSub: Subscription;
+  private navbarShowIndicatorSub: Subscription;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -38,7 +40,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       } else {
         this.showNavBack = false;
       }
+    });
 
+    this.navbarShowIndicatorSub = this.navbarService.navbarShowIndicator$.subscribe((show) => {
+      this.showIndicator = show;
     });
   }
 
@@ -53,6 +58,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     if (this.navbarRouteChangeSub) {
       this.navbarRouteChangeSub.unsubscribe();
+    }
+
+    if (this.navbarShowIndicatorSub) {
+      this.navbarShowIndicatorSub.unsubscribe();
     }
   }
 
@@ -74,6 +83,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
         break;
       case "logout":
+
+        break;
+      case "approveusers":
 
         break;
       default:

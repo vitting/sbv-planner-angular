@@ -2,7 +2,8 @@ export interface User {
   id: string;
   name: string;
   createdAt: any;
-  approved: boolean;
+  accepted: boolean;
+  waitingForApproval: boolean;
   admin: boolean;
   editor: boolean;
   active: boolean;
@@ -14,7 +15,8 @@ export class UserItem implements User {
     public id: string,
     public name: string,
     public createdAt: any,
-    public approved: boolean = true,
+    public accepted: boolean = false,
+    public waitingForApproval: boolean = true,
     public admin: boolean = false,
     public editor: boolean = true,
     public active: boolean = true,
@@ -28,7 +30,8 @@ export class UserItem implements User {
       editor: this.editor,
       name: this.name,
       createdAt: this.createdAt,
-      approved: this.approved,
+      accepted: this.accepted,
+      waitingForApproval: this.waitingForApproval,
       active: this.active,
       photoUrl: this.photoUrl
     };

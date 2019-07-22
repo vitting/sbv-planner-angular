@@ -48,6 +48,7 @@ import { TasksEditModule } from './components/tasks/tasks-edit/tasks-edit.module
 import { CommentsModule } from './components/comments/comments.module';
 import 'moment/locale/da';
 import { SplashScreenModule } from './components/shared/splash-screen/splash-screen.module';
+import { UsersModule } from './components/users/users.module';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { SplashScreenModule } from './components/shared/splash-screen/splash-scr
     TasksEditModule,
     CommentsModule,
     SplashScreenModule,
+    UsersModule,
     AppRoutingModule // Keep this routing module last to make wildcard work correct
   ],
   providers: [AngularFireAuthGuard],

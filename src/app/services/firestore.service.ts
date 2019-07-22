@@ -95,6 +95,59 @@ export class FirestoreService {
     }
   }
 
+  getUsersWaitingForApproval() {
+    return this.db.collection<User>("users", (ref) => {
+      return ref.where("waitingForApproval", "==", true).orderBy("name");
+    }).valueChanges();
+  }
+
+  getUsersAccepted() {
+    return this.db.collection<User>("users", (ref) => {
+      return ref.where("approved", "==", true).orderBy("name");
+    }).valueChanges();
+  }
+
+  getUsersRejected() {
+    return this.db.collection<User>("users", (ref) => {
+      return ref.where("approved", "==", null).orderBy("name");
+    }).valueChanges();
+  }
+
+  async updateUserAccepted(userId: string, accepted: boolean): Promise<string | null> {
+    try {
+      await this.db.collection<User>("users").doc(userId).update({
+        waitingForApproval: false,
+        accepted
+      });
+      return userId;
+    } catch (error) {
+      console.error("updateUserAccepted", error);
+      return null;
+    }
+  }
+
+  async updateUsersAccepted(users: User[], accepted: boolean): Promise<string | null> {
+    try {
+      if (users && users.length) {
+        const batch = this.db.firestore.batch();
+        users.forEach((user) => {
+          const userRef = this.db.collection<User>("users").doc(user.id).ref;
+          batch.update(userRef, {
+            waitingForApproval: false,
+            accepted
+          });
+        });
+
+        await batch.commit();
+      }
+
+      return "ok";
+    } catch (error) {
+      console.error("updateUsersAccepted", error);
+      return null;
+    }
+  }
+
   async getProjectTaskName(projectId: string, taskId: string): Promise<ProjectTaskName> {
     const projectTaskName: ProjectTaskName = {
       projectName: null,
@@ -460,7 +513,7 @@ export class FirestoreService {
       await this.db.collection<SubTask>("subtasks").doc(subTask.id).delete();
       return Promise.resolve(subTask.id);
     } catch (error) {
-      return Promise.reject(error) ;
+      return Promise.reject(error);
     }
   }
 

@@ -1,0 +1,15 @@
+.accept-user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .accept-user-item-buttons {
+    button:first-child {
+      margin-right: 20px;
+    }
+  }
+}
+
+button {
+  outline: none;
+}

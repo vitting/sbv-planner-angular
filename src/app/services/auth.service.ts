@@ -3,14 +3,14 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
 import { switchMap } from 'rxjs/operators';
-import { of, combineLatest, Subject } from 'rxjs';
+import { of, combineLatest, ReplaySubject } from 'rxjs';
 import { SplashService } from './splash.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated: Subject<boolean> = new Subject<boolean>();
+  private isAuthenticated: ReplaySubject<boolean> = new ReplaySubject<boolean>();
   private user: User;
   private id: string;
   private users: { [key: string]: User } = {};

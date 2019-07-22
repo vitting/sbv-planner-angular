@@ -2,14 +2,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 
-// export interface NavbarTitleConfig {
-//   title: string;
-//   icon: {
-//     collection: string;
-//     icon: string;
-//   };
-// }
-
 export interface NavbarRoutes {
   prevRoute: string;
   currentRoute: string;
@@ -23,6 +15,7 @@ export class NavbarService {
   private navbarRouteChange: Subject<void> = new Subject<void>();
   private navbarRouteBackChange: Subject<void> = new Subject<void>();
   private navbarshowProgress: Subject<boolean> = new Subject<boolean>();
+  private navbarshowIndicator: Subject<boolean> = new Subject<boolean>();
   private backRouteClicked = false;
   prevRoute: string = null;
   currentRoute: string = null;
@@ -35,10 +28,6 @@ export class NavbarService {
       if (event instanceof NavigationEnd) {
         this.prevRoute = this.currentRoute;
         this.currentRoute = event.url;
-        // console.log("PrevRoute", this.prevRoute);
-        // console.log("CurrentRoute", this.currentRoute);
-        // console.log("BackButtonClicked", this.backRouteClicked);
-
 
         if (this.currentRoute && this.currentRoute === "/") {
           this.prevRoutesIndex = [];
@@ -49,7 +38,6 @@ export class NavbarService {
           }
 
         }
-        console.log(this.prevRoutesIndex);
 
         this.emitRouteChange();
         this.backRouteClicked = false;
@@ -69,6 +57,14 @@ export class NavbarService {
 
   emitRouteBackChange() {
     this.navbarRouteBackChange.next();
+  }
+
+  set showIndicator(status: boolean) {
+    this.navbarshowIndicator.next(status);
+  }
+
+  get navbarShowIndicator$() {
+    return this.navbarshowIndicator;
   }
 
   get navbarRouteChange$() {

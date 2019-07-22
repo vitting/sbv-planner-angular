@@ -38,6 +38,8 @@ export class ProjectHomeComponent implements OnInit {
     this.navbarService.navbarTitle.next("Mine projekter");
     this.userId = this.authService.userId;
     this.getProjects();
+
+    this.navbarService.showIndicator = true;
   }
 
   private getProjects() {
