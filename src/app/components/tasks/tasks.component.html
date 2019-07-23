@@ -1,4 +1,5 @@
-<app-no-data-box *ngIf="showNoData" [data]="nodata" [showButton]="true" (noDataAddClick)="gotoAddTasks()"></app-no-data-box>
+<app-no-data-box *ngIf="showNoData" [data]="nodata" [showButton]="true" (noDataAddClick)="gotoAddTasks()">
+</app-no-data-box>
 <mat-list>
   <app-task-list-item *ngFor="let task of tasks" [task]="task" (deleteTaskClick)="deleteTaskClick($event)"
     (markAllSubTasksAsCompletedClick)="markAllSubTasksAsCompletedClick($event)"></app-task-list-item>

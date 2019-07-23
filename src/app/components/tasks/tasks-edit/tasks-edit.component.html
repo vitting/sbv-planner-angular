@@ -1,15 +1,15 @@
 <app-no-data-box *ngIf="showNoData" [data]="nodata"></app-no-data-box>
 <div cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="'false'">
-  <div appItemContainer="task" class="app-list-item bg-indigo-50 noselect" *ngFor="let task of tasks; let i = index" cdkDrag
-    cdkDragPreview>
+  <div appItemContainer="task" class="app-list-item bg-indigo-50 noselect" *ngFor="let task of tasks; let i = index"
+    cdkDrag cdkDragPreview>
     <div class="app-list-item-container">
       <div class="app-list-item-drag">
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
       </div>
       <div class="app-list-item-content">
-          <app-item-title-desc [title]="task.title" [description]="task.description"></app-item-title-desc>
+        <app-item-title-desc [title]="task.title" [description]="task.description"></app-item-title-desc>
       </div>
-      <button mat-button type="button" (click)="menuTask(task)">
+      <button mat-button type="button" (tap)="menuTask(task)">
         <mat-icon>more_vert</mat-icon>
       </button>
     </div>

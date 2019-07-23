@@ -21,7 +21,9 @@
   </div>
   <div class="menu-placeholder" *ngIf="!showIsAuth"></div>
 </nav>
-<div class="navbar-progress"><mat-progress-bar *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar></div>
+<div class="navbar-progress">
+  <mat-progress-bar *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar>
+</div>
 <mat-menu #menu="matMenu" xPosition="before">
   <button mat-menu-item (tap)="menuItemClick('home')">Mine Projekter</button>
   <button mat-menu-item (tap)="menuItemClick('approveusers')">Godkend brugere</button>

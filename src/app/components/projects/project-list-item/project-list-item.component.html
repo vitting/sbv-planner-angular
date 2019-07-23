@@ -3,7 +3,7 @@
     <div class="list-item-content">
       <div class="list-item-title-desc">
         <div class="list-item-title-desc-edit" *ngIf="editMode">
-          <button mat-icon-button (click)="editProjectTitleDescClicked()">
+          <button mat-icon-button (tap)="editProjectTitleDescClicked()">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -33,7 +33,9 @@
     </button>
     <button mat-button *ngIf="projectButtonState === 'endedit'" class="list-item-button list-item-end-edit-button"
       (tap)="endEditProjectClicked()">
-      <div class="list-item-end-edit"><mat-icon [inline]="true">edit</mat-icon><span>Afslut</span></div>
+      <div class="list-item-end-edit">
+        <mat-icon [inline]="true">edit</mat-icon><span>Afslut</span>
+      </div>
     </button>
     <div class="empty-space" *ngIf="projectButtonState === 'none'"></div>
   </div>
