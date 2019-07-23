@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthService } from './auth.service';
 
 export interface NavbarRoutes {
   prevRoute: string;
@@ -20,27 +21,29 @@ export class NavbarService {
   prevRoute: string = null;
   currentRoute: string = null;
   prevRoutesIndex: string[] = [];
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
     this.currentRoute = this.router.url;
     this.prevRoute = this.currentRoute;
 
     this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.prevRoute = this.currentRoute;
-        this.currentRoute = event.url;
+      if (this.authService.userId && this.authService.authUserInfo.accepted) {
+        if (event instanceof NavigationEnd) {
 
-        if (this.currentRoute && this.currentRoute === "/") {
-          this.prevRoutesIndex = [];
-          this.prevRoute = null;
-        } else {
-          if (!this.backRouteClicked && this.prevRoute) {
-            this.prevRoutesIndex.push(this.prevRoute);
+          this.prevRoute = this.currentRoute;
+          this.currentRoute = event.url;
+
+          if (this.currentRoute && this.currentRoute === "/") {
+            this.prevRoutesIndex = [];
+            this.prevRoute = null;
+          } else {
+            if (!this.backRouteClicked && this.prevRoute) {
+              this.prevRoutesIndex.push(this.prevRoute);
+            }
           }
 
+          this.emitRouteChange();
+          this.backRouteClicked = false;
         }
-
-        this.emitRouteChange();
-        this.backRouteClicked = false;
       }
     });
 

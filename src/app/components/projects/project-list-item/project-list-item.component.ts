@@ -33,6 +33,7 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
   @Output() commentsTotalClick = new EventEmitter<Project>();
   @Output() tasksTotalClick = new EventEmitter<Project>();
   @Output() deleteProjectClick = new EventEmitter<Project>();
+  @Output() endEditProjectClick = new EventEmitter<Project>();
   users: User[] = [];
   summary: Summary = {
     id: '',
@@ -80,6 +81,8 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
   private setEditModeState(editMode: boolean) {
     this.editMode = editMode;
     this.enableRemoveUserButton = !editMode;
+
+    this.projectButtonState = editMode ? "endedit" : "menu";
   }
 
   private getProjectUsers() {
@@ -130,5 +133,9 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
 
   deleteProjectClicked() {
     this.deleteProjectClick.emit(this.project);
+  }
+
+  endEditProjectClicked() {
+    this.endEditProjectClick.emit(this.project);
   }
 }

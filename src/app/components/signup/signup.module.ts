@@ -7,16 +7,19 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { SignupMessageComponent } from './signup-message/signup-message.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [SignupComponent],
+  declarations: [SignupComponent, SignupMessageComponent],
   imports: [
     CommonModule,
     SignupRoutingModule,
     RouterModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   exports: [SignupComponent]
 })

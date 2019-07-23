@@ -67,7 +67,11 @@ form {
   }
 
   &.app-item-container-comment {
-    background-color: $indigo-900;
+    background-color: $indigo-500;
+  }
+
+  &.app-item-container-comment-user {
+    background-color: $indigo-a200;
   }
 
   &.app-item-container-user {

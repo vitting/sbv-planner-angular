@@ -7,16 +7,31 @@
     align-items: center;
 
     .task-content-edit {
-      display: flex;
-      align-items: center;
+        display: flex;
+        align-items: center;
 
-      button {
-        margin-right: 5px;
-      }
+        button {
+            margin-right: 5px;
+        }
     }
 
     .task-menu {
         align-self: flex-start;
+    }
+
+    .list-item-end-edit-button {
+        color: $pink-100;
+
+        .list-item-end-edit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.2rem;
+
+            mat-icon {
+                font-size: 1.1rem;
+            }
+        }
     }
 }
 
@@ -40,9 +55,9 @@
 }
 
 .task-completed {
-  background-color: $pink-a700;
+    background-color: $pink-a700;
 }
 
 button {
-  outline: none;
+    outline: none;
 }

@@ -12,9 +12,9 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class SignupComponent implements OnInit {
   @ViewChild("passwordInput", { static: true }) passwordInput: ElementRef;
-  signupForm: FormGroup;
   @Input() passwordTest: string;
-
+  signupForm: FormGroup;
+  showSignupMessage = false;
   constructor(
     private navbarService: NavbarService,
     public afAuth: AngularFireAuth,
@@ -45,8 +45,8 @@ export class SignupComponent implements OnInit {
           await this.firestoreService.addUser(userCred.user.uid, name);
         }
       } catch (error) {
-       this.showSignupError(error.code);
-       console.log(error);
+        this.showSignupError(error.code);
+        console.log(error);
       }
     }
   }

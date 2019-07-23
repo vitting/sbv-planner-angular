@@ -21,15 +21,19 @@
       <app-users-list [type]="'project'" *ngIf="showUsers" [users]="users"
         [enableRemoveUserButton]="enableRemoveUserButton" (userClick)="userClicked($event)"></app-users-list>
     </div>
-    <button mat-icon-button *ngIf="projectButtonState === 'menu'" class="list-item-button" (click)="showMenu()">
+    <button mat-icon-button *ngIf="projectButtonState === 'menu'" class="list-item-button" (tap)="showMenu()">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="projectButtonState === 'addperson'" class="list-item-button" (click)="addPerson()">
+    <button mat-icon-button *ngIf="projectButtonState === 'addperson'" class="list-item-button" (tap)="addPerson()">
       <mat-icon>person_add</mat-icon>
     </button>
     <button mat-icon-button *ngIf="projectButtonState === 'delete'" class="list-item-button"
-      (click)="deleteProjectClicked()">
+      (tap)="deleteProjectClicked()">
       <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-button *ngIf="projectButtonState === 'endedit'" class="list-item-button list-item-end-edit-button"
+      (tap)="endEditProjectClicked()">
+      <div class="list-item-end-edit"><mat-icon [inline]="true">edit</mat-icon><span>Afslut</span></div>
     </button>
     <div class="empty-space" *ngIf="projectButtonState === 'none'"></div>
   </div>

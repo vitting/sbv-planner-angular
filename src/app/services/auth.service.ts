@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
 import { switchMap } from 'rxjs/operators';
-import { of, combineLatest, ReplaySubject } from 'rxjs';
+import { of, combineLatest, ReplaySubject, Observable } from 'rxjs';
 import { SplashService } from './splash.service';
 
 @Injectable({
@@ -12,10 +12,11 @@ import { SplashService } from './splash.service';
 export class AuthService {
   private isAuthenticated: ReplaySubject<boolean> = new ReplaySubject<boolean>();
   private user: User;
-  private id: string;
+  private id: string = null;
+  private userIsAdmin = false;
   private users: { [key: string]: User } = {};
   constructor(private afAuth: AngularFireAuth, private firestoreService: FirestoreService, private splashService: SplashService) {
-    const userAuth$ = this.afAuth.user.pipe(switchMap((authUser) => {
+    const userAuth$ = this.afAuth.user.pipe(switchMap<firebase.User, Observable<User>>((authUser) => {
       if (authUser) {
         return this.firestoreService.getUser(authUser.uid);
       } else {
@@ -31,10 +32,12 @@ export class AuthService {
       this.isAuthenticated.next(authUser ? true : false);
 
       if (authUser) {
+        this.userIsAdmin = authUser.admin;
         users.forEach((user) => {
           this.users[user.id] = user;
         });
       }
+      console.log("AUTH", authUser);
 
       this.splashService.splashShow.next(false);
     }, (error) => {
@@ -56,6 +59,10 @@ export class AuthService {
 
   get userId() {
     return this.id;
+  }
+
+  get isAdmin() {
+    return this.userIsAdmin;
   }
 
   getUserInfo(userId: string) {

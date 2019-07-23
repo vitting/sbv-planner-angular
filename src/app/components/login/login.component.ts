@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private navbarService: NavbarService, private authService: AuthService) { }
+  constructor(private navbarService: NavbarService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.navbarService.navbarTitle.next("Login");
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
       const password = this.loginForm.get("password").value;
       try {
         await this.authService.login(email, password);
+        this.router.navigate(["/"]);
       } catch (error) {
         console.log(error);
         this.showLoginError(error.code);

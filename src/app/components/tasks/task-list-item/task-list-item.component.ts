@@ -85,4 +85,8 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  endEditTaskClicked() {
+    this.editMode = !this.editMode;
+  }
 }

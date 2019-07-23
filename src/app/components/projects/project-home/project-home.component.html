@@ -2,7 +2,7 @@
 <mat-list *ngIf="!showNoData">
   <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)"
     (commentsTotalClick)="gotoComments($event)" (tasksTotalClick)="gotoTasks($event)"
-    (editTasksClick)="editTasksClick($event)" (editTitleDescClick)="editTitleDescClick($event)"
+    (editTasksClick)="editTasksClick($event)" (editTitleDescClick)="editTitleDescClick($event)" (endEditProjectClick)="endEditProjectClick($event)"
     (userClick)="removeUserClick($event)" [enableRemoveUserButton]="true" *ngFor="let project of projects"
     [project]="project" [projectButtonState]="'menu'"></app-project-list-item>
 </mat-list>

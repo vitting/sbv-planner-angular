@@ -40,7 +40,7 @@ export class FirestoreService {
     const comment = new CommentItem(id, itemId, text, timestamp, timestamp, type, user.id);
     try {
       await this.db.collection<Comment>("comments").doc(id).set(comment.toObject());
-      await this.updateSummaryComments(itemId, SummaryAction.add);
+      // await this.updateSummaryComments(itemId, SummaryAction.add);
       return id;
     } catch (error) {
       console.error("AddComment", error);
@@ -68,7 +68,7 @@ export class FirestoreService {
 
   async deleteComment(commentId: string, itemId: string): Promise<string> {
     try {
-      await this.updateSummaryComments(itemId, SummaryAction.delete);
+      // await this.updateSummaryComments(itemId, SummaryAction.delete);
       await this.db.collection<Comment>("comments").doc(commentId).delete();
       return Promise.resolve(commentId);
     } catch (error) {
@@ -297,7 +297,6 @@ export class FirestoreService {
     try {
       await this.db.collection<Task>("tasks").doc(id).set(taskItem.toObject());
       await this.addSummary(id);
-      await this.updateSummaryItemsTotal(projectId, SummaryAction.add);
       return id;
     } catch (error) {
       console.error("addTask", error);
@@ -339,7 +338,6 @@ export class FirestoreService {
         }
       });
       await this.deleteSummary(taskId);
-      await this.updateSummaryItemsTotal(projectId, SummaryAction.delete);
       await this.db.collection("tasks").doc(taskId).delete();
       return Promise.resolve(taskId);
     } catch (error) {
@@ -419,7 +417,6 @@ export class FirestoreService {
     const subTaskItem = new SubTaskItem(id, projectId, taskId, timestamp, timestamp, userId, userId, title);
     try {
       await this.db.collection<SubTask>("subtasks").doc(id).set(subTaskItem.toObject());
-      this.updateSummaryItemsTotal(taskId, SummaryAction.add);
       return id;
     } catch (error) {
       console.error("addSubTask", error);
@@ -496,7 +493,6 @@ export class FirestoreService {
         }
       );
 
-      await this.updateSummaryItemsCompleted(taskId, completed ? SummaryAction.add : SummaryAction.delete);
       return subTaskId;
     } catch (error) {
       console.error("updateSubTaskCompleteStatus", error);
@@ -506,10 +502,6 @@ export class FirestoreService {
 
   async deleteSubTask(subTask: SubTask): Promise<string> {
     try {
-      await this.updateSummaryItemsTotal(subTask.taskId, SummaryAction.delete);
-      if (subTask.completed) {
-        await this.updateSummaryItemsCompleted(subTask.taskId, SummaryAction.delete);
-      }
       await this.db.collection<SubTask>("subtasks").doc(subTask.id).delete();
       return Promise.resolve(subTask.id);
     } catch (error) {
@@ -563,53 +555,6 @@ export class FirestoreService {
       console.error("addSummary", error);
       return null;
     }
-  }
-
-  private async updateSummaryComments(itemId: string, action: SummaryAction) {
-    const summary = await this.getSummaryPromise(itemId);
-    if (action === SummaryAction.add) {
-      summary.numberOfComments++;
-    } else {
-      if (summary.numberOfComments > 0) {
-        summary.numberOfComments--;
-      }
-    }
-
-    return this.updateSummary(itemId, summary);
-  }
-
-  private async updateSummaryItemsCompleted(itemId: string, action: SummaryAction) {
-    const summary = await this.getSummaryPromise(itemId);
-    if (action === SummaryAction.add) {
-      summary.numberOfItemsCompleted++;
-    } else {
-      if (summary.numberOfItemsCompleted > 0) {
-        summary.numberOfItemsCompleted--;
-      }
-    }
-
-    return this.updateSummary(itemId, summary);
-  }
-
-  private async updateSummaryItemsTotal(itemId: string, action: SummaryAction) {
-    const summary = await this.getSummaryPromise(itemId);
-    if (action === SummaryAction.add) {
-      summary.numberOfItems++;
-    } else {
-      if (summary.numberOfItems > 0) {
-        summary.numberOfItems--;
-      }
-    }
-
-    return this.updateSummary(itemId, summary);
-  }
-
-  private getSummaryPromise(itemId: string) {
-    return this.db.collection<Summary>("summaries").doc<Summary>(itemId).valueChanges().pipe(take(1)).toPromise();
-  }
-
-  private updateSummary(itemId: string, summary: Summary) {
-    return this.db.collection<Summary>("summaries").doc(itemId).update(summary);
   }
 
   private deleteSummary(itemId: string) {

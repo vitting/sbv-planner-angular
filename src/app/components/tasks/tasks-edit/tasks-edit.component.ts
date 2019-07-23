@@ -54,6 +54,8 @@ export class TasksEditComponent implements OnInit, OnDestroy {
 
       if (this.tasks.length === 0) {
         this.showNoData = true;
+      } else {
+        this.showNoData = false;
       }
     });
   }

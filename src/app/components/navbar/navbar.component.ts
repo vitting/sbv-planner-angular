@@ -15,10 +15,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   showNavBack = false;
   showProgressbar = false;
   showIndicator = false;
+  showIsAuth = false;
   private navbarTitleSub: Subscription;
   private navbarShowProgressSub: Subscription;
   private navbarRouteChangeSub: Subscription;
   private navbarShowIndicatorSub: Subscription;
+  private navbarShowAuthSub: Subscription;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -35,7 +37,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.navbarRouteChangeSub = this.navbarService.navbarRouteChange$.subscribe(() => {
       if (this.navbarService.prevRoutesIndex.length) {
-        console.log(this.navbarService.prevRoutesIndex);
         this.showNavBack = true;
       } else {
         this.showNavBack = false;
@@ -44,6 +45,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.navbarShowIndicatorSub = this.navbarService.navbarShowIndicator$.subscribe((show) => {
       this.showIndicator = show;
+    });
+
+    this.navbarShowAuthSub = this.authService.isUserAuthenticated.subscribe((auth) => {
+      if (auth && this.authService.authUserInfo.accepted) {
+        this.showIsAuth = true;
+      } else {
+        this.showIsAuth = false;
+      }
     });
   }
 
@@ -62,6 +71,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     if (this.navbarShowIndicatorSub) {
       this.navbarShowIndicatorSub.unsubscribe();
+    }
+
+    if (this.navbarShowAuthSub) {
+      this.navbarShowAuthSub.unsubscribe();
     }
   }
 
@@ -83,7 +96,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
         break;
       case "logout":
-
+        this.logout();
         break;
       case "approveusers":
 

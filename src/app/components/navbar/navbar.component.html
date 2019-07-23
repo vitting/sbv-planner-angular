@@ -3,24 +3,28 @@
     <button mat-icon-button *ngIf="showNavBack" (tap)="backButtonClick()">
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
-    <a [routerLink]="['/']">
+    <a [routerLink]="['/']" *ngIf="showIsAuth">
       <img src="assets/images/sbv_logo_250x250.png" alt="Logo" class="brand">
     </a>
+    <div *ngIf="!showIsAuth">
+      <img src="assets/images/sbv_logo_250x250.png" alt="Logo" class="brand">
+    </div>
   </div>
   <div *ngIf="navbarTitle">
     {{navbarTitle}}
   </div>
-  <div class="menu">
+  <div class="menu" *ngIf="showIsAuth">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
       <span *ngIf="showIndicator" class="menu-indicator"></span>
       <mat-icon>menus</mat-icon>
     </button>
   </div>
+  <div class="menu-placeholder" *ngIf="!showIsAuth"></div>
 </nav>
 <div class="navbar-progress"><mat-progress-bar *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar></div>
 <mat-menu #menu="matMenu" xPosition="before">
   <button mat-menu-item (tap)="menuItemClick('home')">Mine Projekter</button>
   <button mat-menu-item (tap)="menuItemClick('approveusers')">Godkend brugere</button>
   <button mat-menu-item (tap)="menuItemClick('help')">Hjælp</button>
-  <button mat-menu-item (tap)="menuItemClick('logout')">Logud</button>
+  <button mat-menu-item (tap)="menuItemClick('logout')">Log ud</button>
 </mat-menu>

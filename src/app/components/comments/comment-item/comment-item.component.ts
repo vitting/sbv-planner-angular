@@ -12,11 +12,13 @@ export class CommentItemComponent implements OnInit {
   @Output() menuClick = new EventEmitter<Comment>();
   showMenu = false;
   name = "";
+  commentStyle = "comment";
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
     if (this.authService.userId === this.comment.userId) {
       this.showMenu = true;
+      this.commentStyle = "comment-user";
     }
 
     const user = this.authService.getUserInfo(this.comment.userId);

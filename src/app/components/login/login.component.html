@@ -12,6 +12,6 @@
   </div>
   <div class="app-form-button login-form-button-container">
     <button mat-flat-button color="primary" [disabled]="loginForm.invalid || loginForm.untouched" type="submit">Login</button>
-    <a mat-flat-button [routerLink]="['/signup']">Opret ny bruger</a>
+    <a mat-button [routerLink]="['/signup']" color="accent">Gå til opret ny bruger</a>
   </div>
 </form>

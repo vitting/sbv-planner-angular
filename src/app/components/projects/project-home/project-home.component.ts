@@ -145,4 +145,8 @@ export class ProjectHomeComponent implements OnInit {
       this.getProjects();
     }
   }
+
+  endEditProjectClick(project: Project) {
+    this.gotoEditProject(project);
+  }
 }
