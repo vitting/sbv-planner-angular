@@ -10,7 +10,7 @@ import { SplashService } from './splash.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated: ReplaySubject<boolean> = new ReplaySubject<boolean>();
+  private isAuthenticated: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
   private user: User;
   private id: string = null;
   private userIsAdmin = false;
@@ -29,8 +29,6 @@ export class AuthService {
     combineLatest([userAuth$, users$]).subscribe(([authUser, users]) => {
       this.user = authUser;
       this.id = authUser ? authUser.id : null;
-      this.isAuthenticated.next(authUser ? true : false);
-
       if (authUser) {
         this.userIsAdmin = authUser.admin;
         users.forEach((user) => {
@@ -38,7 +36,7 @@ export class AuthService {
         });
       }
       console.log("AUTH", authUser);
-
+      this.isAuthenticated.next(authUser ? true : false);
       this.splashService.splashShow.next(false);
     }, (error) => {
       this.user = null;
@@ -49,7 +47,7 @@ export class AuthService {
     });
   }
 
-  get isUserAuthenticated() {
+  get isUserAuthenticated$() {
     return this.isAuthenticated;
   }
 
@@ -78,6 +76,7 @@ export class AuthService {
   }
 
   logout() {
+    this.isAuthenticated.next(false);
     return this.afAuth.auth.signOut();
   }
 }

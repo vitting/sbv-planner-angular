@@ -12,8 +12,6 @@ import { SplashService } from './services/splash.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private splashSub: Subscription;
-  projects: Observable<Project[]>;
-  sidebarState = "close";
   showSplash = true;
   constructor(
     private db: AngularFirestore,
@@ -24,6 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.splashSub = this.splashService.splashShow.subscribe((showSplash) => {
       this.showSplash = showSplash;
     });
+
+
   }
 
   ngOnDestroy() {

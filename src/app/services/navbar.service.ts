@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './auth.service';
+import {
+  DialogConfirmData,
+  DialogConfirmComponent,
+  DialogConfirmResult,
+  DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface NavbarRoutes {
   prevRoute: string;
@@ -21,7 +27,7 @@ export class NavbarService {
   prevRoute: string = null;
   currentRoute: string = null;
   prevRoutesIndex: string[] = [];
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService, private dialog: MatDialog) {
     this.currentRoute = this.router.url;
     this.prevRoute = this.currentRoute;
 
@@ -92,5 +98,35 @@ export class NavbarService {
 
   get navbarProgress$() {
     return this.navbarshowProgress;
+  }
+
+  async logout(): Promise<boolean> {
+    const dialogConfirmData: DialogConfirmData = {
+      header: "Log ud",
+      button1Text: "Ja",
+      button2Text: "Nej",
+      message1: "Er du sikker på du vil logge ud?",
+      message2: null
+    };
+
+    const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      autoFocus: false,
+      data: dialogConfirmData
+    });
+
+    return new Promise((resolve, reject) => {
+      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        if (result && result.action === DialogConfirmAction.yes) {
+          this.showProgressbar = true;
+          await this.authService.logout();
+          this.showProgressbar = false;
+          resolve(true);
+        } else {
+          this.showProgressbar = false;
+          resolve(false);
+        }
+      });
+    });
   }
 }

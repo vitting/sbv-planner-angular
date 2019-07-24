@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DialogConfirmModule } from '../shared/dialog-confirm/dialog-confirm.module';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -17,7 +18,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatMenuModule,
     MatIconModule,
     MatProgressBarModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    DialogConfirmModule
   ],
   exports: [NavbarComponent]
 })

@@ -13,28 +13,28 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-    ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-      return this.authService.isUserAuthenticated.pipe(map((result) => {
-        if (result && this.authService.authUserInfo && this.authService.authUserInfo.accepted) {
-          if (route.data && route.data.onlyAdmin) {
-            if (this.authService.authUserInfo.admin) {
-              return true;
-            } else {
-              this.router.navigate(["/"]);
-              return false;
-            }
-          } else {
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    return this.authService.isUserAuthenticated$.pipe(map((result) => {
+      if (result && this.authService.authUserInfo && this.authService.authUserInfo.accepted) {
+        if (route.data && route.data.onlyAdmin) {
+          if (this.authService.authUserInfo.admin) {
             return true;
-          }
-        } else {
-          if (this.authService.authUserInfo && this.authService.authUserInfo.waitingForApproval) {
-            this.router.navigate(["/message"]);
+          } else {
+            this.router.navigate(["/"]);
             return false;
           }
-          this.router.navigate(["/login"]);
+        } else {
+          return true;
+        }
+      } else {
+        if (this.authService.authUserInfo && this.authService.authUserInfo.waitingForApproval) {
+          this.router.navigate(["/message"]);
           return false;
         }
-      }));
+        this.router.navigate(["/login"]);
+        return false;
+      }
+    }));
   }
 
 }

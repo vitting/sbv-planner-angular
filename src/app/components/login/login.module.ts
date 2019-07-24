@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MessagesModule } from '../shared/messages/messages.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -14,7 +15,8 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MessagesModule
   ],
   exports: [
     LoginRoutingModule,

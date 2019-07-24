@@ -39,7 +39,7 @@ export class ProjectHomeComponent implements OnInit {
     this.userId = this.authService.userId;
     this.getProjects();
 
-    this.navbarService.showIndicator = true;
+    // this.navbarService.showIndicator = true;
   }
 
   private getProjects() {

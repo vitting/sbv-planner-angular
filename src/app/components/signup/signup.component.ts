@@ -15,6 +15,7 @@ export class SignupComponent implements OnInit {
   @Input() passwordTest: string;
   signupForm: FormGroup;
   showSignupMessage = false;
+  messages: string[] = [];
   constructor(
     private navbarService: NavbarService,
     public afAuth: AngularFireAuth,
@@ -52,8 +53,10 @@ export class SignupComponent implements OnInit {
   }
 
   showSignupError(errorCode: string) {
+    this.messages = [];
     switch (errorCode) {
       case "auth/email-already-in-use":
+        this.messages.push("Den indtastede e-mail adresse eksistere allerede.");
         break;
       case "auth/invalid-email":
         break;

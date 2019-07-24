@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupMessageComponent } from './signup-message/signup-message.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MessagesModule } from '../shared/messages/messages.module';
 
 @NgModule({
   declarations: [SignupComponent, SignupMessageComponent],
@@ -19,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MessagesModule
   ],
   exports: [SignupComponent]
 })

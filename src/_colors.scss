@@ -1,3 +1,4 @@
+// Indigo Color Scheme
 $indigo-50: #e8eaf6;
 $indigo-100: #c5cae9;
 $indigo-200: #9fa8da;
@@ -12,6 +13,7 @@ $indigo-a100: #8c9eff;
 $indigo-a200: #536dfe;
 $indigo-a400: #3d5afe;
 $indigo-a700: #304ffe;
+// Pink Color Scheme
 $pink-50: #fce4ec;
 $pink-100: #f8bbd0;
 $pink-200: #f48fb1;
@@ -26,116 +28,174 @@ $pink-a100: #ff80ab;
 $pink-a200: #ff4081;
 $pink-a400: #f50057;
 $pink-a700: #c51162;
+// Teal Color Scheme
+$teal-50: #e0f2f1;
+$teal-100: #b2dfdb;
+$teal-200: #80cbc4;
+$teal-300: #4db6ac;
+$teal-400: #26a69a;
+$teal-500: #009688;
+$teal-600: #00897b;
+$teal-700: #00796b;
+$teal-800: #00695c;
+$teal-900: #004d40;
+$teal-a100: #a7ffeb;
+$teal-a200: #64ffda;
+$teal-a400: #1de9b6;
+$teal-a700: #00bfa5;
+// Orange Color Scheme
+$orange-50: #fff3e0;
+$orange-100: #ffe0b2;
+$orange-200: #ffcc80;
+$orange-300: #ffb74d;
+$orange-400: #ffa726;
+$orange-500: #ff9800;
+$orange-600: #fb8c00;
+$orange-700: #f57c00;
+$orange-800: #ef6c00;
+$orange-900: #e65100;
+$orange-a100: #ffd180;
+$orange-a200: #ffab40;
+$orange-a400: #ff9100;
+$orange-a700: #ff6d00;
+// Cyan Color Scheme
+$cyan-50: #e0f7fa;
+$cyan-100: #b2ebf2;
+$cyan-200: #80deea;
+$cyan-300: #4dd0e1;
+$cyan-400: #26c6da;
+$cyan-500: #00bcd4;
+$cyan-600: #00acc1;
+$cyan-700: #0097a7;
+$cyan-800: #00838f;
+$cyan-900: #006064;
+$cyan-a100: #84ffff;
+$cyan-a200: #18ffff;
+$cyan-a400: #00e5ff;
+$cyan-a500: #00b8d4;
+// Blue Gray Color Scheme
+$bluegray-50: #eceff1;
+$bluegray-100: #cfd8dc;
+$bluegray-200: #b0bec5;
+$bluegray-300: #90a4ae;
+$bluegray-400: #78909c;
+$bluegray-500: #607d8b;
+$bluegray-600: #546e7a;
+$bluegray-700: #455a64;
+$bluegray-800: #37474f;
+$bluegray-900: #263238;
 $text-inverse: #fff;
 $no-data-text: #555;
-.bg-indigo-50 {
-  background-color: $indigo-50;
-}
 
-.bg-indigo-100 {
-  background-color: $indigo-100;
-}
 
-.bg-indigo-200 {
-  background-color: $indigo-200;
-}
+// .bg-indigo-50 {
+//   background-color: $indigo-50;
+// }
 
-.bg-indigo-300 {
-  background-color: $indigo-300;
-}
+// .bg-indigo-100 {
+//   background-color: $indigo-100;
+// }
 
-.bg-indigo-400 {
-  background-color: $indigo-400;
-}
+// .bg-indigo-200 {
+//   background-color: $indigo-200;
+// }
 
-.bg-indigo-500 {
-  background-color: $indigo-500;
-}
+// .bg-indigo-300 {
+//   background-color: $indigo-300;
+// }
 
-.bg-indigo-600 {
-  background-color: $indigo-600;
-}
+// .bg-indigo-400 {
+//   background-color: $indigo-400;
+// }
 
-.bg-indigo-700 {
-  background-color: $indigo-700;
-}
+// .bg-indigo-500 {
+//   background-color: $indigo-500;
+// }
 
-.bg-indigo-800 {
-  background-color: $indigo-800;
-}
+// .bg-indigo-600 {
+//   background-color: $indigo-600;
+// }
 
-.bg-indigo-900 {
-  background-color: $indigo-900;
-}
+// .bg-indigo-700 {
+//   background-color: $indigo-700;
+// }
 
-.bg-indigo-a100 {
-  background-color: $indigo-a100;
-}
+// .bg-indigo-800 {
+//   background-color: $indigo-800;
+// }
 
-.bg-indigo-a200 {
-  background-color: $indigo-a200;
-}
+// .bg-indigo-900 {
+//   background-color: $indigo-900;
+// }
 
-.bg-indigo-a400 {
-  background-color: $indigo-a400;
-}
+// .bg-indigo-a100 {
+//   background-color: $indigo-a100;
+// }
 
-.bg-indigo-a700 {
-  background-color: $indigo-a700;
-}
+// .bg-indigo-a200 {
+//   background-color: $indigo-a200;
+// }
 
-.bg-pink-50 {
-  background-color: $pink-50;
-}
+// .bg-indigo-a400 {
+//   background-color: $indigo-a400;
+// }
 
-.bg-pink-100 {
-  background-color: $pink-100;
-}
+// .bg-indigo-a700 {
+//   background-color: $indigo-a700;
+// }
 
-.bg-pink-200 {
-  background-color: $pink-200;
-}
+// .bg-pink-50 {
+//   background-color: $pink-50;
+// }
 
-.bg-pink-300 {
-  background-color: $pink-300;
-}
+// .bg-pink-100 {
+//   background-color: $pink-100;
+// }
 
-.bg-pink-400 {
-  background-color: $pink-400;
-}
+// .bg-pink-200 {
+//   background-color: $pink-200;
+// }
 
-.bg-pink-500 {
-  background-color: $pink-500;
-}
+// .bg-pink-300 {
+//   background-color: $pink-300;
+// }
 
-.bg-pink-600 {
-  background-color: $pink-600;
-}
+// .bg-pink-400 {
+//   background-color: $pink-400;
+// }
 
-.bg-pink-700 {
-  background-color: $pink-700;
-}
+// .bg-pink-500 {
+//   background-color: $pink-500;
+// }
 
-.bg-pink-800 {
-  background-color: $pink-800;
-}
+// .bg-pink-600 {
+//   background-color: $pink-600;
+// }
 
-.bg-pink-900 {
-  background-color: $pink-900;
-}
+// .bg-pink-700 {
+//   background-color: $pink-700;
+// }
 
-.bg-pink-a100 {
-  background-color: $pink-a100;
-}
+// .bg-pink-800 {
+//   background-color: $pink-800;
+// }
 
-.bg-pink-a200 {
-  background-color: $pink-a200;
-}
+// .bg-pink-900 {
+//   background-color: $pink-900;
+// }
 
-.bg-pink-a400 {
-  background-color: $pink-a400;
-}
+// .bg-pink-a100 {
+//   background-color: $pink-a100;
+// }
 
-.bg-pink-a700 {
-  background-color: $pink-a700;
-}
+// .bg-pink-a200 {
+//   background-color: $pink-a200;
+// }
+
+// .bg-pink-a400 {
+//   background-color: $pink-a400;
+// }
+
+// .bg-pink-a700 {
+//   background-color: $pink-a700;
+// }

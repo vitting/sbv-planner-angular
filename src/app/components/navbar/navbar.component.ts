@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showIndicator = show;
     });
 
-    this.navbarShowAuthSub = this.authService.isUserAuthenticated.subscribe((auth) => {
+    this.navbarShowAuthSub = this.authService.isUserAuthenticated$.subscribe((auth) => {
       if (auth && this.authService.authUserInfo.accepted) {
         this.showIsAuth = true;
       } else {
@@ -83,8 +83,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   async logout() {
-    await this.authService.logout();
-    this.router.navigate(["/login"]);
+    const result = await this.navbarService.logout();
+    if (result) {
+      this.router.navigate(["/login"]);
+    }
   }
 
   menuItemClick(action: string) {

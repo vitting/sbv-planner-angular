@@ -1,0 +1,17 @@
+@import "../../../../colors";
+mat-list {
+  padding: 0;
+  margin-bottom: 10px;
+
+  mat-list-item {
+    font-weight: lighter;
+    border-radius: 4px;
+    background-color: $pink-a200;
+    color: white;
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
