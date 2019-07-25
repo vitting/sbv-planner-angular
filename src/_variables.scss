@@ -1,3 +1,11 @@
+@import "./colors";
+
 $navbar-height: 60px;
 $content-container-vertical-margin: 20px;
 $used-vertical-area-space: $navbar-height + $content-container-vertical-margin;
+$bg-color-project: $indigo-500;
+$bg-color-task: $pink-800;
+$bg-color-subtask: $pink-300;
+$bg-color-comment: $teal-700;
+$bg-color-comment-user: $teal-700;
+$bg-color-user: $cyan-800;

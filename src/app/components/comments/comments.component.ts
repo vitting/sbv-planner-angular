@@ -51,9 +51,15 @@ export class CommentsComponent implements OnInit {
 
   private setTitle() {
     if (this.commentType === "task") {
-      this.navbarService.navbarTitle.next("Opgave kommentar");
+      this.navbarService.setNavbarTitleWithColor({
+        title: "Opgave kommentar",
+        colorState: "comment"
+      });
     } else {
-      this.navbarService.navbarTitle.next("Projekt kommentar");
+      this.navbarService.setNavbarTitleWithColor({
+        title: "Projekt kommentar",
+        colorState: "comment"
+      });
     }
   }
 

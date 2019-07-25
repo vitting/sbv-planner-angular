@@ -1,3 +1,5 @@
 <mat-list *ngIf="messages.length">
-  <mat-list-item *ngFor="let message of messages">{{message}}</mat-list-item>
+  <div class="message-item" mat-list-item *ngFor="let message of messages">
+    <div class="message-item-text">{{message}}</div>
+  </div>
 </mat-list>

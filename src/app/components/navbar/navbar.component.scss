@@ -5,10 +5,26 @@
   align-items: center;
   justify-content: space-between;
   display: flex;
-  background-color: $indigo-500;
   color: $text-inverse;
   padding-left: 10px;
   height: $navbar-height;
+  background-color: $bg-color-project;
+
+  &.app-appbar-color-state-project {
+    background-color: $bg-color-project;
+  }
+
+  &.app-appbar-color-state-task {
+    background-color: $bg-color-task;
+  }
+
+  &.app-appbar-color-state-comment {
+    background-color: $bg-color-comment;
+  }
+
+  &.app-appbar-color-state-user {
+    background-color: $bg-color-user;
+  }
 
   .brand {
     width: 30px;

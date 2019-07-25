@@ -1,3 +1,4 @@
+@import "variables";
 @import "colors";
 
 html,
@@ -55,27 +56,31 @@ form {
   border-radius: 4px;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.30);
   margin-bottom: 5px;
-  background-color: $indigo-400;
+  background-color: $bg-color-project;
   color: white;
 
+  &.app-item-container-project {
+    background-color: $bg-color-project;
+  }
+
   &.app-item-container-task {
-    background-color: $pink-800;
+    background-color: $bg-color-task;
   }
 
   &.app-item-container-subtask {
-    background-color: $pink-300;
+    background-color: $bg-color-subtask;
   }
 
   &.app-item-container-comment {
-    background-color: $indigo-500;
+    background-color: $bg-color-comment;
   }
 
   &.app-item-container-comment-user {
-    background-color: $indigo-a200;
+    background-color: $bg-color-comment-user;
   }
 
   &.app-item-container-user {
-    background-color: $indigo-a200;
+    background-color: $bg-color-user;
   }
 }
 

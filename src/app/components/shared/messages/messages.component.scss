@@ -3,11 +3,12 @@ mat-list {
   padding: 0;
   margin-bottom: 10px;
 
-  mat-list-item {
+  .message-item {
     font-weight: lighter;
     border-radius: 4px;
-    background-color: $pink-a200;
+    background-color: $pink-a400;
     color: white;
+    padding: 10px;
     margin-bottom: 5px;
 
     &:last-child {

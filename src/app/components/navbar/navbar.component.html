@@ -1,4 +1,4 @@
-<nav class="app-appbar">
+<nav class="app-appbar" [ngClass]="navbarColorStateData">
   <div>
     <button mat-icon-button *ngIf="showNavBack" (tap)="backButtonClick()">
       <mat-icon>arrow_back_ios</mat-icon>

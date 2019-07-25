@@ -5,7 +5,7 @@ import { AuthGuard } from 'src/app/services/auth-guard.service';
 
 
 const routes: Routes = [{
-  path: "users/accept",
+  path: "users/:action",
   component: UsersComponent,
   canActivate: [AuthGuard],
   data: { onlyAdmin: true }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { NavbarService, NavbarTitleData } from 'src/app/services/navbar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -10,8 +10,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  title = "Mine projekter";
   navbarTitle: string;
+  navbarColorState = "project"; // project, task, comment, users
+  navbarColorStateData = {};
   showNavBack = false;
   showProgressbar = false;
   showIndicator = false;
@@ -27,8 +28,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    this.navbarTitleSub = this.navbarService.navbarTitle.subscribe((title: string) => {
-      this.navbarTitle = title;
+    this.navbarTitleSub = this.navbarService.navbarTitle.subscribe((data: string | NavbarTitleData) => {
+      if (typeof data === "string") {
+        this.navbarTitle = data;
+        this.navbarColorStateData = {};
+      } else {
+        this.navbarTitle = data.title;
+        this.navbarColorState = data.colorState;
+        this.setColorState();
+      }
+
     });
 
     this.navbarShowProgressSub = this.navbarService.navbarProgress$.subscribe((show: boolean) => {
@@ -76,6 +85,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.navbarShowAuthSub) {
       this.navbarShowAuthSub.unsubscribe();
     }
+  }
+
+  private setColorState() {
+    this.navbarColorStateData = {
+      "app-appbar-color-state-project": this.navbarColorState === "project",
+      "app-appbar-color-state-task": this.navbarColorState === "task",
+      "app-appbar-color-state-comment": this.navbarColorState === "comment",
+      "app-appbar-color-state-user": this.navbarColorState === "user"
+    };
   }
 
   backButtonClick() {

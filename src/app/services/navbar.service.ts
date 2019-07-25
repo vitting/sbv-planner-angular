@@ -14,11 +14,16 @@ export interface NavbarRoutes {
   currentRoute: string;
 }
 
+export interface NavbarTitleData {
+  title: string;
+  colorState: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class NavbarService {
-  navbarTitle: Subject<string> = new Subject<string>();
+  navbarTitle: Subject<string | NavbarTitleData> = new Subject<string | NavbarTitleData>();
   private navbarRouteChange: Subject<void> = new Subject<void>();
   private navbarRouteBackChange: Subject<void> = new Subject<void>();
   private navbarshowProgress: Subject<boolean> = new Subject<boolean>();
@@ -90,6 +95,10 @@ export class NavbarService {
 
   setNavbarTitle(title: string) {
     this.navbarTitle.next(title);
+  }
+
+  setNavbarTitleWithColor(data: NavbarTitleData) {
+    this.navbarTitle.next(data);
   }
 
   set showProgressbar(show: boolean) {
