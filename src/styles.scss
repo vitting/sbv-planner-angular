@@ -82,6 +82,19 @@ form {
   &.app-item-container-user {
     background-color: $bg-color-user;
   }
+
+  &.app-item-container-template {
+    background-color: $bg-color-template;
+  }
+
+  &.app-item-container-template-task {
+    background-color: $bg-color-template-task;
+  }
+
+  &.app-item-container-template-subtask {
+    background-color: $bg-color-template-subtask;
+    padding: 0px;
+  }
 }
 
 /* width */

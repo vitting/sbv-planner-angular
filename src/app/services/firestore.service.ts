@@ -9,6 +9,7 @@ import { User, UserItem } from '../models/user.model';
 import { Observable, of } from 'rxjs';
 import { Comment, CommentItem } from '../models/comment.model';
 import { Summary } from '../models/summary.model';
+import { TemplateItem, Template, TemplateTask, TemplateSubTask } from '../models/template.model';
 
 export enum SummaryAction {
   add,
@@ -34,13 +35,169 @@ export class FirestoreService {
     return this.db.createId();
   }
 
+  async createProjectFromTemplate(userId: string, template: Template) {
+    try {
+      const projectId = await this.addProject(userId, template.title, template.description);
+      const templateTasks = await this.getTemplateTasks(template.id).pipe(take(1)).toPromise();
+      templateTasks.forEach(async (templateTask, index) => {
+        const taskId = await this.addTask(userId, templateTask.title, templateTask.description, projectId, index);
+        const templateSubTasks = await this.getSubTasks(templateTask.id).pipe(take(1)).toPromise();
+
+        templateSubTasks.forEach(async (templateSubTask) => {
+          await this.addSubTask(userId, templateSubTask.title, projectId, taskId);
+        });
+      });
+      return projectId;
+    } catch (error) {
+      console.warn("createProjectFromTemplate", error);
+      return null;
+    }
+  }
+
+  getTemplate(templateId: string) {
+    return this.db.collection<Template>("templates").doc<Template>(templateId).valueChanges();
+  }
+
+  getTemplates() {
+    return this.db.collection<Template>("templates", (ref) => {
+      return ref.where("active", "==", true).orderBy("title");
+    }).valueChanges();
+  }
+
+  getTemplateTasks(templateId: string) {
+    return this.db.collection<TemplateTask>("templatetasks", (ref) => {
+      return ref.where("templateId", "==", templateId).where("active", "==", true).orderBy("title");
+    }).valueChanges();
+  }
+
+  getTemplateSubTasks(templateTaskId: string) {
+    return this.db.collection<TemplateSubTask>("templatesubtasks", (ref) => {
+      return ref.where("templateTaskId", "==", templateTaskId).where("active", "==", true).orderBy("title");
+    }).valueChanges();
+  }
+
+  async addTemplate(user: User, title: string, description: string) {
+    const id = this.newId;
+    const timestamp = this.timestamp;
+    const template = new TemplateItem(id, title, description, timestamp, timestamp, user.id, user.id);
+    try {
+      await this.db.collection<Template>("templates").doc(id).set(template.toObject());
+      return id;
+    } catch (error) {
+      console.error("AddTemplate", error);
+      return null;
+    }
+  }
+
+  async updateTemplate(user: User, templateId: string, title: string, description: string) {
+    const timestamp = this.timestamp;
+    try {
+      await this.db.collection<Template>("templates").doc(templateId).update({
+        title,
+        description,
+        updatedAt: timestamp,
+        updatedBy: user.id
+      });
+      return templateId;
+    } catch (error) {
+      console.error("updatedTemplate");
+      return null;
+    }
+  }
+
+  deleteTemplate(templateId: string) {
+
+  }
+
+  async addTemplateTask(templateId: string, title: string, description: string) {
+    const id = this.newId;
+    const templateTask: TemplateTask = {
+      id,
+      title,
+      description,
+      templateId,
+      active: true
+    };
+
+    try {
+      this.db.collection<TemplateTask>("templatetasks").doc(id).set(templateTask);
+      return id;
+    } catch (error) {
+      console.warn("addTemplateTask");
+      return null;
+    }
+  }
+
+  async updateTemplateTask(templateTaskId: string, title: string, description: string) {
+    try {
+      this.db.collection<TemplateTask>("templatetasks").doc<TemplateTask>(templateTaskId).update({
+        title,
+        description
+      });
+      return templateTaskId;
+    } catch (error) {
+      console.warn("updateTemplateTask");
+      return null;
+    }
+  }
+
+  async deleteTemplateTask(templateTaskId: string) {
+    try {
+      await this.db.collection<TemplateTask>("templatetasks").doc(templateTaskId).delete();
+      return templateTaskId;
+    } catch (error) {
+      console.warn("deleteTemplateTask");
+      return null;
+    }
+  }
+
+  async addTemplateSubTask(templateTask: TemplateTask, title: string) {
+    const id = this.newId;
+    const templateSubTask: TemplateSubTask = {
+      id,
+      title,
+      templateId: templateTask.templateId,
+      templateTaskId: templateTask.id,
+      active: true
+    };
+
+    try {
+      this.db.collection<TemplateSubTask>("templatesubtasks").doc(id).set(templateSubTask);
+      return id;
+    } catch (error) {
+      console.warn("addTemplateSubTask");
+      return null;
+    }
+  }
+
+  async updateTemplateSubTask(templateSubTaskId: string, title: string) {
+    try {
+      this.db.collection<TemplateSubTask>("templatesubtasks").doc<TemplateSubTask>(templateSubTaskId).update({
+        title
+      });
+      return templateSubTaskId;
+    } catch (error) {
+      console.warn("updateTemplateSubTask");
+      return null;
+    }
+  }
+
+  async deleteTemplateSubTask(templateSubTaskId: string) {
+    try {
+      await this.db.collection<TemplateSubTask>("templatesubtasks").doc(templateSubTaskId).delete();
+      return templateSubTaskId;
+    } catch (error) {
+      console.warn("deleteTemplateSubTask");
+      return null;
+    }
+  }
+
   async addComment(user: User, text: string, type: string, itemId: string): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;
     const comment = new CommentItem(id, itemId, text, timestamp, timestamp, type, user.id);
     try {
       await this.db.collection<Comment>("comments").doc(id).set(comment.toObject());
-      // await this.updateSummaryComments(itemId, SummaryAction.add);
       return id;
     } catch (error) {
       console.error("AddComment", error);

@@ -18,6 +18,7 @@ import { Subject } from 'rxjs';
 import { Summary } from '../models/summary.model';
 import { NavbarService } from './navbar.service';
 import { FabButtonService } from './fab-button.service';
+import { Template } from '../models/template.model';
 
 export interface ProjectItemEditModeChange {
   projectId: string;
@@ -76,6 +77,32 @@ export class ProjectService {
 
   getProjectsNotContainingUserId() {
     return this.firestoreService.getProjectsNotContainingUserId(this.authService.userId).pipe(take(1));
+  }
+
+  createProjectFromTemplate(template: Template) {
+    const dialogConfirmData: DialogConfirmData = {
+      header: "Opret project",
+      button1Text: "Ja",
+      button2Text: "Nej",
+      message1: "Vil du et projekt fra den valgte skabelon?",
+      message2: null
+    };
+
+    this.fabuttonService.showFabButton = false;
+    const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      autoFocus: false,
+      data: dialogConfirmData
+    });
+
+    dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+      this.fabuttonService.showFabButton = true;
+      if (result && result.action === DialogConfirmAction.yes) {
+        this.navbarService.showProgressbar = true;
+        const projectId = await this.firestoreService.createProjectFromTemplate(this.authService.userId, template);
+        this.navbarService.showProgressbar = false;
+      }
+    });
   }
 
   addProject(): Promise<string> {

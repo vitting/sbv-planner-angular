@@ -26,6 +26,10 @@
     background-color: $bg-color-user;
   }
 
+  &.app-appbar-color-state-template {
+    background-color: $bg-color-template;
+  }
+
   .brand {
     width: 30px;
     height: 30px;

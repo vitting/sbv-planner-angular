@@ -92,7 +92,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       "app-appbar-color-state-project": this.navbarColorState === "project",
       "app-appbar-color-state-task": this.navbarColorState === "task",
       "app-appbar-color-state-comment": this.navbarColorState === "comment",
-      "app-appbar-color-state-user": this.navbarColorState === "user"
+      "app-appbar-color-state-user": this.navbarColorState === "user",
+      "app-appbar-color-state-template": this.navbarColorState === "user",
     };
   }
 

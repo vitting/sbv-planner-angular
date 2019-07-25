@@ -1,0 +1,23 @@
+.template-item-subtask {
+  .item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .item-title-container {
+      display: flex;
+      align-items: center;
+
+      .item-title {
+        padding: 10px;
+      }
+
+      .item-title-edit {
+        padding-left: 0px;
+      }
+    }
+  }
+}
+
+button {
+  outline: none;
+}

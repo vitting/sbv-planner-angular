@@ -1,0 +1,9 @@
+<div appItemContainer="template-subtask" class="template-item-subtask">
+  <div class="item-content">
+      <div class="item-title-container">
+          <button *ngIf="editMode" mat-icon-button (tap)="editSubTask()"><mat-icon>edit</mat-icon></button>
+          <div class="item-title" [ngClass]="{'item-title-edit': editMode}">{{templateSubTask.title}}</div>
+      </div>
+      <button *ngIf="editMode" mat-icon-button (tap)="deleteSubTask()"><mat-icon>delete</mat-icon></button>
+  </div>
+</div>

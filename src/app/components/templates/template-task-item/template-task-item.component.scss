@@ -1,0 +1,20 @@
+.template-task-item {
+  .item-content {
+    display: flex;
+    justify-content: space-between;
+
+    .item-title {
+      display: flex;
+    }
+  }
+
+  .item-add {
+    mat-icon {
+      margin-left: 5px;
+    }
+  }
+}
+
+button {
+  outline: none;
+}

@@ -1,0 +1,15 @@
+<div appItemContainer="template-task" class="template-task-item">
+  <div class="item-content">
+      <div class="item-title">
+          <button *ngIf="editMode" mat-icon-button (tap)="editTitleDesc()"><mat-icon>edit</mat-icon></button>
+          <app-item-title-desc [title]="templateTask.title" [description]="templateTask.description"></app-item-title-desc>
+      </div>
+
+      <button *ngIf="editMode" mat-icon-button (tap)="deleteTask()"><mat-icon>delete</mat-icon></button>
+  </div>
+
+  <button *ngIf="editMode" class="item-add" mat-button type="button" (tap)="addSubTask()">Tilføj en opgave<mat-icon>add_circle</mat-icon></button>
+  <mat-list>
+    <app-template-subtask-item [editMode]="editMode" *ngFor="let templateSubTask of templateSubTasks" [templateSubTask]="templateSubTask"></app-template-subtask-item>
+  </mat-list>
+</div>
