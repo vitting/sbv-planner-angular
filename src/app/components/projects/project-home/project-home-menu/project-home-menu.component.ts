@@ -4,7 +4,8 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 export enum ProjectHomeMenuResult {
   joinProject,
   newProject,
-  newTemplate
+  newTemplate,
+  newProjectFromTemplate
 }
 
 @Component({
@@ -31,6 +32,9 @@ export class ProjectHomeMenuComponent implements OnInit {
         break;
       case "newTemplate":
         result = ProjectHomeMenuResult.newTemplate;
+        break;
+      case "newProjectfromTemplate":
+        result = ProjectHomeMenuResult.newProjectFromTemplate;
         break;
     }
 

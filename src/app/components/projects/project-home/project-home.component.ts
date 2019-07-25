@@ -66,6 +66,9 @@ export class ProjectHomeComponent implements OnInit {
           case ProjectHomeMenuResult.newTemplate:
             // this.deleteTask(task);
             break;
+          case ProjectHomeMenuResult.newProjectFromTemplate:
+            // this.deleteTask(task);
+            break;
           default:
             console.log("OTHER");
         }

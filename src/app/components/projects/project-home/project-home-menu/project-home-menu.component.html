@@ -7,6 +7,10 @@
       <span>Opret nyt projekt</span>
     </a>
     <mat-divider></mat-divider>
+    <a mat-list-item (tap)="action($event, 'newProjectfromTemplate')">
+      <span>Opret nyt projekt fra skabelon</span>
+    </a>
+    <mat-divider></mat-divider>
     <a mat-list-item (tap)="action($event, 'newYemplate')">
       <span>Opret ny skabelon</span>
     </a>

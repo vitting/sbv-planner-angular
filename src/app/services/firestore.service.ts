@@ -41,7 +41,7 @@ export class FirestoreService {
       const templateTasks = await this.getTemplateTasks(template.id).pipe(take(1)).toPromise();
       templateTasks.forEach(async (templateTask, index) => {
         const taskId = await this.addTask(userId, templateTask.title, templateTask.description, projectId, index);
-        const templateSubTasks = await this.getSubTasks(templateTask.id).pipe(take(1)).toPromise();
+        const templateSubTasks = await this.getTemplateSubTasks(templateTask.id).pipe(take(1)).toPromise();
 
         templateSubTasks.forEach(async (templateSubTask) => {
           await this.addSubTask(userId, templateSubTask.title, projectId, taskId);
