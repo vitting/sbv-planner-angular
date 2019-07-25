@@ -26,7 +26,9 @@ export class TemplatesComponent implements OnInit {
       });
     } else {
       this.editMode = false;
-      this.addMode = true;
+      if (action && action === "add") {
+        this.addMode = true;
+      }
       this.navbarService.setNavbarTitleWithColor({
         title: "Skabeloner",
         colorState: "template"
