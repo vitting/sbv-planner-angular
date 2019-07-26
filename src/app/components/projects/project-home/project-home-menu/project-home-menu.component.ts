@@ -22,7 +22,6 @@ export class ProjectHomeMenuComponent implements OnInit {
 
   action(event: MouseEvent, action: string): void {
     let result: ProjectHomeMenuResult;
-
     switch (action) {
       case "joinProject":
         result = ProjectHomeMenuResult.joinProject;

@@ -64,13 +64,13 @@ export class ProjectHomeComponent implements OnInit {
             this.gotoNewProjects();
             break;
           case ProjectHomeMenuResult.newTemplate:
-            // this.deleteTask(task);
+            this.gotoNewTemplate();
             break;
           case ProjectHomeMenuResult.newProjectFromTemplate:
-            // this.deleteTask(task);
+            this.gotoNewProjectFromTemplate();
             break;
           default:
-            console.log("OTHER");
+            console.log("OTHER", result.action);
         }
       }
     });
@@ -113,6 +113,14 @@ export class ProjectHomeComponent implements OnInit {
 
   gotoNewProjects() {
     this.router.navigate(["/projects/edit"]);
+  }
+
+  gotoNewProjectFromTemplate() {
+    this.router.navigate(["/templates/add"]);
+  }
+
+  gotoNewTemplate() {
+    this.router.navigate(["/templates/edit"]);
   }
 
   gotoProjects() {
