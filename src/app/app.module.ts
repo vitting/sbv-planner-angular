@@ -49,6 +49,7 @@ import { CommentsModule } from './components/comments/comments.module';
 import 'moment/locale/da';
 import { SplashScreenModule } from './components/shared/splash-screen/splash-screen.module';
 import { UsersModule } from './components/users/users.module';
+import { YearCalendarModule } from './components/year-calendar/year-calendar.module';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { UsersModule } from './components/users/users.module';
     CommentsModule,
     SplashScreenModule,
     UsersModule,
-    AppRoutingModule // Keep this routing module last to make wildcard work correct
+    AppRoutingModule,
+    YearCalendarModule // Keep this routing module last to make wildcard work correct
   ],
   providers: [AngularFireAuthGuard],
   bootstrap: [AppComponent]
