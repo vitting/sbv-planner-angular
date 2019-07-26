@@ -79,8 +79,8 @@ import { YearCalendarModule } from './components/year-calendar/year-calendar.mod
     CommentsModule,
     SplashScreenModule,
     UsersModule,
-    AppRoutingModule,
-    YearCalendarModule // Keep this routing module last to make wildcard work correct
+    YearCalendarModule,
+    AppRoutingModule, // AppRoutingModule = Keep this routing module last to make wildcard work correct
   ],
   providers: [AngularFireAuthGuard],
   bootstrap: [AppComponent]
