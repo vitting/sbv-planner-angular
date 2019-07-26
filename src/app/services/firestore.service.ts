@@ -105,8 +105,22 @@ export class FirestoreService {
     }
   }
 
-  deleteTemplate(templateId: string) {
+  async deleteTemplate(templateId: string) {
+    try {
+      const templateTasks = await this.getTemplateTasks(templateId).pipe(take(1)).toPromise();
+      templateTasks.forEach(async (templateTask) => {
+        await this.deleteTemplateTask(templateTask.id);
+      });
 
+      await this.db.collection<Template>("templates").doc(templateId).update({
+        active: false
+      });
+      return templateId;
+    } catch (error) {
+      console.warn("deleteTemplate", error);
+
+      return null;
+    }
   }
 
   async addTemplateTask(templateId: string, title: string, description: string) {
@@ -143,7 +157,22 @@ export class FirestoreService {
 
   async deleteTemplateTask(templateTaskId: string) {
     try {
-      await this.db.collection<TemplateTask>("templatetasks").doc(templateTaskId).delete();
+      const templateSubTasks = await this.getTemplateSubTasks(templateTaskId).pipe(take(1)).toPromise();
+      if (templateSubTasks && templateSubTasks.length !== 0) {
+        const batch = this.db.firestore.batch();
+        templateSubTasks.forEach((templateSubTask) => {
+          const templateSubTaskRef = this.db.collection("templatesubtasks").doc(templateSubTask.id).ref;
+          batch.update(templateSubTaskRef, {
+            active: false
+          });
+        });
+
+        await batch.commit();
+      }
+
+      await this.db.collection<TemplateTask>("templatetasks").doc(templateTaskId).update({
+        active: false
+      });
       return templateTaskId;
     } catch (error) {
       console.warn("deleteTemplateTask");
@@ -184,7 +213,9 @@ export class FirestoreService {
 
   async deleteTemplateSubTask(templateSubTaskId: string) {
     try {
-      await this.db.collection<TemplateSubTask>("templatesubtasks").doc(templateSubTaskId).delete();
+      await this.db.collection<TemplateSubTask>("templatesubtasks").doc(templateSubTaskId).update({
+        active: false
+      });
       return templateSubTaskId;
     } catch (error) {
       console.warn("deleteTemplateSubTask");
@@ -225,7 +256,6 @@ export class FirestoreService {
 
   async deleteComment(commentId: string, itemId: string): Promise<string> {
     try {
-      // await this.updateSummaryComments(itemId, SummaryAction.delete);
       await this.db.collection<Comment>("comments").doc(commentId).delete();
       return Promise.resolve(commentId);
     } catch (error) {
