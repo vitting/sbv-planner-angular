@@ -9,6 +9,7 @@ export class MonthItemComponent implements OnInit {
   @Input() monthNumber = 0;
   @Input() highlightCurrentMonth = false;
   @Input() currentMonth = 0;
+  @Input() editMode = false;
   itemClass = {};
   highligtMonth = false;
   monthName: string;
@@ -26,4 +27,7 @@ export class MonthItemComponent implements OnInit {
     this.itemClass['month-active'] = this.highligtMonth;
   }
 
+  addCalendarTask() {
+
+  }
 }

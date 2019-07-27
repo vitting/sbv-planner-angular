@@ -5,6 +5,7 @@
   border-bottom: 1px solid white;
   align-items: center;
   width: 100%;
+  min-height: 60px;
   color: white;
   font-weight: lighter;
 
@@ -26,6 +27,12 @@
   .month-tasks {
     width: 100%;
     border-left: 1px solid white;
+
+    .month-add-task {
+      display: flex;
+      justify-content: flex-end;
+      margin: 10px 0;
+    }
   }
 }
 
@@ -75,4 +82,8 @@
 
 .month-11-container {
   background-color: $teal-600;
+}
+
+button {
+  outline: none;
 }

@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { FirestoreService } from './firestore.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +22,20 @@ export class CalendarService {
     "December"
   ];
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog,
+    private firestoreService: FirestoreService,
+    private authService: AuthService) { }
 
   getMonthName(month: number) {
     return this.months[month];
+  }
+
+  addTask() {
+
+  }
+
+  deleteTask() {
+
   }
 }

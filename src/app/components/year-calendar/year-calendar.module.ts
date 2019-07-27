@@ -7,6 +7,8 @@ import { MonthItemComponent } from './month-item/month-item.component';
 import { MonthTaskComponent } from './month-task/month-task.component';
 import { MomentModule } from 'ngx-moment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -15,6 +17,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     MomentModule,
     FontAwesomeModule,
+    MatButtonModule,
+    MatIconModule,
     YearCalendarRoutingModule
   ],
   exports: [YearCalendarComponent, MonthItemComponent, MonthTaskComponent]

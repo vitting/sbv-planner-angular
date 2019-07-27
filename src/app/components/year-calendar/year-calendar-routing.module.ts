@@ -9,6 +9,11 @@ const routes: Routes = [{
   component: YearCalendarComponent,
   canActivate: [AuthGuard],
   data: { onlyAdmin: false }
+}, {
+  path: "calendar/edit",
+  component: YearCalendarComponent,
+  canActivate: [AuthGuard],
+  data: { onlyAdmin: false }
 }];
 
 @NgModule({

@@ -1,11 +1,21 @@
-.month-task {
-  font-size: 0.9rem;
+.month-task-container {
   display: flex;
-  align-items: baseline;
-  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  .month-task-title {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    padding: 10px;
 
-  .month-task-icon {
-    font-size: 0.6rem;
-    margin-right: 5px;
+    .month-task-icon {
+      font-size: 0.6rem;
+      margin-right: 5px;
+    }
+  }
+
+  .month-task-delete {
+    margin-right: 10px;
   }
 }
+

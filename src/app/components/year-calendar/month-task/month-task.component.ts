@@ -7,9 +7,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MonthTaskComponent implements OnInit {
   @Input() title: string;
+  @Input() editMode = false;
   constructor() { }
 
   ngOnInit() {
   }
 
+  editTask() {
+
+  }
+
+  deleteTask() {
+
+  }
 }
