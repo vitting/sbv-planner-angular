@@ -1,0 +1,11 @@
+.month-task {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: baseline;
+  padding: 10px;
+
+  .month-task-icon {
+    font-size: 0.6rem;
+    margin-right: 5px;
+  }
+}

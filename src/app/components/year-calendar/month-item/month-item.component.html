@@ -1,18 +1,8 @@
 <div class="flex-row" [ngClass]="itemClass">
   <div class="month-name">{{monthName}}</div>
   <div class="month-tasks">
-    <div class="month-task month-task-1">
-      <fa-icon [icon]="['fas', 'circle']" class="month-task-icon"></fa-icon>
-      <div>Få resevert dato til Silkeborg
-        Grundlovsstævne hos DVFB</div>
-    </div>
-    <div class="month-task month-task-1">
-      <fa-icon [icon]="['fas', 'circle']" class="month-task-icon"></fa-icon>
-      <div>Få indkaldt til opsætning af telt.</div>
-    </div>
-    <div class="month-task month-task-1">
-      <fa-icon [icon]="['fas', 'circle']" class="month-task-icon"></fa-icon>
-      <div>Møde for Stævne udvalget hos Helle Nielsen angående Silkeborg Beachvolley Stævne</div>
-    </div>
+    <app-month-task [title]="'Dette er opgave 1'"></app-month-task>
+    <app-month-task [title]="'Dette er opgave 2'"></app-month-task>
+    <app-month-task [title]="'Dette er opgave 3'"></app-month-task>
   </div>
 </div>

@@ -17,6 +17,7 @@ import {
   faUser,
   faUsers,
   faEdit,
+  faHome,
   faAddressBook,
   faUserEdit,
   faSignInAlt,
@@ -28,7 +29,8 @@ import {
   faTrash,
   faCircle,
   faPlusCircle,
-  faChevronCircleRight
+  faChevronCircleRight,
+  faCog
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faComment,
@@ -39,7 +41,8 @@ import {
   faClipboard,
   faCheckSquare,
   faQuestionCircle,
-  faCircle as faCircle_outline
+  faCircle as faCircle_outline,
+  faCalendarAlt
 } from '@fortawesome/free-regular-svg-icons';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -102,6 +105,7 @@ export class AppModule {
       faTimesCircle,
       faComment,
       faComments,
+      faCog,
       faTasks,
       faCalendar,
       faUser,
@@ -110,11 +114,13 @@ export class AppModule {
       faLightbulb,
       faSignInAlt,
       faClipboardList,
+      faCalendarAlt,
       faEdit,
       faCheckSquare,
       faBook,
       faArchive,
       faClipboard,
+      faHome,
       faTrash,
       faTrashAlt,
       faUsers,

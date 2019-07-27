@@ -24,20 +24,8 @@
   }
 
   .month-tasks {
-    font-size: 0.9rem;
     width: 100%;
     border-left: 1px solid white;
-
-    .month-task {
-      display: flex;
-      align-items: baseline;
-      padding: 10px;
-
-      .month-task-icon {
-        font-size: 0.7rem;
-        margin-right: 5px;
-      }
-    }
   }
 }
 

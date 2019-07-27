@@ -111,16 +111,28 @@ export class NavbarComponent implements OnInit, OnDestroy {
   menuItemClick(action: string) {
     switch (action) {
       case "home":
-
+        this.router.navigate(["/"]);
+        break;
+      case "calendar":
+        this.router.navigate(["/calendar"]);
+        break;
+      case "projects":
+        this.router.navigate(["/projects/edit"]);
+        break;
+      case "templates":
+        this.router.navigate(["/templates"]);
+        break;
+      case "approveusers":
+        this.router.navigate(["/users/accept"]);
         break;
       case "help":
 
         break;
+      case "settings":
+
+        break;
       case "logout":
         this.logout();
-        break;
-      case "approveusers":
-
         break;
       default:
         break;

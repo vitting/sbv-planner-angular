@@ -26,7 +26,10 @@
 </div>
 <mat-menu #menu="matMenu" xPosition="before">
   <button mat-menu-item (tap)="menuItemClick('home')">
-    <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Mine Projekter
+    <fa-icon [icon]="['fas', 'home']" class="app-menu-icon"></fa-icon>Mine Projekter
+  </button>
+  <button mat-menu-item (tap)="menuItemClick('calendar')">
+    <fa-icon [icon]="['far', 'calendar-alt']" class="app-menu-icon"></fa-icon>Kalender
   </button>
   <button mat-menu-item (tap)="menuItemClick('projects')">
     <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Projekter
@@ -39,6 +42,9 @@
   </button>
   <button mat-menu-item (tap)="menuItemClick('help')">
     <fa-icon [icon]="['far', 'question-circle']" class="app-menu-icon"></fa-icon>Hjælp
+  </button>
+  <button mat-menu-item (tap)="menuItemClick('settings')">
+    <fa-icon [icon]="['fas', 'cog']" class="app-menu-icon"></fa-icon>Indstillinger
   </button>
   <button mat-menu-item (tap)="menuItemClick('logout')">
     <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
