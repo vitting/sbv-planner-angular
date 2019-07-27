@@ -1,15 +1,15 @@
 <mat-nav-list>
   <a mat-list-item (tap)="action($event, 'addremove')">
-    <span>Rediger opgaven</span>
+    <span><fa-icon [icon]="['fas', 'edit']" class="app-menu-icon"></fa-icon>Rediger opgaven</span>
   </a>
   <mat-divider></mat-divider>
   <a mat-list-item (tap)="action($event, 'delete')">
-    <span>Slet opgaven</span>
+    <span><fa-icon [icon]="['far', 'trash-alt']" class="app-menu-icon"></fa-icon>Slet opgaven</span>
   </a>
   <div *ngIf="!data.taskCompleted">
     <mat-divider></mat-divider>
     <a mat-list-item (tap)="action($event, 'markAllSubTasksCompleted')">
-      <span>Markere alle opgaver som fuldført</span>
+      <span><fa-icon [icon]="['far', 'check-square']" class="app-menu-icon"></fa-icon>Markere alle opgaver som fuldført</span>
     </a>
   </div>
 </mat-nav-list>

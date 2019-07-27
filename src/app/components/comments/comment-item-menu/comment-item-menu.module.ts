@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CommentItemMenuComponent } from './comment-item-menu.component';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -11,7 +12,8 @@ import { MatDividerModule } from '@angular/material/divider';
   imports: [
     CommonModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    FontAwesomeModule
   ],
   exports: [CommentItemMenuComponent],
   entryComponents: [CommentItemMenuComponent]

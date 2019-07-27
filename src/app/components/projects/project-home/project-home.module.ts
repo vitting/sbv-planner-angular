@@ -9,6 +9,7 @@ import { ProjectHomeItemMenuModule } from './project-home-item-menu/project-home
 import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
 import { ProjectHomeMenuModule } from './project-home-menu/project-home-menu.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { YearCalendarModule } from '../../year-calendar/year-calendar.module';
 @NgModule({
   declarations: [ProjectHomeComponent],
   imports: [
@@ -20,7 +21,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     FabButtonModule,
     ProjectHomeItemMenuModule,
     ProjectHomeMenuModule,
-    NoDataBoxModule
+    NoDataBoxModule,
+    YearCalendarModule
   ],
   providers: [],
   exports: [

@@ -1,9 +1,9 @@
 <mat-nav-list>
   <a mat-list-item (tap)="action($event, 'edit')">
-    <span>Rediger opgave</span>
+    <span><fa-icon [icon]="['fas', 'edit']" class="app-menu-icon"></fa-icon>Rediger opgave</span>
   </a>
   <mat-divider></mat-divider>
   <a mat-list-item (tap)="action($event, 'delete')">
-    <span>Slet opgave</span>
+    <span><fa-icon [icon]="['far', 'trash-alt']" class="app-menu-icon"></fa-icon>Slet opgave</span>
   </a>
 </mat-nav-list>

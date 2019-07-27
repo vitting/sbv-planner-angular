@@ -1,56 +1,5 @@
 @import "../../../colors";
 
 .month-container {
-    color: white;
 
-    .flex-row {
-        display: flex;
-    }
-    .month-1-container {
-        background-color: $teal-900;
-    }
-
-    .month-2-container {
-        background-color: $teal-800;
-    }
-
-    .month-3-container {
-        background-color: $teal-700;
-    }
-
-    .month-4-container {
-        background-color: $teal-600;
-    }
-
-    .month-5-container {
-        background-color: $teal-500;
-    }
-
-    .month-6-container {
-        background-color: $teal-400;
-    }
-
-    .month-7-container {
-        background-color: $teal-300;
-    }
-
-    .month-8-container {
-        background-color: $cyan-500;
-    }
-
-    .month-9-container {
-        background-color: $cyan-600;
-    }
-
-    .month-10-container {
-        background-color: $cyan-700;
-    }
-
-    .month-11-container {
-        background-color: $cyan-800;
-    }
-
-    .month-12-container {
-        background-color: $cyan-900;
-    }
 }

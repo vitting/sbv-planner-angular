@@ -1,62 +1,6 @@
 <div class="month-container">
-    <div class="month-1-container flex-row">
-        <div>Januar</div>
-        <div>
-            <div>Opgave 1</div>
-            <div>Opgave 2</div>
-            <div>Opgave 3</div>
-        </div>
-    </div>
-    <div class="month-2-container flex-row">
-        <div>Februar</div>
-        <div>
-                <div class="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque in quisquam culpa repellat distinctio voluptate ex ea, obcaecati officiis dolorum debitis neque eum facere alias ducimus ipsam accusamus ut quos!</div>
-                <div class="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque in quisquam culpa repellat distinctio voluptate ex ea, obcaecati officiis dolorum debitis neque eum facere alias ducimus ipsam accusamus ut quos!</div>
-                <div class="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque in quisquam culpa repellat distinctio voluptate ex ea, obcaecati officiis dolorum debitis neque eum facere alias ducimus ipsam accusamus ut quos!</div>
-        </div>
-    </div>
-    <div class="month-3-container flex-row">
-        <div>Marts</div>
-        <div>
-            <div>Opgave1</div>
-            <div>Opgave2</div>
-            <div>Opgave3</div>
-        </div>
-    </div>
-    <div class="month-4-container flex-row">
-        <div>April</div>
-        <div></div>
-    </div>
-    <div class="month-5-container flex-row">
-        <div>Maj</div>
-        <div></div>
-    </div>
-    <div class="month-6-container flex-row">
-        <div>Juni</div>
-        <div></div>
-    </div>
-    <div class="month-7-container flex-row">
-        <div>Juli</div>
-        <div></div>
-    </div>
-    <div class="month-8-container flex-row">
-        <div>August</div>
-        <div></div>
-    </div>
-    <div class="month-9-container flex-row">
-        <div>September</div>
-        <div></div>
-    </div>
-    <div class="month-10-container flex-row">
-        <div>Oktober</div>
-        <div></div>
-    </div>
-    <div class="month-11-container flex-row">
-        <div>November</div>
-        <div></div>
-    </div>
-    <div class="month-12-container flex-row">
-        <div>December</div>
-        <div></div>
-    </div>
+  <app-month-item *ngFor="let monthNumber of months" [monthNumber]="monthNumber" [currentMonth]="currentMonth" [highlightCurrentMonth]="true"></app-month-item>
 </div>
+
+<!-- <app-month-item [monthNumber]="currentMonth" [currentMonth]="currentMonth"></app-month-item> -->
+

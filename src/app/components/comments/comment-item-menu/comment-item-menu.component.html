@@ -1,9 +1,9 @@
 <mat-nav-list>
   <a mat-list-item (tap)="action($event, 'edit')">
-    <span mat-line>Rediger kommentar</span>
+    <span mat-line><fa-icon [icon]="['fas', 'edit']" class="app-menu-icon"></fa-icon>Rediger kommentar</span>
   </a>
   <mat-divider></mat-divider>
   <a mat-list-item (tap)="action($event, 'delete')">
-    <span mat-line>Slet kommentar</span>
+    <span mat-line><fa-icon [icon]="['far', 'trash-alt']" class="app-menu-icon"></fa-icon>Slet kommentar</span>
   </a>
 </mat-nav-list>

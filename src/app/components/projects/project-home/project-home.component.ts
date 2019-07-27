@@ -23,6 +23,8 @@ export class ProjectHomeComponent implements OnInit {
   userId: string = null;
   nodata: NoDataBoxData;
   showNoData = false;
+  currentMonth = 0;
+  showCalendar = false;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -35,6 +37,7 @@ export class ProjectHomeComponent implements OnInit {
       textline1: "Du har endnu ikke nogen aktive projekter.",
       textline2: "Du kan tilslutte dig et eksisterende projekt eller oprette dit eget projekt."
     };
+    this.currentMonth = new Date(Date.now()).getMonth();
     this.navbarService.navbarTitle.next("Mine projekter");
     this.userId = this.authService.userId;
     this.getProjects();

@@ -4,6 +4,7 @@ import { TaskEditMenuComponent } from './task-edit-menu.component';
 import { MatListModule } from '@angular/material/list';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDividerModule } from '@angular/material/divider';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -13,7 +14,8 @@ import { MatDividerModule } from '@angular/material/divider';
     CommonModule,
     MatListModule,
     MatDividerModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    FontAwesomeModule
   ],
   exports: [TaskEditMenuComponent],
   entryComponents: [TaskEditMenuComponent]

@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { ProjectListItemModule } from './project-list-item/project-list-item.module';
 import { DialogConfirmModule } from '../shared/dialog-confirm/dialog-confirm.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectMenuComponent],
@@ -29,6 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatChipsModule,
     MatIconModule,
     MatDialogModule,
+    FontAwesomeModule,
     ProjectsRoutingModule,
     FabButtonModule,
     ProjectListItemModule,

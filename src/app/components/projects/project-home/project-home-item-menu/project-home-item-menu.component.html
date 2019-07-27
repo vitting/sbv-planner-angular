@@ -1,17 +1,17 @@
 <mat-nav-list>
   <a mat-list-item (tap)="action($event, 'gotoTasks')">
-    <span>Vis projekt opgaver</span>
+    <span><fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Vis projekt opgaver</span>
   </a>
   <mat-divider></mat-divider>
   <a mat-list-item (tap)="action($event, 'gotoComments')">
-    <span>Vis projekt kommentarer</span>
+    <span><fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Vis projekt kommentarer</span>
   </a>
   <mat-divider></mat-divider>
   <a mat-list-item (tap)="action($event, 'removeFromProject')">
-    <span>Forlad projektet</span>
+    <span><fa-icon [icon]="['fas', 'arrow-left']" class="app-menu-icon"></fa-icon>Forlad projektet</span>
   </a>
   <mat-divider></mat-divider>
   <a mat-list-item (tap)="action($event, 'editProject')">
-    <span>Redigere projektet</span>
+    <span><fa-icon [icon]="['fas', 'edit']" class="app-menu-icon"></fa-icon>Redigere projektet</span>
   </a>
 </mat-nav-list>

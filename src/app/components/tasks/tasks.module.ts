@@ -9,6 +9,7 @@ import { TasksMenuModule } from './tasks-menu/tasks-menu.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogConfirmModule } from '../shared/dialog-confirm/dialog-confirm.module';
 import { NoDataBoxModule } from '../shared/no-data-box/no-data-box.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [TasksComponent],
@@ -17,6 +18,7 @@ import { NoDataBoxModule } from '../shared/no-data-box/no-data-box.module';
     TasksRoutingModule,
     MatListModule,
     MatDialogModule,
+    FontAwesomeModule,
     TaskListItemModule,
     TasksMenuModule,
     DialogConfirmModule,

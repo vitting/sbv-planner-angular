@@ -12,6 +12,8 @@ import {
   DialogConfirmAction
 } from '../../shared/dialog-confirm/dialog-confirm.component';
 import { ProjectService } from 'src/app/services/project.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ProjectEditItemMenuComponent, ProjectEditItemResult } from './project-edit-item-menu/project-edit-item-menu.component';
 
 @Component({
   selector: 'app-project-edit',
@@ -26,6 +28,7 @@ export class ProjectEditComponent implements OnInit {
     private firestoreService: FirestoreService,
     private router: Router,
     private dialog: MatDialog,
+    private bottomSheet: MatBottomSheet,
     private projectService: ProjectService
     ) { }
 
@@ -62,6 +65,30 @@ export class ProjectEditComponent implements OnInit {
         this.router.navigate(["/projects", projectId, "tasks", "edit"]);
       }
     });
+  }
+
+  menuClick(project: Project) {
+    const bottomSheetRef = this.bottomSheet.open(ProjectEditItemMenuComponent);
+
+    bottomSheetRef.afterDismissed().subscribe((result) => {
+      if (result) {
+        switch (result.action) {
+          case ProjectEditItemResult.edit:
+            this.projectService.setProjectItemEditMode(project.id);
+            break;
+          case ProjectEditItemResult.delete:
+            this.deleteProjectClick(project);
+            break;
+          default:
+            console.log("OTHER");
+        }
+      }
+    });
+
+  }
+
+  endEditProjectClick(project: Project) {
+    this.projectService.setProjectItemEditMode(project.id);
   }
 
   editProjectTasks(item: Project) {

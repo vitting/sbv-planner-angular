@@ -15,20 +15,31 @@ import {
   faTimesCircle,
   faTasks,
   faUser,
+  faUsers,
+  faEdit,
   faAddressBook,
   faUserEdit,
   faSignInAlt,
   faSignOutAlt,
   faClipboardList,
   faBook,
-  faArchive
+  faArchive,
+  faArrowLeft,
+  faTrash,
+  faCircle,
+  faPlusCircle,
+  faChevronCircleRight
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faComment,
   faComments,
   faCalendar,
+  faTrashAlt,
   faLightbulb,
-  faClipboard
+  faClipboard,
+  faCheckSquare,
+  faQuestionCircle,
+  faCircle as faCircle_outline
 } from '@fortawesome/free-regular-svg-icons';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -99,9 +110,20 @@ export class AppModule {
       faLightbulb,
       faSignInAlt,
       faClipboardList,
+      faEdit,
+      faCheckSquare,
       faBook,
       faArchive,
       faClipboard,
+      faTrash,
+      faTrashAlt,
+      faUsers,
+      faArrowLeft,
+      faPlusCircle,
+      faCircle,
+      faCircle_outline,
+      faQuestionCircle,
+      faChevronCircleRight,
       faSignOutAlt);
   }
 }

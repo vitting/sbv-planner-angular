@@ -25,10 +25,22 @@
   <mat-progress-bar *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar>
 </div>
 <mat-menu #menu="matMenu" xPosition="before">
-  <button mat-menu-item (tap)="menuItemClick('home')">Mine Projekter</button>
-  <button mat-menu-item (tap)="menuItemClick('projects')">Projekter</button>
-  <button mat-menu-item (tap)="menuItemClick('templates')">Skabeloner</button>
-  <button mat-menu-item (tap)="menuItemClick('approveusers')">Godkend brugere</button>
-  <button mat-menu-item (tap)="menuItemClick('help')">Hjælp</button>
-  <button mat-menu-item (tap)="menuItemClick('logout')">Log ud</button>
+  <button mat-menu-item (tap)="menuItemClick('home')">
+    <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Mine Projekter
+  </button>
+  <button mat-menu-item (tap)="menuItemClick('projects')">
+    <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Projekter
+  </button>
+  <button mat-menu-item (tap)="menuItemClick('templates')">
+    <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Skabeloner
+  </button>
+  <button mat-menu-item (tap)="menuItemClick('approveusers')">
+    <fa-icon [icon]="['fas', 'users']" class="app-menu-icon"></fa-icon>Godkend brugere
+  </button>
+  <button mat-menu-item (tap)="menuItemClick('help')">
+    <fa-icon [icon]="['far', 'question-circle']" class="app-menu-icon"></fa-icon>Hjælp
+  </button>
+  <button mat-menu-item (tap)="menuItemClick('logout')">
+    <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
+  </button>
 </mat-menu>

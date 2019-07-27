@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
     trigger("buttonHide", [
       state("show", style({
         opacity: '1',
-        zIndex: "1100"
+        zIndex: "999"
       })),
       state("hide", style({
         opacity: '0',

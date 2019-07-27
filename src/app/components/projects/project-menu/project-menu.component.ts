@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 
+export enum CommentItemMenuResult {
+  edit,
+  delete
+}
+
 @Component({
   selector: 'app-project-menu',
   templateUrl: './project-menu.component.html',
@@ -14,9 +19,16 @@ export class ProjectMenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  onGotoRoute(event: MouseEvent, path: string) {
-    this.router.navigate([path]);
-    this.bottomSheetRef.dismiss();
+  action(event: MouseEvent, action: string) {
+    let result = CommentItemMenuResult.edit;
+
+    if (action === "delete") {
+      result = CommentItemMenuResult.delete;
+    }
+
+    this.bottomSheetRef.dismiss({
+      action: result
+    });
     event.preventDefault();
   }
 }

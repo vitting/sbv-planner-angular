@@ -4,6 +4,7 @@ import { ProjectHomeMenuComponent } from './project-home-menu.component';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -11,6 +12,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
   declarations: [ProjectHomeMenuComponent],
   imports: [
     CommonModule,
+    FontAwesomeModule,
     MatListModule,
     MatDividerModule,
     MatBottomSheetModule

@@ -49,7 +49,16 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getProjectUsers();
-    this.setEditModeState(this.projectService.isProjectItemInEditMode(this.project.id));
+    if (this.projectButtonState !== "addperson") {
+      this.setEditModeState(this.projectService.isProjectItemInEditMode(this.project.id));
+
+      this.projectItemEditModeSub = this.projectService.projectItemEditMode$.subscribe((projectId: string) => {
+        if (projectId && projectId === this.project.id) {
+          this.setEditModeState(!this.editMode);
+          this.projectService.setProjectItemEditModeChange(projectId, this.editMode);
+        }
+      });
+    }
 
     if (!this.editMode) {
       this.summarySub = this.projectService.getProjectSummary((this.project.id)).subscribe((summary) => {
@@ -59,13 +68,6 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
     } else {
       this.summary = this.projectService.getSummaryFromCache(this.project.id);
     }
-
-    this.projectItemEditModeSub = this.projectService.projectItemEditMode$.subscribe((projectId: string) => {
-      if (projectId && projectId === this.project.id) {
-        this.setEditModeState(!this.editMode);
-        this.projectService.setProjectItemEditModeChange(projectId, this.editMode);
-      }
-    });
   }
 
   ngOnDestroy(): void {
