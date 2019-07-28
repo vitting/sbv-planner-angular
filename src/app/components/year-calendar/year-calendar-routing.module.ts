@@ -10,7 +10,7 @@ const routes: Routes = [{
   canActivate: [AuthGuard],
   data: { onlyAdmin: false }
 }, {
-  path: "calendar/edit",
+  path: "calendar/:action",
   component: YearCalendarComponent,
   canActivate: [AuthGuard],
   data: { onlyAdmin: false }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CalendarItem } from 'src/app/models/calendar.model';
+import { CalendarService } from 'src/app/services/calendar.service';
 
 @Component({
   selector: 'app-year-calendar',
@@ -11,17 +13,29 @@ export class YearCalendarComponent implements OnInit {
   currentMonth = 0;
   editMode = false;
   highlightCurrentMonth = false;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private calendarService: CalendarService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentMonth = new Date(Date.now()).getMonth();
 
-    if (this.route.snapshot.toString().toLocaleLowerCase().indexOf("edit") !== -1) {
+    if (this.route.snapshot.params.action && this.route.snapshot.params.action === "edit") {
       this.editMode = true;
     } else {
       this.highlightCurrentMonth = true;
     }
-
   }
 
+  async addCalendarItemClick(month: number) {
+    const itemId = await this.calendarService.addCalendarItem(month);
+  }
+
+  async editCalendarItemClick(item: CalendarItem) {
+    console.log(item);
+
+    const itemId = await this.calendarService.editCalendarItem(item);
+  }
+
+  async deleteCalendarItemClick(item: CalendarItem) {
+    const itemId = await this.calendarService.deleteItem(item);
+  }
 }

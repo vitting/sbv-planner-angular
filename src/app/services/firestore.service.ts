@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
 import { Comment, CommentItem } from '../models/comment.model';
 import { Summary } from '../models/summary.model';
 import { TemplateItem, Template, TemplateTask, TemplateSubTask } from '../models/template.model';
+import { CalendarItem } from '../models/calendar.model';
 
 export enum SummaryAction {
   add,
@@ -221,6 +222,58 @@ export class FirestoreService {
       console.warn("deleteTemplateSubTask");
       return null;
     }
+  }
+
+  async addCalendarItem(user: User, text: string, month: number): Promise<string> {
+    const id = this.newId;
+    const timestamp = this.timestamp;
+    const entry: CalendarItem = {
+      id,
+      month,
+      text,
+      createdAt: timestamp,
+      createdBy: user.id,
+      active: true
+    };
+
+    try {
+      await this.db.collection<CalendarItem>("calendaritems").doc(id).set(entry);
+      return id;
+    } catch (error) {
+      console.error("addCalendarItem", error);
+      return null;
+    }
+  }
+
+  async updateCalendarItem(itemId: string, text: string): Promise<string> {
+    try {
+      await this.db.collection<CalendarItem>("calendaritems").doc<CalendarItem>(itemId).update(
+        {
+          text
+        }
+      );
+
+      return itemId;
+    } catch (error) {
+      console.error("updateCalendarItem", error);
+      return null;
+    }
+  }
+
+  async deleteCalendarItem(itemId: string): Promise<string> {
+    try {
+      await this.db.collection<CalendarItem>("calendaritems").doc<CalendarItem>(itemId).delete();
+      return Promise.resolve(itemId);
+    } catch (error) {
+      console.error("deleteCalendarItem", error);
+      return Promise.reject(error);
+    }
+  }
+
+  getCalendarItems(month: number): Observable<CalendarItem[]> {
+    return this.db.collection<CalendarItem>("calendaritems", (ref) => {
+      return ref.where("month", "==", month).where("active", "==", true).orderBy("text");
+    }).valueChanges();
   }
 
   async addComment(user: User, text: string, type: string, itemId: string): Promise<string> {

@@ -1,9 +1,13 @@
 <div class="flex-row" [ngClass]="itemClass">
   <div class="month-name">{{monthName}}</div>
   <div class="month-tasks">
-      <div class="month-add-task" *ngIf="editMode" ><button mat-button type="button" (tap)="addCalendarTask()">Tilføj en opgave <mat-icon>add_circle</mat-icon></button></div>
-    <app-month-task [title]="'Dette er opgave 1'" [editMode]="editMode"></app-month-task>
-    <app-month-task [title]="'Dette er opgave 2'" [editMode]="editMode"></app-month-task>
-    <app-month-task [title]="'Dette er opgave 3'" [editMode]="editMode"></app-month-task>
+    <div class="month-add-task" *ngIf="editMode">
+      <button mat-button type="button" (tap)="addCalendarItem()">
+        Tilføj en opgave <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
+    <app-month-task *ngFor="let item of calendarItems$ | async" [calendarItem]="item" [editMode]="editMode"
+      (editCalendarItemClick)="editCalendarItemClicked($event)"
+      (deleteCalendarItemClick)="deleteCalendarItemClicked($event)"></app-month-task>
   </div>
 </div>

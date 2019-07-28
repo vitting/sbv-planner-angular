@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CalendarItem } from 'src/app/models/calendar.model';
 
 @Component({
   selector: 'app-month-task',
@@ -6,18 +7,20 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./month-task.component.scss']
 })
 export class MonthTaskComponent implements OnInit {
-  @Input() title: string;
+  @Input() calendarItem: CalendarItem;
   @Input() editMode = false;
+  @Output() editCalendarItemClick = new EventEmitter<CalendarItem>();
+  @Output() deleteCalendarItemClick = new EventEmitter<CalendarItem>();
   constructor() { }
 
   ngOnInit() {
   }
 
-  editTask() {
-
+  editCalendarItem() {
+    this.editCalendarItemClick.next(this.calendarItem);
   }
 
-  deleteTask() {
-
+  deleteCalendarItem() {
+    this.deleteCalendarItemClick.next(this.calendarItem);
   }
 }

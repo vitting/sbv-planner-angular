@@ -1,7 +1,8 @@
-export interface CalendarMonthTask {
+export interface CalendarItem {
   id: string;
   month: number;
-  name: string;
+  text: string;
   createdAt: any;
   createdBy: string;
+  active: boolean;
 }

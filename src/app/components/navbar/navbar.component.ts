@@ -116,6 +116,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
       case "calendar":
         this.router.navigate(["/calendar"]);
         break;
+      case "calendaredit":
+        this.router.navigate(["/calendar/edit"]);
+        break;
       case "projects":
         this.router.navigate(["/projects/edit"]);
         break;

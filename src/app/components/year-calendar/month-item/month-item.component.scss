@@ -25,7 +25,11 @@
   }
 
   .month-tasks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
+    min-height: 60px;
     border-left: 1px solid white;
 
     .month-add-task {

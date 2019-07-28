@@ -1,7 +1,6 @@
-<h2>Vi skal lave edit mode</h2>
 <div class="month-container">
-  <app-month-item *ngFor="let monthNumber of months" [monthNumber]="monthNumber" [currentMonth]="currentMonth" [highlightCurrentMonth]="highlightCurrentMonth" [editMode]="editMode"></app-month-item>
+  <app-month-item *ngFor="let monthNumber of months" [monthNumber]="monthNumber" [currentMonth]="currentMonth"
+    [highlightCurrentMonth]="highlightCurrentMonth" [editMode]="editMode"
+    (editCalendarItemClick)="editCalendarItemClick($event)" (deleteCalendarItemClick)="deleteCalendarItemClick($event)"
+    (addCalendarItemClick)="addCalendarItemClick($event)"></app-month-item>
 </div>
-
-<!-- <app-month-item [monthNumber]="currentMonth" [currentMonth]="currentMonth"></app-month-item> -->
-
