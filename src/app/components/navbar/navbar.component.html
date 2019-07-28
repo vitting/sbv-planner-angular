@@ -32,15 +32,16 @@
     <fa-icon [icon]="['far', 'calendar-alt']" class="app-menu-icon"></fa-icon>Kalender
   </button>
   <button mat-menu-item (tap)="menuItemClick('calendaredit')">
-    <fa-icon [icon]="['far', 'calendar-alt']" class="app-menu-icon"></fa-icon>Rediger kalender
+    <fa-icon [icon]="['far', 'calendar-plus']" class="app-menu-icon"></fa-icon>Rediger kalender
   </button>
   <button mat-menu-item (tap)="menuItemClick('projects')">
-    <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Projekter
+    <fa-icon [icon]="['far', 'lightbulb']" class="app-menu-icon"></fa-icon>Projekter
   </button>
   <button mat-menu-item (tap)="menuItemClick('templates')">
-    <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Skabeloner
+    <fa-icon [icon]="['far', 'clipboard']" class="app-menu-icon"></fa-icon>Skabeloner
   </button>
   <button mat-menu-item (tap)="menuItemClick('approveusers')">
+    <span *ngIf="showIndicator" class="menu-item-indicator"></span>
     <fa-icon [icon]="['fas', 'users']" class="app-menu-icon"></fa-icon>Godkend brugere
   </button>
   <button mat-menu-item (tap)="menuItemClick('help')">

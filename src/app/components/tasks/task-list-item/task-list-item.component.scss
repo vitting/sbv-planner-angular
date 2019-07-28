@@ -15,6 +15,7 @@
         }
     }
 
+
     .task-menu {
         align-self: flex-start;
     }
@@ -51,6 +52,18 @@
 
     .task-action-text {
         margin-left: 5px;
+    }
+
+    .comment-indicator {
+      position: absolute;
+      left: auto;
+      right: auto;
+      top: 4px;
+      border-radius: 50%;
+      background-color: red;
+      display: inline-block;
+      width: 10px;
+      height: 10px;
     }
 }
 

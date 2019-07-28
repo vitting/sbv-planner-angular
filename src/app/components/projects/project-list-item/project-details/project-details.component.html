@@ -5,6 +5,7 @@
   </div>
   <div>
     <button *ngIf="!passiveFields" mat-button (tap)="commentClicked()">
+      <span *ngIf="showCommentIndicator" class="comment-indicator"></span>
       <fa-icon [icon]="['far', 'comment']" class="app-project-details-icon"></fa-icon><span
         class="task-action-text">{{summary?.numberOfComments}}</span>
     </button>

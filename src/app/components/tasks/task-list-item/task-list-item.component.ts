@@ -7,6 +7,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TasksMenuComponent, TasksMenuResult } from '../tasks-menu/tasks-menu.component';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/services/task.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-task-list-item',
@@ -20,10 +21,12 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
   @Output() markAllSubTasksAsCompletedClick = new EventEmitter<Task>();
   summary: Summary;
   completed = false;
+  showCommentIndicator = false;
   private summarySub: Subscription;
   constructor(
     private firestoreService: FirestoreService,
     private taskService: TaskService,
+    private authService: AuthService,
     private router: Router,
     private bottomSheet: MatBottomSheet) { }
 
@@ -45,10 +48,21 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
       } else {
         this.completed = false;
       }
+
+      if (this.authService.authUserMeta && this.authService.authUserMeta[this.task.id]) {
+        const taskItemMeta = this.authService.authUserMeta[this.task.id];
+        if (taskItemMeta.commentsLastRead.toDate().getTime() < summary.commentsUpdatedAt.toDate().getTime()) {
+          this.showCommentIndicator = true;
+          console.log("Comments er opdateret siden vi var der sidst");
+        } else {
+          this.showCommentIndicator = false;
+        }
+      }
     });
   }
 
   commentsClick() {
+    this.taskService.updateCommentsLastRead(this.task.id);
     this.router.navigate(["/projects", this.task.projectId, "tasks", this.task.id, "comments"]);
   }
 

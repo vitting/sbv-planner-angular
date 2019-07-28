@@ -3,8 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
 import { switchMap } from 'rxjs/operators';
-import { of, combineLatest, ReplaySubject, Observable } from 'rxjs';
+import { of, combineLatest, ReplaySubject, Observable, Subscription } from 'rxjs';
 import { SplashService } from './splash.service';
+import { UserMeta } from '../models/user-meta.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class AuthService {
   private id: string = null;
   private userIsAdmin = false;
   private users: { [key: string]: User } = {};
+  private userMeta: UserMeta;
+  private userMetaSub: Subscription;
   constructor(private afAuth: AngularFireAuth, private firestoreService: FirestoreService, private splashService: SplashService) {
     const userAuth$ = this.afAuth.user.pipe(switchMap<firebase.User, Observable<User>>((authUser) => {
       if (authUser) {
@@ -31,9 +34,14 @@ export class AuthService {
       this.id = authUser ? authUser.id : null;
       if (authUser) {
         this.userIsAdmin = authUser.admin;
+        this.getUserMetaData(authUser.id);
         users.forEach((user) => {
           this.users[user.id] = user;
         });
+      } else {
+        if (this.userMetaSub) {
+          this.userMetaSub.unsubscribe();
+        }
       }
       console.log("AUTH", authUser);
       this.isAuthenticated.next(authUser ? true : false);
@@ -45,6 +53,16 @@ export class AuthService {
       this.users = {};
       console.log("AUTH ERROR", error);
     });
+  }
+
+  getUserMetaData(userId: string) {
+    this.userMetaSub = this.firestoreService.getUserMeta(userId).subscribe((userMeta: UserMeta) => {
+      this.userMeta = userMeta;
+    });
+  }
+
+  get authUserMeta() {
+    return this.userMeta;
   }
 
   get isUserAuthenticated$() {

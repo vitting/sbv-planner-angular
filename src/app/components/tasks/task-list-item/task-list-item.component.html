@@ -26,6 +26,7 @@
       </div>
       <div class="task-action-item">
         <button mat-button (tap)="commentsClick()">
+            <span *ngIf="showCommentIndicator" class="comment-indicator"></span>
           <fa-icon [icon]="['far', 'comment']"></fa-icon><span
             class="task-action-text">{{summary?.numberOfComments}}</span>
         </button>

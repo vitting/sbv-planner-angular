@@ -48,9 +48,9 @@ export class CalendarService {
 
   addCalendarItem(month: number) {
     const data: Dialog1FieldData = {
-      title: "Nyt kalender punkt",
+      title: "Ny kalender opgave",
       buttonText: "Tilføj",
-      fieldLabel: "Tekst",
+      fieldLabel: "Opgave tekst",
       fieldValue: null,
       multiLine: 2
     };
@@ -82,9 +82,9 @@ export class CalendarService {
 
   editCalendarItem(item: CalendarItem) {
     const data: Dialog1FieldData = {
-      title: "Rediger punkt",
+      title: "Rediger kalender opgave",
       buttonText: "Opdater",
-      fieldLabel: "Tekst",
+      fieldLabel: "Opgave tekst",
       fieldValue: item.text,
       multiLine: 2
     };
@@ -112,10 +112,10 @@ export class CalendarService {
 
   deleteItem(item: CalendarItem) {
     const dialogConfirmData: DialogConfirmData = {
-      header: "Slet kalender punkt",
+      header: "Slet kalender opgaven",
       button1Text: "Ja",
       button2Text: "Nej",
-      message1: "Vil du slette kalender punktet?",
+      message1: "Vil du slette kalender opgaven?",
       message2: null
     };
 

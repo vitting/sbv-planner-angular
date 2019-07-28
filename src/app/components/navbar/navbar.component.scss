@@ -67,3 +67,13 @@ button {
   outline: none;
 }
 
+.menu-item-indicator {
+  position: absolute;
+  left: 3px;
+  top: 17px;
+  border-radius: 50%;
+  background-color: red;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}

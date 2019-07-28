@@ -11,6 +11,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
   @Input() summary: Summary;
   @Input() editMode = false;
   @Input() passiveMode = false;
+  @Input() showCommentIndicator = false;
   @Output() commentsTotalClick: EventEmitter<void> = new EventEmitter<void>();
   @Output() tasksClick: EventEmitter<void> = new EventEmitter<void>();
   @Output() editTasksClick: EventEmitter<void> = new EventEmitter<void>();

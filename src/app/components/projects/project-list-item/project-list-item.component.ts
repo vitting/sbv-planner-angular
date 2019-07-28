@@ -39,8 +39,10 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
     id: '',
     numberOfComments: 0,
     numberOfItems: 0,
-    numberOfItemsCompleted: 0
+    numberOfItemsCompleted: 0,
+    commentsUpdatedAt: null
   };
+  showCommentIndicator = false;
   private summarySub: Subscription;
   private projectItemEditModeSub: Subscription;
   constructor(
@@ -63,6 +65,17 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
     if (!this.editMode) {
       this.summarySub = this.projectService.getProjectSummary((this.project.id)).subscribe((summary) => {
         this.summary = summary;
+
+        if (this.authService.authUserMeta && this.authService.authUserMeta[this.project.id]) {
+          const projectItemMeta = this.authService.authUserMeta[this.project.id];
+          if (projectItemMeta.commentsLastRead.toDate().getTime() <= summary.commentsUpdatedAt.toDate().getTime()) {
+            this.showCommentIndicator = true;
+            console.log("Comments er opdateret siden vi var der sidst");
+          } else {
+            this.showCommentIndicator = false;
+          }
+        }
+
         this.projectService.addSummaryToCache(this.project.id, summary);
       });
     } else {

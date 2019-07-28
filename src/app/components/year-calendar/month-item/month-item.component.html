@@ -6,7 +6,8 @@
         Tilføj en opgave <mat-icon>add_circle</mat-icon>
       </button>
     </div>
-    <app-month-task *ngFor="let item of calendarItems$ | async" [calendarItem]="item" [editMode]="editMode"
+    <div *ngIf="!calendarItems.length" class="no-items">Ingen kalender opgaver for {{monthName}}</div>
+    <app-month-task *ngFor="let item of calendarItems" [calendarItem]="item" [editMode]="editMode"
       (editCalendarItemClick)="editCalendarItemClicked($event)"
       (deleteCalendarItemClick)="deleteCalendarItemClicked($event)"></app-month-task>
   </div>

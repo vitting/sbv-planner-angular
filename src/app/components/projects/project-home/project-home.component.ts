@@ -24,7 +24,7 @@ export class ProjectHomeComponent implements OnInit {
   nodata: NoDataBoxData;
   showNoData = false;
   currentMonth = 0;
-  showCalendar = false;
+  showCalendar = true;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -131,6 +131,7 @@ export class ProjectHomeComponent implements OnInit {
   }
 
   gotoComments(project: Project) {
+    this.projectService.updateCommentsLastRead(project.id);
     this.router.navigate(["/projects", project.id, "comments"]);
   }
 

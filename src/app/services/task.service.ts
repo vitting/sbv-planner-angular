@@ -32,6 +32,10 @@ export class TaskService {
     private fabButtonService: FabButtonService,
     private dialog: MatDialog) { }
 
+  updateCommentsLastRead(taskId: string) {
+    return this.firestoreService.updateUserMetaComments(this.authService.userId, taskId);
+  }
+
   getTasksOnce(projectId: string) {
     return this.firestoreService.getTasks(projectId).pipe(take(1));
   }

@@ -1,14 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { CalendarItem } from 'src/app/models/calendar.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-month-item',
   templateUrl: './month-item.component.html',
   styleUrls: ['./month-item.component.scss']
 })
-export class MonthItemComponent implements OnInit {
+export class MonthItemComponent implements OnInit, OnDestroy {
   @Input() monthNumber = 0;
   @Input() highlightCurrentMonth = false;
   @Input() currentMonth = 0;
@@ -19,7 +19,8 @@ export class MonthItemComponent implements OnInit {
   itemClass = {};
   highligtMonth = false;
   monthName: string;
-  calendarItems$: Observable<CalendarItem[]>;
+  calendarItems: CalendarItem[] = [];
+  calendarItemsSub: Subscription;
   constructor(private calendarService: CalendarService) { }
 
   ngOnInit() {
@@ -31,11 +32,22 @@ export class MonthItemComponent implements OnInit {
     const className = 'month-' + this.monthNumber + '-container';
     this.itemClass[className] = true;
     this.itemClass['month-active'] = this.highligtMonth;
+    this.itemClass['month-edit'] = this.editMode;
 
     if (this.editMode) {
-      this.calendarItems$ = this.calendarService.getCalendarItems(this.monthNumber);
+      this.calendarItemsSub = this.calendarService.getCalendarItems(this.monthNumber).subscribe((calenderItems) => {
+        this.calendarItems = calenderItems;
+      });
     } else {
-      this.calendarItems$ = this.calendarService.getCalendarItems(this.monthNumber).pipe(take(1));
+      this.calendarService.getCalendarItems(this.monthNumber).pipe(take(1)).subscribe((calenderItems) => {
+        this.calendarItems = calenderItems;
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.calendarItemsSub) {
+      this.calendarItemsSub.unsubscribe();
     }
   }
 

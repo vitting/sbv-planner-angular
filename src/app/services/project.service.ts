@@ -39,6 +39,10 @@ export class ProjectService {
     private fabuttonService: FabButtonService,
     private authService: AuthService) { }
 
+  updateCommentsLastRead(projectId: string) {
+    return this.firestoreService.updateUserMetaComments(this.authService.userId, projectId);
+  }
+
   addSummaryToCache(projectId: string, summary: Summary) {
     this.summaryCache[projectId] = summary;
   }

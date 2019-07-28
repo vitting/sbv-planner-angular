@@ -13,6 +13,18 @@
   .app-project-details-icon-button {
     font-size: 0.85rem;
   }
+
+  .comment-indicator {
+    position: absolute;
+    left: auto;
+    right: auto;
+    top: 4px;
+    border-radius: 50%;
+    background-color: red;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
 }
 
 button {

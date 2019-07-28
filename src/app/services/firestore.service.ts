@@ -11,6 +11,7 @@ import { Comment, CommentItem } from '../models/comment.model';
 import { Summary } from '../models/summary.model';
 import { TemplateItem, Template, TemplateTask, TemplateSubTask } from '../models/template.model';
 import { CalendarItem } from '../models/calendar.model';
+import { UserMeta } from '../models/user-meta.model';
 
 export enum SummaryAction {
   add,
@@ -34,6 +35,28 @@ export class FirestoreService {
 
   get newId(): string {
     return this.db.createId();
+  }
+
+  getUserMeta(userId: string) {
+    return this.db.collection<UserMeta>("usermetas").doc<UserMeta>(userId).valueChanges();
+  }
+
+  async updateUserMetaComments(userId: string, parentId: string) {
+    try {
+      const data = {};
+
+      data[parentId] = {
+        commentsLastRead: this.timestamp
+      };
+
+      await this.db.collection<UserMeta>("usermetas").doc<UserMeta>(userId).set(data, {
+        merge: true
+      });
+      return true;
+    } catch (error) {
+      console.warn("updateUserMetaComments", error);
+      return false;
+    }
   }
 
   async createProjectFromTemplate(userId: string, template: Template) {
@@ -280,8 +303,10 @@ export class FirestoreService {
     const id = this.newId;
     const timestamp = this.timestamp;
     const comment = new CommentItem(id, itemId, text, timestamp, timestamp, type, user.id);
+
     try {
       await this.db.collection<Comment>("comments").doc(id).set(comment.toObject());
+      await this.updateUserMetaComments(user.id, itemId);
       return id;
     } catch (error) {
       console.error("AddComment", error);
@@ -787,6 +812,7 @@ export class FirestoreService {
       numberOfComments: 0,
       numberOfItems: 0,
       numberOfItemsCompleted: 0,
+      commentsUpdatedAt: this.timestamp
     };
     try {
       await this.db.collection<Summary>("summaries").doc(itemId).set(summary);

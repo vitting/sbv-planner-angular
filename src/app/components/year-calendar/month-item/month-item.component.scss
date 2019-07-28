@@ -1,5 +1,5 @@
 @import "../../../../colors";
-
+@import "../../../../variables";
 .flex-row {
   display: flex;
   border-bottom: 1px solid white;
@@ -13,7 +13,7 @@
     position: relative;
     width: 100%;
     font-size: 1rem;
-    box-shadow: 0px 0px 3px 3px  rgba(255, 251, 0, 0.7);
+    box-shadow: 0px 0px 3px 3px $color-highligt-month;
     z-index: 100;
     border-bottom: none;
   }
@@ -32,6 +32,11 @@
     min-height: 60px;
     border-left: 1px solid white;
 
+    .no-items {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+
     .month-add-task {
       display: flex;
       justify-content: flex-end;
@@ -41,51 +46,111 @@
 }
 
 .month-0-container {
-  background-color: $cyan-900;
+  background-color: $bg-color-calendar-month-0;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-0, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-1-container {
-  background-color: $cyan-800;
+  background-color: $bg-color-calendar-month-1;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-1, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-2-container {
-  background-color: $cyan-700;
+  background-color: $bg-color-calendar-month-2;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-2, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-3-container {
-  background-color: $cyan-600;
+  background-color: $bg-color-calendar-month-3;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-3, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-4-container {
-  background-color: $pink-600;
+  background-color: $bg-color-calendar-month-4;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-4, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-5-container {
-  background-color: $pink-700;
+  background-color: $bg-color-calendar-month-5;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-5, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-6-container {
-  background-color: $pink-800;
+  background-color: $bg-color-calendar-month-6;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-6, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-7-container {
-  background-color: $pink-900;
+  background-color: $bg-color-calendar-month-7;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-7, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-8-container {
-  background-color: $teal-900;
+  background-color: $bg-color-calendar-month-8;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-8, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-9-container {
-  background-color: $teal-800;
+  background-color: $bg-color-calendar-month-9;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-9, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-10-container {
-  background-color: $teal-700;
+  background-color: $bg-color-calendar-month-10;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-10, 5%);
+    border-radius: 4px;
+  }
 }
 
 .month-11-container {
-  background-color: $teal-600;
+  background-color: $bg-color-calendar-month-11;
+
+  &.month-edit app-month-task:hover {
+    background-color: lighten($bg-color-calendar-month-11, 5%);
+    border-radius: 4px;
+  }
 }
 
 button {
