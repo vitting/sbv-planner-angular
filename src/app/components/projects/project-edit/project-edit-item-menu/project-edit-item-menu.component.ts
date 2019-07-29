@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { ProjectMenuComponent } from '../../project-menu/project-menu.component';
 
 export enum ProjectEditItemResult {
   edit,
@@ -14,7 +13,7 @@ export enum ProjectEditItemResult {
 })
 export class ProjectEditItemMenuComponent implements OnInit {
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<ProjectMenuComponent>) { }
+  constructor(private bottomSheetRef: MatBottomSheetRef<ProjectEditItemMenuComponent>) { }
 
   ngOnInit() {
   }

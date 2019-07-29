@@ -33,7 +33,7 @@ export class ProjectEditComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.navbarService.navbarTitle.next("Rediger Projekter");
+    this.navbarService.navbarTitle.next("Projekter");
 
     this.projects$ = this.firestoreService.getProjects();
   }

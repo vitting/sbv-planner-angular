@@ -27,6 +27,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.usersSub = this.userService.getUsersWaitingForApproval().subscribe((users) => {
         this.users = users;
       });
+
+      this.userService.updateUserMetaLastCheckToAcceptUsers();
     }
   }
 

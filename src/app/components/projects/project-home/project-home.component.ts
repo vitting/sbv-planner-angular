@@ -127,7 +127,7 @@ export class ProjectHomeComponent implements OnInit {
   }
 
   gotoProjects() {
-    this.router.navigate(["/projects"]);
+    this.router.navigate(["/projects/join"]);
   }
 
   gotoComments(project: Project) {
@@ -137,6 +137,10 @@ export class ProjectHomeComponent implements OnInit {
 
   gotoTasks(project: Project) {
     this.router.navigate(["/projects", project.id, "tasks"]);
+  }
+
+  gotoCalendar() {
+    this.router.navigate(["/calendar"]);
   }
 
   async removeUserFromProject(project: Project, user: User) {

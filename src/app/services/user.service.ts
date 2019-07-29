@@ -10,6 +10,7 @@ import { FirestoreService } from './firestore.service';
 import { FabButtonService } from './fab-button.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarService } from './navbar.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class UserService {
   constructor(
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
+    private authService: AuthService,
     private fabButtonService: FabButtonService,
     private dialog: MatDialog) { }
 
@@ -38,5 +40,9 @@ export class UserService {
 
   getUsersWaitingForApproval() {
     return this.firestoreService.getUsersWaitingForApproval();
+  }
+
+  updateUserMetaLastCheckToAcceptUsers() {
+    return this.firestoreService.updateUserMetaLastCheckToAcceptUsers(this.authService.userId);
   }
 }

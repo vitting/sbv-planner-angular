@@ -3,21 +3,26 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
 import { switchMap } from 'rxjs/operators';
-import { of, combineLatest, ReplaySubject, Observable, Subscription } from 'rxjs';
+import { of, combineLatest, ReplaySubject, Observable, Subscription, Subject } from 'rxjs';
 import { SplashService } from './splash.service';
 import { UserMeta } from '../models/user-meta.model';
+import { AppMeta } from '../models/app-meta.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+  private isAuthenticated = new ReplaySubject<boolean>(1);
+  private appMetaUpdated = new ReplaySubject<AppMeta>(1);
+  private userMetaUpdated = new ReplaySubject<UserMeta>(1);
   private user: User;
   private id: string = null;
   private userIsAdmin = false;
   private users: { [key: string]: User } = {};
   private userMeta: UserMeta;
   private userMetaSub: Subscription;
+  private appMeta: AppMeta;
+  private appMetaSub: Subscription;
   constructor(private afAuth: AngularFireAuth, private firestoreService: FirestoreService, private splashService: SplashService) {
     const userAuth$ = this.afAuth.user.pipe(switchMap<firebase.User, Observable<User>>((authUser) => {
       if (authUser) {
@@ -28,18 +33,25 @@ export class AuthService {
     }));
 
     const users$ = this.firestoreService.getUsers();
-
-    combineLatest([userAuth$, users$]).subscribe(([authUser, users]) => {
+    combineLatest([userAuth$, users$]).subscribe(async ([authUser, users]) => {
       this.user = authUser;
       this.id = authUser ? authUser.id : null;
       if (authUser) {
         this.userIsAdmin = authUser.admin;
-        this.getUserMetaData(authUser.id);
+        await this.getUserMetaData(authUser.id);
+        await this.getAppMetaData();
         users.forEach((user) => {
           this.users[user.id] = user;
         });
       } else {
+        this.userMeta = null;
+        this.appMeta = null;
+        this.userIsAdmin = false;
         if (this.userMetaSub) {
+          this.userMetaSub.unsubscribe();
+        }
+
+        if (this.appMetaSub) {
           this.userMetaSub.unsubscribe();
         }
       }
@@ -55,10 +67,36 @@ export class AuthService {
     });
   }
 
-  getUserMetaData(userId: string) {
-    this.userMetaSub = this.firestoreService.getUserMeta(userId).subscribe((userMeta: UserMeta) => {
-      this.userMeta = userMeta;
+  private getUserMetaData(userId: string) {
+    return new Promise((resolve, reject) => {
+      this.userMetaSub = this.firestoreService.getUserMeta(userId).subscribe((userMeta: UserMeta) => {
+        this.userMeta = userMeta;
+        this.userMetaUpdated.next(userMeta);
+        resolve(null);
+      });
     });
+  }
+
+  private getAppMetaData() {
+    return new Promise((resolve, reject) => {
+      this.appMetaSub = this.firestoreService.getAppMeta().subscribe((appMeta: AppMeta) => {
+        this.appMeta = appMeta;
+        this.appMetaUpdated.next(appMeta);
+        resolve(null);
+      });
+    });
+  }
+
+  get appMetaWhenUpdated$() {
+    return this.appMetaUpdated;
+  }
+
+  get authAppMeta() {
+    return this.appMeta;
+  }
+
+  get userMetaWhenUpdated$() {
+    return this.userMetaUpdated;
   }
 
   get authUserMeta() {

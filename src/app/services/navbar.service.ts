@@ -8,6 +8,8 @@ import {
   DialogConfirmResult,
   DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FirestoreService } from './firestore.service';
+import { AppMeta } from '../models/app-meta.model';
 
 export interface NavbarRoutes {
   prevRoute: string;
@@ -32,7 +34,10 @@ export class NavbarService {
   prevRoute: string = null;
   currentRoute: string = null;
   prevRoutesIndex: string[] = [];
-  constructor(private router: Router, private authService: AuthService, private dialog: MatDialog) {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private dialog: MatDialog) {
     this.currentRoute = this.router.url;
     this.prevRoute = this.currentRoute;
 

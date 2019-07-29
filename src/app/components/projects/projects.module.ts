@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProjectsComponent } from './projects.component';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { FabButtonModule } from '../shared/fab-button/fab-button.module';
-import { ProjectMenuComponent } from './project-menu/project-menu.component';
 import { RouterModule } from '@angular/router';
 import { ProjectListItemModule } from './project-list-item/project-list-item.module';
 import { DialogConfirmModule } from '../shared/dialog-confirm/dialog-confirm.module';
@@ -18,7 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  declarations: [ProjectsComponent, ProjectMenuComponent],
+  declarations: [ProjectsComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -36,7 +35,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ProjectListItemModule,
     DialogConfirmModule
   ],
-  exports: [ProjectsComponent],
-  entryComponents: [ProjectMenuComponent]
+  exports: [ProjectsComponent]
 })
 export class ProjectsModule { }

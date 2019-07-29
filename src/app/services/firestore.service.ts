@@ -12,6 +12,7 @@ import { Summary } from '../models/summary.model';
 import { TemplateItem, Template, TemplateTask, TemplateSubTask } from '../models/template.model';
 import { CalendarItem } from '../models/calendar.model';
 import { UserMeta } from '../models/user-meta.model';
+import { AppMeta } from '../models/app-meta.model';
 
 export enum SummaryAction {
   add,
@@ -37,6 +38,10 @@ export class FirestoreService {
     return this.db.createId();
   }
 
+  getAppMeta() {
+    return this.db.collection<AppMeta>("appmetas").doc<AppMeta>("app-meta").valueChanges();
+  }
+
   getUserMeta(userId: string) {
     return this.db.collection<UserMeta>("usermetas").doc<UserMeta>(userId).valueChanges();
   }
@@ -55,6 +60,24 @@ export class FirestoreService {
       return true;
     } catch (error) {
       console.warn("updateUserMetaComments", error);
+      return false;
+    }
+  }
+
+  async updateUserMetaLastCheckToAcceptUsers(userId: string) {
+    try {
+      const data = {};
+
+      data["accept-visit"] = {
+        usersApprovedLastChecked: this.timestamp
+      };
+
+      await this.db.collection<UserMeta>("usermetas").doc<UserMeta>(userId).set(data, {
+        merge: true
+      });
+      return true;
+    } catch (error) {
+      console.warn("updateUserMetaLastCheckToAcceptUsers", error);
       return false;
     }
   }

@@ -1,47 +1,49 @@
-<app-messages [messages]="messages"></app-messages>
-<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-  <div>
-    <mat-form-field class="app-form-input">
-      <input id="name" name="name" matInput placeholder="Dit navn" type="text" formControlName="name" required>
-      <mat-hint>Dit navn der bliver vist til andre brugere</mat-hint>
-      <mat-error
-        *ngIf="signupForm.get('name').invalid && signupForm.get('name').touched && signupForm.get('name').errors['required']">
-        Feltet skal udfyldes</mat-error>
-    </mat-form-field>
-    <mat-form-field class="app-form-input">
-      <input id="email" name="email" matInput placeholder="E-mail" type="email" formControlName="email" required>
-      <mat-error
-        *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched && signupForm.get('email').errors['required']">
-        Feltet skal udfyldes</mat-error>
-      <mat-error
-        *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched && signupForm.get('email').errors['email']">
-        Feltet indeholder ikke en valid e-mail adresse</mat-error>
-    </mat-form-field>
-    <mat-form-field class="app-form-input">
-      <input id="password" name="password" matInput placeholder="Kodeord" type="password" formControlName="password"
-        #passwordInput required>
-      <mat-hint>Dit kodeord skal være på mindst 6 tegn</mat-hint>
-      <mat-error
-        *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && signupForm.get('password').errors['required']">
-        Feltet skal udfyldes</mat-error>
-      <mat-error
-        *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && signupForm.get('password').errors['minlength']">
-        Kodeordet skal være på mindst 6 tegn</mat-error>
-    </mat-form-field>
-    <mat-form-field class="app-form-input">
-      <input id="passwordRepeat" name="passwordRepeat" matInput placeholder="Gentag kodeord" type="password"
-        formControlName="passwordRepeat" required>
-      <mat-error
-        *ngIf="signupForm.get('passwordRepeat').invalid && signupForm.get('passwordRepeat').touched && signupForm.get('passwordRepeat').errors['required']">
-        Feltet skal udfyldes</mat-error>
-      <mat-error
-        *ngIf="signupForm.get('passwordRepeat').invalid && signupForm.get('passwordRepeat').touched && signupForm.get('passwordRepeat').errors['passwordsNotEqual']">
-        Kodeord stemmer ikke overens</mat-error>
-    </mat-form-field>
-  </div>
-  <div class="app-form-button">
-    <button mat-flat-button color="primary" [disabled]="signupForm.invalid || signupForm.untouched"
-      type="submit">Opret</button>
-    <a mat-button [routerLink]="['/login']" color="accent">Gå til login</a>
-  </div>
-</form>
+<div>
+  <app-messages [messages]="messages"></app-messages>
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field class="app-form-input">
+        <input id="name" name="name" matInput placeholder="Dit navn" type="text" formControlName="name" required>
+        <mat-hint>Dit navn der bliver vist til andre brugere</mat-hint>
+        <mat-error
+          *ngIf="signupForm.get('name').invalid && signupForm.get('name').touched && signupForm.get('name').errors['required']">
+          Feltet skal udfyldes</mat-error>
+      </mat-form-field>
+      <mat-form-field class="app-form-input">
+        <input id="email" name="email" matInput placeholder="E-mail" type="email" formControlName="email" required>
+        <mat-error
+          *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched && signupForm.get('email').errors['required']">
+          Feltet skal udfyldes</mat-error>
+        <mat-error
+          *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched && signupForm.get('email').errors['email']">
+          Feltet indeholder ikke en valid e-mail adresse</mat-error>
+      </mat-form-field>
+      <mat-form-field class="app-form-input">
+        <input id="password" name="password" matInput placeholder="Kodeord" type="password" formControlName="password"
+          #passwordInput required>
+        <mat-hint>Dit kodeord skal være på mindst 6 tegn</mat-hint>
+        <mat-error
+          *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && signupForm.get('password').errors['required']">
+          Feltet skal udfyldes</mat-error>
+        <mat-error
+          *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && signupForm.get('password').errors['minlength']">
+          Kodeordet skal være på mindst 6 tegn</mat-error>
+      </mat-form-field>
+      <mat-form-field class="app-form-input">
+        <input id="passwordRepeat" name="passwordRepeat" matInput placeholder="Gentag kodeord" type="password"
+          formControlName="passwordRepeat" required>
+        <mat-error
+          *ngIf="signupForm.get('passwordRepeat').invalid && signupForm.get('passwordRepeat').touched && signupForm.get('passwordRepeat').errors['required']">
+          Feltet skal udfyldes</mat-error>
+        <mat-error
+          *ngIf="signupForm.get('passwordRepeat').invalid && signupForm.get('passwordRepeat').touched && signupForm.get('passwordRepeat').errors['passwordsNotEqual']">
+          Kodeord stemmer ikke overens</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="app-form-button">
+      <button mat-flat-button color="primary" [disabled]="signupForm.invalid || signupForm.untouched"
+        type="submit">Opret</button>
+      <a mat-button [routerLink]="['/login']" color="accent">Gå til login</a>
+    </div>
+  </form>
+</div>

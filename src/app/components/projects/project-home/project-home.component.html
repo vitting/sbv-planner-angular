@@ -1,7 +1,10 @@
-<h3>Menu indicator</h3>
-<h3>Menu indicator Check for new users to approve</h3>
+<h3>Admin og Editor</h3>
+<h3>Ryd op i moduler</h3>
+<h3>Venter på accept besked</h3>
+<h3>Signup user redirect</h3>
+<h3>Mulighed for at logge ud fra signup</h3>
 <div class="home-calendar">
-  <app-month-item [monthNumber]="currentMonth" [currentMonth]="currentMonth" *ngIf="showCalendar"></app-month-item>
+  <app-month-item [monthNumber]="currentMonth" [currentMonth]="currentMonth" *ngIf="showCalendar" (click)="gotoCalendar()"></app-month-item>
 </div>
 <app-no-data-box *ngIf="showNoData" [data]="nodata"></app-no-data-box>
 <mat-list *ngIf="!showNoData">

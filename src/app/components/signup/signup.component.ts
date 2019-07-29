@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -18,9 +18,9 @@ export class SignupComponent implements OnInit {
   messages: string[] = [];
   constructor(
     private navbarService: NavbarService,
-    public afAuth: AngularFireAuth,
     private authService: AuthService,
-    private firestoreService: FirestoreService) {
+    private firestoreService: FirestoreService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -41,13 +41,19 @@ export class SignupComponent implements OnInit {
       const name: string = this.signupForm.get("name").value;
 
       try {
+        this.navbarService.showProgressbar = true;
         const userCred = await this.authService.createUser(email, password);
         if (userCred) {
-          await this.firestoreService.addUser(userCred.user.uid, name);
+          const user = await this.firestoreService.addUser(userCred.user.uid, name);
+          if (user) {
+            this.router.navigate(["/message"]);
+          }
         }
       } catch (error) {
         this.showSignupError(error.code);
         console.log(error);
+      } finally {
+        this.navbarService.showProgressbar = false;
       }
     }
   }

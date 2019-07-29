@@ -7,9 +7,9 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SignupMessageComponent } from './signup-message/signup-message.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MessagesModule } from '../shared/messages/messages.module';
+import { SignupMessageComponent } from './signup-message/signup-message.component';
 
 @NgModule({
   declarations: [SignupComponent, SignupMessageComponent],
@@ -23,6 +23,6 @@ import { MessagesModule } from '../shared/messages/messages.module';
     MatIconModule,
     MessagesModule
   ],
-  exports: [SignupComponent]
+  exports: [SignupComponent, SignupMessageComponent]
 })
 export class SignupModule { }

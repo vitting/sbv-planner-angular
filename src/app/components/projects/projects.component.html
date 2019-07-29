@@ -1,4 +1,3 @@
-<h2>Her skal vi da vise add person i stedet for menu</h2>
 <mat-list>
   <app-project-list-item mat-list-item (addPersonClick)="projectAddPersonClick($event)" *ngFor="let project of projects"
     [project]="project" [enableRemoveUserButton]="false" [projectButtonState]="'addperson'" [passiveMode]="true">

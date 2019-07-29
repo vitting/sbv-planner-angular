@@ -3,6 +3,7 @@ import { NavbarService, NavbarTitleData } from 'src/app/services/navbar.service'
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,6 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private navbarRouteChangeSub: Subscription;
   private navbarShowIndicatorSub: Subscription;
   private navbarShowAuthSub: Subscription;
+  private appMetaSub: Subscription;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -40,10 +42,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     });
 
+    // Show/hide progressBar
     this.navbarShowProgressSub = this.navbarService.navbarProgress$.subscribe((show: boolean) => {
       this.showProgressbar = show;
     });
 
+    // Show/hide back button
     this.navbarRouteChangeSub = this.navbarService.navbarRouteChange$.subscribe(() => {
       if (this.navbarService.prevRoutesIndex.length) {
         this.showNavBack = true;
@@ -52,15 +56,38 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     });
 
+    // Show/hide a red indicator on Menu icon
     this.navbarShowIndicatorSub = this.navbarService.navbarShowIndicator$.subscribe((show) => {
       this.showIndicator = show;
     });
 
+    // Indicate if user is accepted by the administrator
     this.navbarShowAuthSub = this.authService.isUserAuthenticated$.subscribe((auth) => {
       if (auth && this.authService.authUserInfo.accepted) {
         this.showIsAuth = true;
       } else {
         this.showIsAuth = false;
+      }
+    });
+
+    this.appMetaSub = this.authService.appMetaWhenUpdated$.subscribe((appMeta) => {
+      if (this.authService.isAdmin) {
+        if (appMeta && appMeta.usersToApprove) {
+          const metaAcceptVisit = this.authService.authUserMeta["accept-visit"];
+          if (metaAcceptVisit && metaAcceptVisit.usersApprovedLastChecked) {
+            const appDate: Date = appMeta.userToApproveLastUpdated.toDate();
+            const userDate: Date = metaAcceptVisit.usersApprovedLastChecked.toDate();
+            if (userDate.getTime() < appDate.getTime()) {
+              this.navbarService.showIndicator = true;
+            } else {
+              this.navbarService.showIndicator = false;
+            }
+          } else {
+            this.navbarService.showIndicator = false;
+          }
+        } else {
+          this.navbarService.showIndicator = false;
+        }
       }
     });
   }
@@ -84,6 +111,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     if (this.navbarShowAuthSub) {
       this.navbarShowAuthSub.unsubscribe();
+    }
+
+    if (this.appMetaSub) {
+      this.appMetaSub.unsubscribe();
     }
   }
 
@@ -120,7 +151,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.router.navigate(["/calendar/edit"]);
         break;
       case "projects":
-        this.router.navigate(["/projects/edit"]);
+        this.router.navigate(["/projects"]);
         break;
       case "templates":
         this.router.navigate(["/templates"]);

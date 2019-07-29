@@ -4,4 +4,8 @@ mat-list {
 
 .home-calendar {
   margin-bottom: 5px;
+
+  app-month-item {
+    cursor: pointer;
+  }
 }

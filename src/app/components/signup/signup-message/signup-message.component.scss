@@ -1,21 +1,3 @@
-@import "../../../../colors";
 .message {
-  border-radius: 4px;
-  color: #333;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   font-weight: lighter;
-  font-size: 1.1rem;
-
-  p {
-    text-align: center;
-  }
-
-  .message-icon {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    color: $indigo-a200;
-  }
 }

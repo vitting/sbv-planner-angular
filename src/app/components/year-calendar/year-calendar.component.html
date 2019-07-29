@@ -1,4 +1,4 @@
-<div class="month-container">
+<div class="months-container">
   <app-month-item *ngFor="let monthNumber of months" [monthNumber]="monthNumber" [currentMonth]="currentMonth"
     [highlightCurrentMonth]="highlightCurrentMonth" [editMode]="editMode"
     (editCalendarItemClick)="editCalendarItemClick($event)" (deleteCalendarItemClick)="deleteCalendarItemClick($event)"

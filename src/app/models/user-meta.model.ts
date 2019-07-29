@@ -4,4 +4,5 @@ export interface UserMeta {
 
 interface UserMetaElement {
   commentsLastRead?: any;
+  usersApprovedLastChecked?: any;
 }

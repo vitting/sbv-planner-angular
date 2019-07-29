@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup-message',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./signup-message.component.scss']
 })
 export class SignupMessageComponent implements OnInit {
-
-  constructor() { }
+  name: string;
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.name = this.authService.authUserInfo.name;
   }
 
 }
