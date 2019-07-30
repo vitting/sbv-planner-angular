@@ -27,7 +27,7 @@
     "@fortawesome/angular-fontawesome": "^0.4.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.20",
     "@fortawesome/free-regular-svg-icons": "^5.10.0",
-    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/free-solid-svg-icons": "^5.10.0",
     "@getbase/grid": "^4.1.0",
     "firebase": "^6.3.3",
     "hammerjs": "^2.0.8",
