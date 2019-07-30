@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, AfterViewChecked, OnChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,6 +11,7 @@ import { RemoveUserFromProjectResult } from '../project-list-item/project-list-i
 import { NavbarService } from 'src/app/services/navbar.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { User } from 'src/app/models/user.model';
+import { MonthItemComponent } from '../../year-calendar/month-item/month-item.component';
 
 @Component({
   selector: 'app-home',
@@ -35,14 +36,12 @@ export class ProjectHomeComponent implements OnInit {
   ngOnInit() {
     this.nodata = {
       textline1: "Du har endnu ikke nogen aktive projekter.",
-      textline2: "Du kan tilslutte dig et eksisterende projekt eller oprette dit eget projekt."
+      textline2: "Tilslutte dig et eksisterende projekt eller opret dit eget."
     };
     this.currentMonth = new Date(Date.now()).getMonth();
-    this.navbarService.navbarTitle.next("Mine projekter");
+    this.navbarService.navbarTitle.next("Forside");
     this.userId = this.authService.userId;
     this.getProjects();
-
-    // this.navbarService.showIndicator = true;
   }
 
   private getProjects() {

@@ -70,7 +70,6 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
           const projectItemMeta = this.authService.authUserMeta[this.project.id];
           if (projectItemMeta.commentsLastRead.toDate().getTime() <= summary.commentsUpdatedAt.toDate().getTime()) {
             this.showCommentIndicator = true;
-            console.log("Comments er opdateret siden vi var der sidst");
           } else {
             this.showCommentIndicator = false;
           }

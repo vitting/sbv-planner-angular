@@ -8,8 +8,6 @@ import {
   DialogConfirmResult,
   DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FirestoreService } from './firestore.service';
-import { AppMeta } from '../models/app-meta.model';
 
 export interface NavbarRoutes {
   prevRoute: string;

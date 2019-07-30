@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { FirestoreService, ProjectTaskName } from 'src/app/services/firestore.service';
-import { MatDialog } from '@angular/material/dialog';
 import { Comment } from 'src/app/models/comment.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommentItemMenuComponent, CommentItemMenuResult } from './comment-item-menu/comment-item-menu.component';

@@ -3,16 +3,17 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { ProjectItem, Project } from '../models/project.model';
 import { TaskItem, Task } from '../models/task.model';
-import { take, switchMap, tap, map } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { SubTaskItem, SubTask } from '../models/subtask.model';
 import { User, UserItem } from '../models/user.model';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Comment, CommentItem } from '../models/comment.model';
 import { Summary } from '../models/summary.model';
 import { TemplateItem, Template, TemplateTask, TemplateSubTask } from '../models/template.model';
 import { CalendarItem } from '../models/calendar.model';
 import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
+import { Log } from '../models/log.model';
 
 export enum SummaryAction {
   add,
@@ -36,6 +37,21 @@ export class FirestoreService {
 
   get newId(): string {
     return this.db.createId();
+  }
+
+  async addToLog(message: string, userId: string = "", type: string = "") {
+    try {
+      await this.db.collection<Log>("logs").add({
+        type,
+        date: this.timestamp,
+        message,
+        userId
+      });
+      return true;
+    } catch (error) {
+      console.error("addToLog", error);
+      return false;
+    }
   }
 
   getAppMeta() {
@@ -355,7 +371,7 @@ export class FirestoreService {
     }
   }
 
-  async deleteComment(commentId: string, itemId: string): Promise<string> {
+  async deleteComment(commentId: string): Promise<string> {
     try {
       await this.db.collection<Comment>("comments").doc(commentId).delete();
       return Promise.resolve(commentId);
@@ -379,6 +395,42 @@ export class FirestoreService {
       return user;
     } catch (error) {
       console.error("AddUser", error);
+      return null;
+    }
+  }
+
+  async updateUserAdmin(userId: string, state: boolean): Promise<string> {
+    try {
+      await this.db.collection<User>("users").doc(userId).update({
+        admin: state
+      });
+      return userId;
+    } catch (error) {
+      console.error("updateUserAdmin", error);
+      return null;
+    }
+  }
+
+  async updateUserEditor(userId: string, state: boolean): Promise<string> {
+    try {
+      await this.db.collection<User>("users").doc(userId).update({
+        editor: state
+      });
+      return userId;
+    } catch (error) {
+      console.error("updateUserEditor", error);
+      return null;
+    }
+  }
+
+  async updateUserActive(userId: string, state: boolean): Promise<string> {
+    try {
+      await this.db.collection<User>("users").doc(userId).update({
+        active: state
+      });
+      return userId;
+    } catch (error) {
+      console.error("updateUserActive", error);
       return null;
     }
   }
@@ -460,6 +512,12 @@ export class FirestoreService {
     return this.db.collection<User>("users").valueChanges();
   }
 
+  getUsersSorted(acsending: boolean): Observable<User[]> {
+    return this.db.collection<User>("users", (ref) => {
+      return ref.orderBy("name", acsending ? "asc" : "desc");
+    }).valueChanges();
+  }
+
   getProjects() {
     return this.db.collection<Project>("projects", (ref) => {
       return ref.where("active", "==", true).orderBy("createdAt", "desc").orderBy("title");
@@ -531,7 +589,7 @@ export class FirestoreService {
     tasks$.pipe(take(1)).subscribe((tasks: Task[]) => {
       if (tasks) {
         tasks.forEach((task) => {
-          this.deleteTask(task.id, projectId);
+          this.deleteTask(task.id);
         });
       }
     });
@@ -611,7 +669,7 @@ export class FirestoreService {
     }
   }
 
-  async deleteTask(taskId: string, projectId: string): Promise<string> {
+  async deleteTask(taskId: string): Promise<string> {
     try {
       const subtasks$ = this.getSubTasks(taskId);
       subtasks$.pipe(take(1)).subscribe((subTasks: SubTask[]) => {
@@ -769,7 +827,7 @@ export class FirestoreService {
     }
   }
 
-  async updateSubTaskCompleteStatus(subTaskId: string, userId: string, completed: boolean, taskId: string) {
+  async updateSubTaskCompleteStatus(subTaskId: string, userId: string, completed: boolean) {
     const timestamp = this.timestamp;
 
     try {

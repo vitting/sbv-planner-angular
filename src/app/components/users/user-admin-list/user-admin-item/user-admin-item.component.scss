@@ -1,0 +1,25 @@
+.admin-user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .admin-user-item-actions {
+    display: flex;
+    flex-direction: column;
+
+    .slide-button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+button {
+  outline: none;
+}

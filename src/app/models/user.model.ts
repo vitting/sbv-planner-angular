@@ -20,7 +20,7 @@ export class UserItem implements User {
     public admin: boolean = false,
     public editor: boolean = true,
     public active: boolean = true,
-    public photoUrl: string = null
+    public photoUrl: string = null,
   ) {}
 
   toObject(): User {

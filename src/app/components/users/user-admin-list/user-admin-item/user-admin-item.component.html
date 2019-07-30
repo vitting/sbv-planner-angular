@@ -1,0 +1,14 @@
+<div mat-list-item appItemContainer="user" class="admin-user-item">
+  <div>{{user.name}}</div>
+  <div class="admin-user-item-actions" *ngIf="!showUndo">
+    <div class="slide-button"><span>Redaktør</span>
+      <mat-slide-toggle color="primary" labelPosition="before" (change)="editor($event)" [checked]="editorState"></mat-slide-toggle>
+    </div>
+    <div class="slide-button"><span>Administrator</span>
+      <mat-slide-toggle color="primary" labelPosition="before" (change)="admin($event)" [checked]="adminState"></mat-slide-toggle>
+    </div>
+    <div class="slide-button"><span>Aktiv</span>
+      <mat-slide-toggle color="primary" labelPosition="before" (change)="active($event)" [checked]="activeState"></mat-slide-toggle>
+    </div>
+  </div>
+</div>

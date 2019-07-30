@@ -1,7 +1,8 @@
-<h3 mat-dialog-title>{{data.header}}</h3>
-<div mat-dialog-content>
-  <p>{{data.message1}}</p>
-  <p *ngIf="data.message2">{{data.message2}}</p>
+<h3 mat-dialog-title class="dialog-title">{{data.header}}</h3>
+<div mat-dialog-content class="dialog-body">
+  <div class="dialog-body-line">{{data.message1}}</div>
+  <div class="dialog-body-line" *ngIf="data.message2">{{data.message2}}</div>
+  <div class="dialog-body-line" *ngIf="data.message3">{{data.message3}}</div>
 </div>
 <div mat-dialog-actions class="dialog-buttons">
   <button mat-flat-button color="primary" type="button" (tap)="closeDialog('yes')">{{data.button1Text}}</button>

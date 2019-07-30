@@ -1,12 +1,10 @@
 <h3>Admin og Editor</h3>
 <h3>Ryd op i moduler</h3>
-<h3>Venter på accept besked</h3>
-<h3>Signup user redirect</h3>
-<h3>Mulighed for at logge ud fra signup</h3>
+<h3>Hvis en bruger bliver markeret som active = false hvad så. Så skal han vel ikke kunne logge ind?</h3>
 <div class="home-calendar">
-  <app-month-item [monthNumber]="currentMonth" [currentMonth]="currentMonth" *ngIf="showCalendar" (click)="gotoCalendar()"></app-month-item>
+  <app-month-item [singleItem]="true" [monthNumber]="currentMonth" [currentMonth]="currentMonth" *ngIf="showCalendar" (click)="gotoCalendar()"></app-month-item>
 </div>
-<app-no-data-box *ngIf="showNoData" [data]="nodata"></app-no-data-box>
+<app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>
 <mat-list *ngIf="!showNoData">
   <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)"
     (commentsTotalClick)="gotoComments($event)" (tasksTotalClick)="gotoTasks($event)"

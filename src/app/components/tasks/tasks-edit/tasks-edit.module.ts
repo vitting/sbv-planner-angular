@@ -6,15 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { TasksEditRoutingModule } from './tasks-edit-routing.module';
 import { TasksEditComponent } from './tasks-edit.component';
 import { FabButtonModule } from '../../shared/fab-button/fab-button.module';
-import { Dialog2FieldsModule } from '../../shared/dialog-2-fields/dialog-2-fields.module';
 import { SubtaskListModule } from '../subtask-list/subtask-list.module';
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
-import { TaskEditMenuModule } from './task-edit-menu/task-edit-menu.module';
-import { DialogConfirmModule } from '../../shared/dialog-confirm/dialog-confirm.module';
-import { ItemContainerModule } from '../../shared/directives/item-container/item-container.module';
 import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-desc.module';
 import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
+import { ItemContainerModule } from '../../shared/directives/item-container/item-container.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [TasksEditComponent],
@@ -27,13 +25,11 @@ import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
     MatListModule,
     MatBottomSheetModule,
     FabButtonModule,
-    Dialog2FieldsModule,
-    DialogConfirmModule,
     SubtaskListModule,
-    TaskEditMenuModule,
-    ItemContainerModule,
     ItemTitleDescModule,
-    NoDataBoxModule
+    ItemContainerModule,
+    NoDataBoxModule,
+    FontAwesomeModule
   ],
   exports: [TasksEditComponent],
 })

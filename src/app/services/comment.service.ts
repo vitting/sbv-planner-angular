@@ -118,7 +118,7 @@ export class CommentService {
         this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           this.navbarService.showProgressbar = true;
-          const commentId = await this.firestoreService.deleteComment(comment.id, comment.parentId);
+          const commentId = await this.firestoreService.deleteComment(comment.id);
           this.navbarService.showProgressbar = false;
           resolve(commentId);
         } else {

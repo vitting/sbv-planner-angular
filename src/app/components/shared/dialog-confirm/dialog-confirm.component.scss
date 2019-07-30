@@ -1,4 +1,18 @@
+.dialog-title {
+  text-align: center;
+}
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  .dialog-body-line {
+    line-height: 2rem;
+    text-align: center;
+  }
+}
+
 .dialog-buttons {
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }

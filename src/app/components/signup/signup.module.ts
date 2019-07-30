@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MessagesModule } from '../shared/messages/messages.module';
 import { SignupMessageComponent } from './signup-message/signup-message.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [SignupComponent, SignupMessageComponent],
@@ -20,6 +21,7 @@ import { SignupMessageComponent } from './signup-message/signup-message.componen
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
+    FontAwesomeModule,
     MatIconModule,
     MessagesModule
   ],

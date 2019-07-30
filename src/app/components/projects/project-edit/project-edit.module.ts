@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ProjectEditRoutingModule } from './project-edit-routing.module';
 import { ProjectEditComponent } from './project-edit.component';
 import { FabButtonModule } from '../../shared/fab-button/fab-button.module';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { ProjectListItemModule } from '../project-list-item/project-list-item.module';
 import { ProjectEditItemMenuComponent } from './project-edit-item-menu/project-edit-item-menu.component';
@@ -16,8 +14,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [
     CommonModule,
     ProjectEditRoutingModule,
-    MatDialogModule,
-    MatBottomSheetModule,
     MatListModule,
     FontAwesomeModule,
     FabButtonModule,

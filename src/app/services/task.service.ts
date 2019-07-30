@@ -140,7 +140,7 @@ export class TaskService {
         this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           this.navbarService.showProgressbar = true;
-          const taskId = await this.firestoreService.deleteTask(task.id, task.projectId);
+          const taskId = await this.firestoreService.deleteTask(task.id);
           this.navbarService.showProgressbar = false;
           resolve(taskId);
         } else {
@@ -283,8 +283,8 @@ export class TaskService {
     });
   }
 
-  updateSubTaskCompleteStatus(taskId: string, subTaskId: string, completed: boolean) {
-    return this.firestoreService.updateSubTaskCompleteStatus(subTaskId, this.authService.userId, completed, taskId);
+  updateSubTaskCompleteStatus(subTaskId: string, completed: boolean) {
+    return this.firestoreService.updateSubTaskCompleteStatus(subTaskId, this.authService.userId, completed);
   }
 
   addUserToSubTask(subTaskId: string): Promise<string> {

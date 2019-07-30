@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service';
-import { Route, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
@@ -10,11 +8,10 @@ import { NavbarService } from 'src/app/services/navbar.service';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit {
   users: User[] = [];
   mode = "";
-  private usersSub: Subscription;
-  constructor(private navbarService: NavbarService, private userService: UserService, private route: ActivatedRoute) { }
+  constructor(private navbarService: NavbarService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const action = this.route.snapshot.params.action;
@@ -24,17 +21,14 @@ export class UsersComponent implements OnInit, OnDestroy {
         colorState: "user"
       });
       this.mode = "accept";
-      this.usersSub = this.userService.getUsersWaitingForApproval().subscribe((users) => {
-        this.users = users;
-      });
-
-      this.userService.updateUserMetaLastCheckToAcceptUsers();
     }
-  }
 
-  ngOnDestroy(): void {
-    if (this.usersSub) {
-      this.usersSub.unsubscribe();
+    if (action && action === "admin") {
+      this.navbarService.setNavbarTitleWithColor({
+        title: "Administrere brugere",
+        colorState: "user"
+      });
+      this.mode = "admin";
     }
   }
 }

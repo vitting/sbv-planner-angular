@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef, AfterContentChecked } from '@angular/core';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { CalendarItem } from 'src/app/models/calendar.model';
 import { Observable, Subscription } from 'rxjs';
@@ -13,9 +13,11 @@ export class MonthItemComponent implements OnInit, OnDestroy {
   @Input() highlightCurrentMonth = false;
   @Input() currentMonth = 0;
   @Input() editMode = false;
+  @Input() singleItem = false;
   @Output() addCalendarItemClick = new EventEmitter<number>();
   @Output() editCalendarItemClick = new EventEmitter<CalendarItem>();
   @Output() deleteCalendarItemClick = new EventEmitter<CalendarItem>();
+  @ViewChild("monthItem", {static: true}) monthItemRef: ElementRef;
   itemClass = {};
   highligtMonth = false;
   monthName: string;
@@ -33,6 +35,7 @@ export class MonthItemComponent implements OnInit, OnDestroy {
     this.itemClass[className] = true;
     this.itemClass['month-active'] = this.highligtMonth;
     this.itemClass['month-edit'] = this.editMode;
+    this.itemClass['month-single'] = this.singleItem;
 
     if (this.editMode) {
       this.calendarItemsSub = this.calendarService.getCalendarItems(this.monthNumber).subscribe((calenderItems) => {

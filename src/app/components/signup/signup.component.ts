@@ -4,6 +4,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Router } from '@angular/router';
+import { LogService } from 'src/app/services/log.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,6 +20,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
+    private logService: LogService,
     private firestoreService: FirestoreService,
     private router: Router) {
   }
@@ -46,6 +48,7 @@ export class SignupComponent implements OnInit {
         if (userCred) {
           const user = await this.firestoreService.addUser(userCred.user.uid, name);
           if (user) {
+            this.logService.userAdded(user);
             this.router.navigate(["/message"]);
           }
         }

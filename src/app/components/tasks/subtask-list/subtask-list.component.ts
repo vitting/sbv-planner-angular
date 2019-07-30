@@ -45,6 +45,6 @@ export class SubtaskListComponent implements OnInit {
   }
 
   async checkboxClicked(status: SubTaskCheckboxStateInfo) {
-    const result = await this.taskService.updateSubTaskCompleteStatus(this.task.id, status.subTask.id, status.completed);
+    const result = await this.taskService.updateSubTaskCompleteStatus(status.subTask.id, status.completed);
   }
 }

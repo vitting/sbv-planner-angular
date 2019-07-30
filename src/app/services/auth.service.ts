@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
 import { switchMap } from 'rxjs/operators';
-import { of, combineLatest, ReplaySubject, Observable, Subscription, Subject } from 'rxjs';
+import { of, combineLatest, ReplaySubject, Observable, Subscription } from 'rxjs';
 import { SplashService } from './splash.service';
 import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
@@ -68,7 +68,7 @@ export class AuthService {
   }
 
   private getUserMetaData(userId: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.userMetaSub = this.firestoreService.getUserMeta(userId).subscribe((userMeta: UserMeta) => {
         this.userMeta = userMeta;
         this.userMetaUpdated.next(userMeta);
@@ -78,7 +78,7 @@ export class AuthService {
   }
 
   private getAppMetaData() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.appMetaSub = this.firestoreService.getAppMeta().subscribe((appMeta: AppMeta) => {
         this.appMeta = appMeta;
         this.appMetaUpdated.next(appMeta);

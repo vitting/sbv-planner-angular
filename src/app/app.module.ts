@@ -3,13 +3,9 @@ import { NgModule } from '@angular/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faTimesCircle,
@@ -74,13 +70,9 @@ import { YearCalendarModule } from './components/year-calendar/year-calendar.mod
     BrowserModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
-    FontAwesomeModule,
     AngularFireModule.initializeApp(firebaseConfig.firebase, 'sbv-planner'),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
     ProjectHomeModule,
     ProjectsModule,
     LoginModule,

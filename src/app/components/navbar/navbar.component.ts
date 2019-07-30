@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   showProgressbar = false;
   showIndicator = false;
   showIsAuth = false;
+  showLogout = false;
   private navbarTitleSub: Subscription;
   private navbarShowProgressSub: Subscription;
   private navbarRouteChangeSub: Subscription;
@@ -65,8 +66,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.navbarShowAuthSub = this.authService.isUserAuthenticated$.subscribe((auth) => {
       if (auth && this.authService.authUserInfo.accepted) {
         this.showIsAuth = true;
+        this.showLogout = false;
+      } else if (auth && this.authService.authUserInfo.waitingForApproval) {
+        this.showLogout = true;
       } else {
         this.showIsAuth = false;
+        this.showLogout = false;
       }
     });
 
@@ -124,7 +129,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       "app-appbar-color-state-task": this.navbarColorState === "task",
       "app-appbar-color-state-comment": this.navbarColorState === "comment",
       "app-appbar-color-state-user": this.navbarColorState === "user",
-      "app-appbar-color-state-template": this.navbarColorState === "user",
+      "app-appbar-color-state-template": this.navbarColorState === "template",
+      "app-appbar-color-state-message": this.navbarColorState === "message"
     };
   }
 
@@ -158,6 +164,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         break;
       case "approveusers":
         this.router.navigate(["/users/accept"]);
+        break;
+      case "adminusers":
+        this.router.navigate(["/users/admin"]);
         break;
       case "help":
 

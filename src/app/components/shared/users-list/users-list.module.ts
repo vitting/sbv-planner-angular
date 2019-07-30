@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersListComponent } from './users-list.component';
-import { UserChipModule } from 'src/app/components/shared/user-chip/user-chip.module';
-
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UserChipComponent } from './user-chip/user-chip.component';
 
 @NgModule({
-  declarations: [UsersListComponent],
+  declarations: [UsersListComponent, UserChipComponent],
   imports: [
     CommonModule,
-    UserChipModule
+    FontAwesomeModule
   ],
   exports: [UsersListComponent]
 })

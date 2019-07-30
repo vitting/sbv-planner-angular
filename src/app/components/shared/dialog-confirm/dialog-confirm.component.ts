@@ -12,6 +12,7 @@ export interface DialogConfirmData {
   button2Text: string;
   message1: string;
   message2: string;
+  message3?: string;
 }
 
 export interface DialogConfirmResult {

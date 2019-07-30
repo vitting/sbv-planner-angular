@@ -4,7 +4,7 @@
     <div>
       <mat-form-field class="app-form-input">
         <input id="name" name="name" matInput placeholder="Dit navn" type="text" formControlName="name" required>
-        <mat-hint>Dit navn der bliver vist til andre brugere</mat-hint>
+        <mat-hint>Det navn der bliver vist til andre brugere</mat-hint>
         <mat-error
           *ngIf="signupForm.get('name').invalid && signupForm.get('name').touched && signupForm.get('name').errors['required']">
           Feltet skal udfyldes</mat-error>

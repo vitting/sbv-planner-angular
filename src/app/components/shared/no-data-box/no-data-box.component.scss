@@ -1,4 +1,3 @@
-@import "../../../../colors";
 @import "../../../../variables";
 .no-data-container {
   box-sizing: border-box;
@@ -14,7 +13,7 @@
   color: $no-data-text;
 
   &.no-data-small {
-    height: calc(100vh - #{$used-vertical-area-space} - 100px);
+    height: 100%;
   }
 }
 

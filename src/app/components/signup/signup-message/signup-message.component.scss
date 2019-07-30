@@ -1,3 +1,15 @@
+@import "../../../../variables";
 .message {
-  font-weight: lighter;
+  background-color: $bg-color-message;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 1.1rem;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.30);
+
+  .logo {
+    width: 100px;
+    margin: 10px 0 20px 0;
+  }
 }

@@ -1,11 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Project } from './models/project.model';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { SplashService } from './services/splash.service';
-import { FirestoreService } from './services/firestore.service';
-import { AppMeta } from './models/app-meta.model';
 
 @Component({
   selector: 'app-root',

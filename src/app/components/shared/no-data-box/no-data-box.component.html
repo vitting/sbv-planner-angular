@@ -1,7 +1,9 @@
 <div class="no-data-container" [ngClass]="{'no-data-small': small}">
-    <p>{{data?.textline1}}</p>
-    <p>{{data?.textline2}}</p>
-    <div *ngIf="showButton">
-      <button mat-fab (tap)="NoDataAddButton()"><mat-icon>add</mat-icon></button>
-    </div>
+  <p>{{data?.textline1}}</p>
+  <p>{{data?.textline2}}</p>
+  <div *ngIf="showButton">
+    <button mat-fab (tap)="NoDataAddButton()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </div>

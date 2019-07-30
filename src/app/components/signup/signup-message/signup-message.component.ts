@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-signup-message',
@@ -7,11 +8,18 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./signup-message.component.scss']
 })
 export class SignupMessageComponent implements OnInit {
-  name: string;
-  constructor(private authService: AuthService) { }
+  name = "";
+  constructor(private authService: AuthService, private navbarService: NavbarService) { }
 
   ngOnInit() {
-    this.name = this.authService.authUserInfo.name;
+    if (this.authService.authUserInfo) {
+      this.name = this.authService.authUserInfo.name;
+    }
+
+    this.navbarService.setNavbarTitleWithColor({
+      title: "Oprettet",
+      colorState: "message"
+    });
   }
 
 }

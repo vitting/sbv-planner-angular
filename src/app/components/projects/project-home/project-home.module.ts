@@ -5,26 +5,25 @@ import { ProjectHomeRoutingModule } from './project-home-routing.module';
 import { MatListModule } from '@angular/material/list';
 import { ProjectListItemModule } from '../project-list-item/project-list-item.module';
 import { FabButtonModule } from '../../shared/fab-button/fab-button.module';
-import { ProjectHomeItemMenuModule } from './project-home-item-menu/project-home-item-menu.module';
 import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
-import { ProjectHomeMenuModule } from './project-home-menu/project-home-menu.module';
-import { MatDialogModule } from '@angular/material/dialog';
 import { YearCalendarModule } from '../../year-calendar/year-calendar.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ProjectHomeItemMenuComponent } from './project-home-item-menu/project-home-item-menu.component';
+import { ProjectHomeMenuComponent } from './project-home-menu/project-home-menu.component';
 @NgModule({
-  declarations: [ProjectHomeComponent],
+  declarations: [ProjectHomeComponent, ProjectHomeItemMenuComponent, ProjectHomeMenuComponent],
   imports: [
     CommonModule,
     ProjectHomeRoutingModule,
     MatListModule,
-    MatDialogModule,
     ProjectListItemModule,
     FabButtonModule,
-    ProjectHomeItemMenuModule,
-    ProjectHomeMenuModule,
+    FontAwesomeModule,
     NoDataBoxModule,
     YearCalendarModule
   ],
   providers: [],
+  entryComponents: [ProjectHomeItemMenuComponent, ProjectHomeMenuComponent],
   exports: [
     ProjectHomeComponent,
   ]

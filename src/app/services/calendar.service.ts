@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from './firestore.service';
 import { AuthService } from './auth.service';
 import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
-import { FabButtonService } from './fab-button.service';
 import { NavbarService } from './navbar.service';
 import { CalendarItem } from '../models/calendar.model';
 import {
@@ -61,7 +60,7 @@ export class CalendarService {
       data
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
         if (result) {
           this.navbarService.showProgressbar = true;
@@ -95,7 +94,7 @@ export class CalendarService {
       data
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
         if (result) {
           this.navbarService.showProgressbar = true;
@@ -125,7 +124,7 @@ export class CalendarService {
       data: dialogConfirmData
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         if (result && result.action === DialogConfirmAction.yes) {
           this.navbarService.showProgressbar = true;

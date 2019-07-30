@@ -4,7 +4,7 @@ import { Summary } from 'src/app/models/summary.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Subscription } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { TasksMenuComponent, TasksMenuResult } from '../tasks-menu/tasks-menu.component';
+import { TasksMenuComponent, TasksMenuResult } from './tasks-menu/tasks-menu.component';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/services/task.service';
 import { AuthService } from 'src/app/services/auth.service';

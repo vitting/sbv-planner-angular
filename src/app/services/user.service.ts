@@ -7,10 +7,10 @@ import {
   DialogConfirmComponent
 } from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { FirestoreService } from './firestore.service';
-import { FabButtonService } from './fab-button.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarService } from './navbar.service';
 import { AuthService } from './auth.service';
+import { LogService } from './log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class UserService {
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
     private authService: AuthService,
-    private fabButtonService: FabButtonService,
+    private logService: LogService,
     private dialog: MatDialog) { }
 
   async acceptUser(user: User, accepted: boolean) {
@@ -42,7 +42,115 @@ export class UserService {
     return this.firestoreService.getUsersWaitingForApproval();
   }
 
+  getUsers() {
+    return this.firestoreService.getUsersSorted(true);
+  }
+
   updateUserMetaLastCheckToAcceptUsers() {
     return this.firestoreService.updateUserMetaLastCheckToAcceptUsers(this.authService.userId);
+  }
+
+  updateUserAdminState(user: User, state: boolean) {
+    const dialogConfirmData: DialogConfirmData = {
+      header: "Ændre bruger rettighed",
+      button1Text: "Ja",
+      button2Text: "Nej",
+      message1: state ?
+        `Er du sikker på du vil gøre` :
+        `Er du sikker på du vil fjerne administrator rettigheden fra:`,
+      message2: state ? `${user.name}` : `${user.name}?`,
+      message3: state ? `til administrator?` : null
+    };
+
+    const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      autoFocus: false,
+      data: dialogConfirmData
+    });
+
+    return new Promise((resolve) => {
+      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        if (result && result.action === DialogConfirmAction.yes) {
+          this.navbarService.showProgressbar = true;
+          const success = await this.firestoreService.updateUserAdmin(user.id, state);
+          if (success) {
+            this.logService.userAdminStateChanged(user, state);
+          }
+          this.navbarService.showProgressbar = false;
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
+  }
+
+  updateUserEditorState(user: User, state: boolean) {
+    const dialogConfirmData: DialogConfirmData = {
+      header: "Ændre bruger rettighed",
+      button1Text: "Ja",
+      button2Text: "Nej",
+      message1: state ?
+        `Er du sikker på du vil gøre` :
+        `Er du sikker på du vil fjerne redaktør rettigheden fra:`,
+      message2: state ? `${user.name}` : `${user.name}?`,
+      message3: state ? `til redaktør?` : null
+    };
+
+    const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      autoFocus: false,
+      data: dialogConfirmData
+    });
+
+    return new Promise((resolve) => {
+      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        if (result && result.action === DialogConfirmAction.yes) {
+          this.navbarService.showProgressbar = true;
+          const success = await this.firestoreService.updateUserEditor(user.id, state);
+          if (success) {
+            this.logService.userEditorStateChanged(user, state);
+          }
+          this.navbarService.showProgressbar = false;
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
+  }
+
+  updateUserActiveState(user: User, state: boolean) {
+    const dialogConfirmData: DialogConfirmData = {
+      header: "Ændre bruger rettighed",
+      button1Text: "Ja",
+      button2Text: "Nej",
+      message1: state ?
+        `Er du sikker på du vil aktivere` :
+        `Er du sikker på du vil deaktivere`,
+      message2: `${user.name}?`
+    };
+
+    const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      autoFocus: false,
+      data: dialogConfirmData
+    });
+
+    return new Promise((resolve) => {
+      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        if (result && result.action === DialogConfirmAction.yes) {
+          this.navbarService.showProgressbar = true;
+          const success = await this.firestoreService.updateUserActive(user.id, state);
+          if (success) {
+            this.logService.userActiveStateChanged(user, state);
+          }
+          this.navbarService.showProgressbar = false;
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   }
 }
