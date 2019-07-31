@@ -2,7 +2,7 @@
 
 $navbar-height: 60px;
 $content-container-vertical-margin: 20px;
-$used-vertical-area-space: $navbar-height + $content-container-vertical-margin;
+$used-vertical-area-space: $navbar-height+$content-container-vertical-margin;
 $bg-color-project: $indigo-500;
 $bg-color-task: $pink-800;
 $bg-color-subtask: $pink-500;
@@ -12,6 +12,7 @@ $bg-color-user: $cyan-800;
 $bg-color-template: $bg-color-project;
 $bg-color-template-task: $bg-color-task;
 $bg-color-template-subtask: $bg-color-subtask;
+$bg-color-setting: $bluegray-700;
 $bg-color-calendar-month-0: $cyan-900;
 $bg-color-calendar-month-1: $cyan-800;
 $bg-color-calendar-month-2: $cyan-700;

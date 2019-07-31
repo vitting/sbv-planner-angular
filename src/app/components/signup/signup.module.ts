@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MessagesModule } from '../shared/messages/messages.module';
 import { SignupMessageComponent } from './signup-message/signup-message.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ItemContainerModule } from '../shared/directives/item-container/item-container.module';
 
 @NgModule({
   declarations: [SignupComponent, SignupMessageComponent],
@@ -23,7 +24,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatButtonModule,
     FontAwesomeModule,
     MatIconModule,
-    MessagesModule
+    MessagesModule,
+    ItemContainerModule
   ],
   exports: [SignupComponent, SignupMessageComponent]
 })

@@ -13,9 +13,10 @@ import { ItemTitleDescModule } from '../../shared/item-title-desc/item-title-des
 import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
 import { ItemContainerModule } from '../../shared/directives/item-container/item-container.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TaskEditMenuComponent } from './task-edit-menu/task-edit-menu.component';
 
 @NgModule({
-  declarations: [TasksEditComponent],
+  declarations: [TasksEditComponent, TaskEditMenuComponent],
   imports: [
     CommonModule,
     TasksEditRoutingModule,
@@ -32,5 +33,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ],
   exports: [TasksEditComponent],
+  entryComponents: [TaskEditMenuComponent]
 })
 export class TasksEditModule { }

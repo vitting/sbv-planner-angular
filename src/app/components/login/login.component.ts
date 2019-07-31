@@ -1,10 +1,8 @@
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,6 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private isUserAuthenticatedSub: Subscription;
   loginForm: FormGroup;
   messages: string[] = [];
+  showForm = true;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -28,6 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required])
     });
+
+    this.showForm = !this.authService.authUserInfo;
   }
 
   ngOnDestroy(): void {
@@ -75,5 +76,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         break;
       default:
     }
+  }
+
+  async logout() {
+    await this.navbarService.logout();
+    this.showForm = !this.authService.authUserInfo;
+  }
+
+  forgotPassword() {
+
   }
 }

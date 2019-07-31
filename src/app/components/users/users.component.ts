@@ -11,11 +11,22 @@ import { NavbarService } from 'src/app/services/navbar.service';
 export class UsersComponent implements OnInit {
   users: User[] = [];
   mode = "";
+  private action: string;
   constructor(private navbarService: NavbarService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const action = this.route.snapshot.params.action;
-    if (action && action === "accept") {
+    this.action = this.route.snapshot.params.action;
+    this.initialize();
+    this.route.params.subscribe((params) => {
+      if (params.action) {
+        this.action = params.action;
+        this.initialize();
+      }
+    });
+  }
+
+  private initialize() {
+    if (this.action && this.action === "accept") {
       this.navbarService.setNavbarTitleWithColor({
         title: "Godkend brugere",
         colorState: "user"
@@ -23,7 +34,7 @@ export class UsersComponent implements OnInit {
       this.mode = "accept";
     }
 
-    if (action && action === "admin") {
+    if (this.action && this.action === "admin") {
       this.navbarService.setNavbarTitleWithColor({
         title: "Administrere brugere",
         colorState: "user"

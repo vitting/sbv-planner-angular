@@ -130,7 +130,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       "app-appbar-color-state-comment": this.navbarColorState === "comment",
       "app-appbar-color-state-user": this.navbarColorState === "user",
       "app-appbar-color-state-template": this.navbarColorState === "template",
-      "app-appbar-color-state-message": this.navbarColorState === "message"
+      "app-appbar-color-state-message": this.navbarColorState === "message",
+      "app-appbar-color-state-setting": this.navbarColorState === "setting"
     };
   }
 
@@ -172,7 +173,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
         break;
       case "settings":
-
+        this.router.navigate(["/settings"]);
         break;
       case "logout":
         this.logout();

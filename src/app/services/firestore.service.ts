@@ -14,6 +14,7 @@ import { CalendarItem } from '../models/calendar.model';
 import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
 import { Log } from '../models/log.model';
+import { Settings } from '../models/settings.model';
 
 export enum SummaryAction {
   add,
@@ -387,6 +388,37 @@ export class FirestoreService {
     }).valueChanges();
   }
 
+  getSettings(userId: string) {
+    return this.db.collection<Settings>("settings").doc<Settings>(userId).valueChanges();
+  }
+
+  async addSettings(userId: string): Promise<string> {
+    const timestamp = this.timestamp;
+    const settings: Settings = {
+      id: userId,
+      showCalendar: true
+    };
+    try {
+      await this.db.collection<Settings>("settings").doc(userId).set(settings);
+      return userId;
+    } catch (error) {
+      console.error("addSettings", error);
+      return null;
+    }
+  }
+
+  async updateSettingsShowCalendar(userId: string, showCalendar: boolean): Promise<string> {
+    try {
+      await this.db.collection<Settings>("settings").doc(userId).update({
+        showCalendar
+      });
+      return userId;
+    } catch (error) {
+      console.error("updateSettingsShowCalendar", error);
+      return null;
+    }
+  }
+
   async addUser(userId: string, name: string): Promise<User> {
     const timestamp = this.timestamp;
     const user: User = new UserItem(userId, name, timestamp).toObject();
@@ -394,7 +426,19 @@ export class FirestoreService {
       await this.db.collection<User>("users").doc(userId).set(user);
       return user;
     } catch (error) {
-      console.error("AddUser", error);
+      console.error("addUser", error);
+      return null;
+    }
+  }
+
+  async updateNameOfUser(userId: string, name: string): Promise<string> {
+    try {
+      await this.db.collection<User>("users").doc(userId).update({
+        name
+      });
+      return userId;
+    } catch (error) {
+      console.error("updateNameOfUser", error);
       return null;
     }
   }

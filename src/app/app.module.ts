@@ -61,6 +61,10 @@ import 'moment/locale/da';
 import { SplashScreenModule } from './components/shared/splash-screen/splash-screen.module';
 import { UsersModule } from './components/users/users.module';
 import { YearCalendarModule } from './components/year-calendar/year-calendar.module';
+import { Dialog2FieldsComponent } from './components/shared/dialog-2-fields/dialog-2-fields.component';
+import { Dialog2FieldsModule } from './components/shared/dialog-2-fields/dialog-2-fields.module';
+import { Dialog1FieldModule } from './components/shared/dialog-1-field/dialog-1-fieldmodule';
+import { DialogConfirmModule } from './components/shared/dialog-confirm/dialog-confirm.module';
 
 @NgModule({
   declarations: [
@@ -87,6 +91,9 @@ import { YearCalendarModule } from './components/year-calendar/year-calendar.mod
     SplashScreenModule,
     UsersModule,
     YearCalendarModule,
+    Dialog2FieldsModule,
+    Dialog1FieldModule,
+    DialogConfirmModule,
     AppRoutingModule, // AppRoutingModule = Keep this routing module last to make wildcard work correct
   ],
   providers: [AngularFireAuthGuard],

@@ -1,4 +1,11 @@
-<div>
+<div class="message" appItemContainer="message" *ngIf="!showForm">
+  <p>Du er logget ind med en bruger.</p>
+  <p>Log ud før du kan oprette en anden bruger.</p>
+  <button mat-flat-button color="primary" (tap)="logout()">
+    <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
+  </button>
+</div>
+<div *ngIf="showForm">
   <app-messages [messages]="messages"></app-messages>
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div>

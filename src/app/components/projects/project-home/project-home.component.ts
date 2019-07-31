@@ -38,6 +38,7 @@ export class ProjectHomeComponent implements OnInit {
       textline1: "Du har endnu ikke nogen aktive projekter.",
       textline2: "Tilslutte dig et eksisterende projekt eller opret dit eget."
     };
+
     this.currentMonth = new Date(Date.now()).getMonth();
     this.navbarService.navbarTitle.next("Forside");
     this.userId = this.authService.userId;

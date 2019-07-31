@@ -1,18 +1,31 @@
+<div class="message" appItemContainer="message" *ngIf="!showForm">
+  <p>Du er allerede logget ind.</p>
+  <p>Log ud før du kan logge ind med en anden bruger.</p>
+  <button mat-flat-button color="primary" (tap)="logout()">
+    <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
+  </button>
+</div>
 <app-messages [messages]="messages"></app-messages>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="showForm">
   <div>
     <mat-form-field class="app-form-input">
       <input id="email" name="email" matInput placeholder="E-mail" type="email" formControlName="email" required>
-      <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['required']">Feltet skal udfyldes</mat-error>
-      <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['email']">Feltet indeholder ikke en valid e-mail adresse</mat-error>
+      <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['required']">Feltet skal
+        udfyldes</mat-error>
+      <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['email']">Feltet indeholder ikke
+        en valid e-mail adresse</mat-error>
     </mat-form-field>
     <mat-form-field class="app-form-input">
-      <input id="password" name="password" matInput placeholder="Kodeord" type="password" formControlName="password" required>
-      <mat-error *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Feltet skal udfyldes</mat-error>
+      <input id="password" name="password" matInput placeholder="Kodeord" type="password" formControlName="password"
+        required>
+      <mat-error *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Feltet skal udfyldes
+      </mat-error>
     </mat-form-field>
   </div>
   <div class="app-form-button login-form-button-container">
-    <button mat-flat-button color="primary" [disabled]="loginForm.invalid || loginForm.untouched" type="submit">Login</button>
-    <a mat-button [routerLink]="['/signup']" color="accent">Gå til opret ny bruger</a>
+    <button mat-flat-button color="primary" [disabled]="loginForm.invalid || loginForm.untouched"
+      type="submit">Login</button>
+    <button mat-flat-button color="accent" type="button" (tap)="forgotPassword()">Glemt kodeord</button>
+    <a mat-button [routerLink]="['/signup']" color="accent">Opret ny bruger</a>
   </div>
 </form>

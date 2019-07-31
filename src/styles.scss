@@ -95,6 +95,15 @@ form {
     background-color: $bg-color-template-subtask;
     padding: 0px;
   }
+
+  &.app-item-container-setting {
+    background-color: $bg-color-setting;
+    min-height: 60px;
+  }
+
+  &.app-item-container-message {
+    background-color: $bg-color-message;
+  }
 }
 
 .app-menu-icon {

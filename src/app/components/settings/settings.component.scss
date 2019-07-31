@@ -1,0 +1,17 @@
+.settings-item {
+  &.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &.flex-start {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
+
+button {
+  outline: none;
+}

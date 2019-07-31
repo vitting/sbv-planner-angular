@@ -17,6 +17,7 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   showSignupMessage = false;
   messages: string[] = [];
+  showForm = false;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -34,6 +35,8 @@ export class SignupComponent implements OnInit {
       password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       passwordRepeat: new FormControl(null, [Validators.required, this.passwordsNotEqual.bind(this)])
     });
+
+    this.showForm = !this.authService.authUserInfo;
   }
 
   async onSubmit() {
@@ -78,13 +81,17 @@ export class SignupComponent implements OnInit {
   }
 
   passwordsNotEqual(control: FormControl): { [s: string]: boolean } | null {
-    if (
-      this.passwordInput.nativeElement.value !== control.value) {
+    if (this.passwordInput && this.passwordInput.nativeElement.value !== control.value) {
       return {
         passwordsNotEqual: true
       };
     }
 
     return null;
+  }
+
+  async logout() {
+    await this.navbarService.logout();
+    this.showForm = !this.authService.authUserInfo;
   }
 }

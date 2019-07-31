@@ -26,6 +26,7 @@ import { TasksMenuComponent } from './tasks-menu/tasks-menu.component';
     ItemTitleDescModule,
     SubtaskListModule
   ],
-  exports: [TaskListItemComponent]
+  exports: [TaskListItemComponent],
+  entryComponents: [TasksMenuComponent]
 })
 export class TaskListItemModule { }

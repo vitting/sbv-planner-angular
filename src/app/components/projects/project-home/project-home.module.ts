@@ -10,6 +10,7 @@ import { YearCalendarModule } from '../../year-calendar/year-calendar.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProjectHomeItemMenuComponent } from './project-home-item-menu/project-home-item-menu.component';
 import { ProjectHomeMenuComponent } from './project-home-menu/project-home-menu.component';
+
 @NgModule({
   declarations: [ProjectHomeComponent, ProjectHomeItemMenuComponent, ProjectHomeMenuComponent],
   imports: [

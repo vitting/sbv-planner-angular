@@ -1,8 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SettingsComponent } from './settings.component';
+import { AuthGuard } from 'src/app/services/auth-guard.service';
 
 
-const routes: Routes = [];
+const routes: Routes = [{
+  path: "settings",
+  component: SettingsComponent,
+  canActivate: [AuthGuard],
+  data: { onlyAdmin: false }
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

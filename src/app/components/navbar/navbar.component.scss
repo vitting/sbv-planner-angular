@@ -34,6 +34,10 @@
     background-color: $bg-color-message;
   }
 
+  &.app-appbar-color-state-setting {
+    background-color: $bg-color-setting;
+  }
+
   .brand {
     width: 30px;
     height: 30px;

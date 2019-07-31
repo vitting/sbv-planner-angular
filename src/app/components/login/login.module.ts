@@ -7,6 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MessagesModule } from '../shared/messages/messages.module';
+import { ItemContainerModule } from '../shared/directives/item-container/item-container.module';
+import { MatIconModule } from '@angular/material/icon';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -16,7 +19,9 @@ import { MessagesModule } from '../shared/messages/messages.module';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
-    MessagesModule
+    FontAwesomeModule,
+    MessagesModule,
+    ItemContainerModule
   ],
   exports: [
     LoginRoutingModule,
