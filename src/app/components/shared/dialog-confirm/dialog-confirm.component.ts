@@ -3,7 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export enum DialogConfirmAction {
   yes,
-  no
+  no,
+  ok
 }
 
 export interface DialogConfirmData {
@@ -13,6 +14,7 @@ export interface DialogConfirmData {
   message1: string;
   message2: string;
   message3?: string;
+  buttonOkText?: string;
 }
 
 export interface DialogConfirmResult {
@@ -25,18 +27,26 @@ export interface DialogConfirmResult {
   styleUrls: ['./dialog-confirm.component.scss']
 })
 export class DialogConfirmComponent implements OnInit {
+  okButtonState = false;
   constructor(
     public dialogRef: MatDialogRef<DialogConfirmComponent, DialogConfirmResult>,
     @Inject(MAT_DIALOG_DATA) public data: DialogConfirmData) { }
 
   ngOnInit() {
+    if (this.data && this.data.buttonOkText) {
+      this.okButtonState = true;
+    }
   }
 
   closeDialog(action: string) {
-    if (action === "yes") {
-      this.dialogRef.close({ action: DialogConfirmAction.yes });
+    if (this.okButtonState) {
+      this.dialogRef.close({ action: DialogConfirmAction.ok });
     } else {
-      this.dialogRef.close({ action: DialogConfirmAction.no });
+      if (action === "yes") {
+        this.dialogRef.close({ action: DialogConfirmAction.yes });
+      } else {
+        this.dialogRef.close({ action: DialogConfirmAction.no });
+      }
     }
   }
 }

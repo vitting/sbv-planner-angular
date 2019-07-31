@@ -7,6 +7,7 @@
 </div>
 <div *ngIf="showForm">
   <app-messages-error [messages]="messages"></app-messages-error>
+  <div class="login-button"><a mat-button [routerLink]="['/login']" color="accent"><fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Gå til login</a></div>
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div>
       <mat-form-field class="app-form-input">
@@ -50,7 +51,7 @@
     <div class="app-form-button">
       <button mat-flat-button color="primary" [disabled]="signupForm.invalid || signupForm.untouched"
         type="submit"><fa-icon [icon]="['fas', 'user']" class="app-menu-icon"></fa-icon>Opret</button>
-      <a mat-button [routerLink]="['/login']" color="accent"><fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Gå til login</a>
+
     </div>
   </form>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 export interface Dialog1FieldData {
   title: string;
@@ -8,6 +8,8 @@ export interface Dialog1FieldData {
   fieldLabel: string;
   fieldValue: string;
   multiLine: number;
+  text?: string;
+  type?: string;
 }
 
 export interface Dialog1FieldResult {
@@ -25,6 +27,11 @@ export class Dialog1FieldComponent implements OnInit {
   fieldForm: FormGroup;
   showMultiLine = false;
   numberOfLines = 3;
+  text: string = null;
+  type = "normal";
+  validateForEmail = false;
+  validate = false;
+  inputType = "text";
   constructor(
     public dialogRef: MatDialogRef<Dialog1FieldComponent, Dialog1FieldResult>,
     @Inject(MAT_DIALOG_DATA) public data: Dialog1FieldData) { }
@@ -32,13 +39,26 @@ export class Dialog1FieldComponent implements OnInit {
   ngOnInit() {
     this.title = this.data.title;
     this.buttonText = this.data.buttonText;
+
+    if (this.data.text) {
+      this.text = this.data.text;
+    }
+
     if (this.data.multiLine !== 0) {
       this.showMultiLine = true;
       this.numberOfLines = this.data.multiLine;
     }
 
+    const validators = [];
+    if (this.data.type && this.data.type === "email") {
+      this.validateForEmail = true;
+      this.validate = true;
+      this.inputType = "email";
+      validators.push(Validators.email);
+    }
+
     this.fieldForm = new FormGroup({
-      field: new FormControl(this.data.fieldValue)
+      field: new FormControl(this.data.fieldValue, validators)
     });
   }
 
@@ -48,8 +68,7 @@ export class Dialog1FieldComponent implements OnInit {
 
   onSubmit() {
     if (this.fieldForm.valid) {
-      const field = this.fieldForm.get("field").value;
-      this.dialogRef.close({fieldValue: field});
+      this.dialogRef.close({fieldValue: this.fieldForm.get("field").value});
     }
   }
 }

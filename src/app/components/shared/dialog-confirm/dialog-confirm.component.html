@@ -1,10 +1,13 @@
 <h3 mat-dialog-title class="dialog-title">{{data.header}}</h3>
 <div mat-dialog-content class="dialog-body">
-  <div class="dialog-body-line">{{data.message1}}</div>
-  <div class="dialog-body-line" *ngIf="data.message2">{{data.message2}}</div>
-  <div class="dialog-body-line" *ngIf="data.message3">{{data.message3}}</div>
+  <div class="dialog-body-line dialog-body-line-1">{{data.message1}}</div>
+  <div class="dialog-body-line dialog-body-line-2" *ngIf="data.message2">{{data.message2}}</div>
+  <div class="dialog-body-line dialog-body-line-3" *ngIf="data.message3">{{data.message3}}</div>
 </div>
-<div mat-dialog-actions class="dialog-buttons">
+<div mat-dialog-actions class="dialog-buttons" *ngIf="!okButtonState">
   <button mat-flat-button color="primary" type="button" (tap)="closeDialog('yes')">{{data.button1Text}}</button>
   <button mat-flat-button color="accent" type="button" (tap)="closeDialog('no')">{{data.button2Text}}</button>
+</div>
+<div *ngIf="okButtonState" class="dialog-ok-button">
+  <button mat-flat-button color="primary" type="button" (tap)="closeDialog('ok')">{{data.buttonOkText}}</button>
 </div>

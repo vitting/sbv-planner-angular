@@ -124,7 +124,7 @@ export class FirestoreService {
 
   getTemplates() {
     return this.db.collection<Template>("templates", (ref) => {
-      return ref.where("active", "==", true).orderBy("title");
+      return ref.where("active", "==", true).orderBy("updatedAt");
     }).valueChanges();
   }
 

@@ -5,27 +5,37 @@
     <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
   </button>
 </div>
-<app-messages-error [messages]="messages"></app-messages-error>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="showForm">
-  <div>
-    <mat-form-field class="app-form-input">
-      <input id="email" name="email" matInput placeholder="E-mail" type="email" formControlName="email" required>
-      <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['required']">Feltet skal
-        udfyldes</mat-error>
-      <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['email']">Feltet indeholder ikke
-        en valid e-mail adresse</mat-error>
-    </mat-form-field>
-    <mat-form-field class="app-form-input">
-      <input id="password" name="password" matInput placeholder="Kodeord" type="password" formControlName="password"
-        required>
-      <mat-error *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Feltet skal udfyldes
-      </mat-error>
-    </mat-form-field>
+
+<div *ngIf="showForm">
+  <app-messages-error [messages]="messages"></app-messages-error>
+  <div class="signup-button">
+    <a mat-button [routerLink]="['/signup']" color="accent">
+      <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Opret ny bruger
+    </a>
   </div>
-  <div class="app-form-button login-form-button-container">
-    <button mat-flat-button color="primary" [disabled]="loginForm.invalid || loginForm.untouched"
-      type="submit"><fa-icon [icon]="['fas', 'sign-in-alt']" class="app-menu-icon"></fa-icon>Login</button>
-    <button mat-flat-button color="accent" type="button" (tap)="forgotPassword()"><fa-icon [icon]="['far', 'question-circle']" class="app-menu-icon"></fa-icon>Glemt kodeord</button>
-    <a mat-button [routerLink]="['/signup']" color="accent"><fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Opret ny bruger</a>
-  </div>
-</form>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field class="app-form-input">
+        <input id="email" name="email" matInput placeholder="E-mail" type="email" formControlName="email" required>
+        <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['required']">Feltet skal
+          udfyldes</mat-error>
+        <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['email']">Feltet indeholder
+          ikke en valid e-mail adresse</mat-error>
+      </mat-form-field>
+      <mat-form-field class="app-form-input">
+        <input id="password" name="password" matInput placeholder="Kodeord" type="password" formControlName="password"
+          required>
+        <mat-error *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Feltet skal udfyldes
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="app-form-button login-form-button-container">
+      <button mat-flat-button color="primary" [disabled]="loginForm.invalid || loginForm.untouched" type="submit">
+        <fa-icon [icon]="['fas', 'sign-in-alt']" class="app-menu-icon"></fa-icon>Login
+      </button>
+      <button mat-flat-button color="accent" type="button" (tap)="forgotPassword()">
+        <fa-icon [icon]="['far', 'question-circle']" class="app-menu-icon"></fa-icon>Glemt kodeord
+      </button>
+    </div>
+  </form>
+</div>

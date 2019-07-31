@@ -12,6 +12,7 @@ import { Template } from 'src/app/models/template.model';
 export class TemplatesComponent implements OnInit {
   editMode = false;
   addMode = false;
+  singleEditMode = false;
   templates: Template[] = [];
   constructor(private templateService: TemplateService, private navbarService: NavbarService, private route: ActivatedRoute) { }
 
@@ -36,6 +37,7 @@ export class TemplatesComponent implements OnInit {
     }
 
     if (templateId) {
+      this.singleEditMode = true;
       this.templateService.getTemplate(templateId).subscribe((template) => {
         this.templates.push(template);
       });

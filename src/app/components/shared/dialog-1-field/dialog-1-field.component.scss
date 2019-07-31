@@ -1,6 +1,14 @@
+.dialog-text {
+  font-weight: lighter;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 5px;
+}
+
 .dialog-close-container {
   display: flex;
   justify-content: space-between;
+  margin-top: 15px;
 }
 
 mat-form-field {

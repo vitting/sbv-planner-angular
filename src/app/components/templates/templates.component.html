@@ -1,4 +1,4 @@
 <mat-list>
   <app-template-item [editMode]="editMode" [addMode]="addMode" *ngFor="let template of templates" [template]="template"></app-template-item>
 </mat-list>
-<app-fab-button *ngIf="editMode" (fabClick)="addTemplate()"></app-fab-button>
+<app-fab-button *ngIf="!addMode && !singleEditMode" (fabClick)="addTemplate()"></app-fab-button>

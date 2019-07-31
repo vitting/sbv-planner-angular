@@ -23,7 +23,10 @@ export class AuthService {
   private userMetaSub: Subscription;
   private appMeta: AppMeta;
   private appMetaSub: Subscription;
-  constructor(private afAuth: AngularFireAuth, private firestoreService: FirestoreService, private splashService: SplashService) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private firestoreService: FirestoreService,
+    private splashService: SplashService) {
     const userAuth$ = this.afAuth.user.pipe(switchMap<firebase.User, Observable<User>>((authUser) => {
       if (authUser) {
         return this.firestoreService.getUser(authUser.uid);
@@ -136,7 +139,7 @@ export class AuthService {
     return this.afAuth.auth.signOut();
   }
 
-  resetPassword(email: string) {
+  sendResetPasswordEmail(email: string) {
     return this.afAuth.auth.sendPasswordResetEmail(email.trim());
   }
 }
