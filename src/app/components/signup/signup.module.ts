@@ -8,10 +8,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MessagesModule } from '../shared/messages/messages.module';
 import { SignupMessageComponent } from './signup-message/signup-message.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ItemContainerModule } from '../shared/directives/item-container/item-container.module';
+import { MessagesErrorModule } from '../shared/messages-error/messages-error.module';
 
 @NgModule({
   declarations: [SignupComponent, SignupMessageComponent],
@@ -24,7 +24,7 @@ import { ItemContainerModule } from '../shared/directives/item-container/item-co
     MatButtonModule,
     FontAwesomeModule,
     MatIconModule,
-    MessagesModule,
+    MessagesErrorModule,
     ItemContainerModule
   ],
   exports: [SignupComponent, SignupMessageComponent]

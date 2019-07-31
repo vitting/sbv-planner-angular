@@ -6,10 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MessagesModule } from '../shared/messages/messages.module';
 import { ItemContainerModule } from '../shared/directives/item-container/item-container.module';
-import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MessagesErrorModule } from '../shared/messages-error/messages-error.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -20,7 +19,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatInputModule,
     MatButtonModule,
     FontAwesomeModule,
-    MessagesModule,
+    MessagesErrorModule,
     ItemContainerModule
   ],
   exports: [

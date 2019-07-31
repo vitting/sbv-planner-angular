@@ -5,7 +5,7 @@
     <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
   </button>
 </div>
-<app-messages [messages]="messages"></app-messages>
+<app-messages-error [messages]="messages"></app-messages-error>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="showForm">
   <div>
     <mat-form-field class="app-form-input">
@@ -24,8 +24,8 @@
   </div>
   <div class="app-form-button login-form-button-container">
     <button mat-flat-button color="primary" [disabled]="loginForm.invalid || loginForm.untouched"
-      type="submit">Login</button>
-    <button mat-flat-button color="accent" type="button" (tap)="forgotPassword()">Glemt kodeord</button>
-    <a mat-button [routerLink]="['/signup']" color="accent">Opret ny bruger</a>
+      type="submit"><fa-icon [icon]="['fas', 'sign-in-alt']" class="app-menu-icon"></fa-icon>Login</button>
+    <button mat-flat-button color="accent" type="button" (tap)="forgotPassword()"><fa-icon [icon]="['far', 'question-circle']" class="app-menu-icon"></fa-icon>Glemt kodeord</button>
+    <a mat-button [routerLink]="['/signup']" color="accent"><fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Opret ny bruger</a>
   </div>
 </form>

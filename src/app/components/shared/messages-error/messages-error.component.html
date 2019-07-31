@@ -1,0 +1,6 @@
+<mat-list *ngIf="messages.length">
+  <div appItemContainer="message-error" class="message-item" mat-list-item *ngFor="let message of messages">
+    <fa-icon [icon]="['fas', 'circle']" class="message-error-icon"></fa-icon>
+    <div class="message-item-text">{{message}}</div>
+  </div>
+</mat-list>

@@ -1,0 +1,19 @@
+mat-list {
+  padding: 0;
+  margin-bottom: 10px;
+
+  .message-item {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-error-icon {
+      font-size: 0.7rem;
+      margin-right: 10px;
+    }
+  }
+}
