@@ -1,8 +1,9 @@
-<h3>Admin og Editor</h3>
-<h3>Vis navn i menu</h3>
 <h3>Hvis en bruger bliver markeret som active = false hvad så. Så skal han vel ikke kunne logge ind?</h3>
-<div class="home-calendar">
-  <app-month-item [singleItem]="true" [monthNumber]="currentMonth" [currentMonth]="currentMonth" *ngIf="showCalendar"
+<h3>Set auth på database</h3>
+<h3>Test user as editor and admin and nothing</h3>
+<h3>Se alle opgaver jeg er på</h3>
+<div class="home-calendar" *ngIf="showCalendar">
+  <app-month-item [singleItem]="true" [monthNumber]="currentMonth" [currentMonth]="currentMonth"
     (click)="gotoCalendar()"></app-month-item>
 </div>
 <app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>

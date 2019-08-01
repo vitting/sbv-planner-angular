@@ -2,5 +2,5 @@
 </app-no-data-box>
 <mat-list class="app-list">
   <app-task-list-item *ngFor="let task of tasks" [task]="task" (deleteTaskClick)="deleteTaskClick($event)"
-    (markAllSubTasksAsCompletedClick)="markAllSubTasksAsCompletedClick($event)"></app-task-list-item>
+    (markAllSubTasksAsCompletedClick)="markAllSubTasksAsCompletedClick($event)" (markAllSubTasksAsNotCompletedClick)="markAllSubTasksAsNotCompletedClick($event)"></app-task-list-item>
 </mat-list>

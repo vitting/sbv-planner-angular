@@ -16,8 +16,6 @@ export class AuthGuard implements CanActivate {
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     return this.authService.isUserAuthenticated$.pipe(map((result) => {
       if (result && this.authService.authUserInfo && this.authService.authUserInfo.accepted) {
-
-        // if (state.url)
         if (route.data && route.data.onlyAdmin) {
           if (this.authService.authUserInfo.admin) {
             return true;
@@ -25,6 +23,14 @@ export class AuthGuard implements CanActivate {
             this.router.navigate(["/"]);
             return false;
           }
+        } else if (route.data && route.data.onlyEditor) {
+          if (this.authService.authUserInfo.editor) {
+            return true;
+          } else {
+            this.router.navigate(["/"]);
+            return false;
+          }
+          return true;
         } else {
           return true;
         }

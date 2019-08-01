@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { AuthService } from 'src/app/services/auth.service';
 
 export enum ProjectHomeItemMenuResult {
   editProject,
@@ -16,7 +17,8 @@ export class ProjectHomeItemMenuComponent implements OnInit {
 
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public inEditMode: boolean,
-    private bottomSheetRef: MatBottomSheetRef<ProjectHomeItemMenuComponent>) { }
+    private bottomSheetRef: MatBottomSheetRef<ProjectHomeItemMenuComponent>,
+    public authService: AuthService) { }
 
   ngOnInit() {
   }

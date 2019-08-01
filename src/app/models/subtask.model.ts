@@ -7,10 +7,8 @@ export interface SubTask {
   createdBy: string;
   updatedBy: string;
   title: string;
-  colorCode: string;
   completed: boolean;
   users: string[];
-  index: number;
 }
 
 export class SubTaskItem implements SubTask {
@@ -23,10 +21,8 @@ export class SubTaskItem implements SubTask {
     public createdBy: string,
     public updatedBy: string,
     public title: string,
-    public colorCode: string = null,
     public completed: boolean = false,
-    public users: string[] = [],
-    public index: number  = 0
+    public users: string[] = []
   ) {}
 
   static fromObject(subTask: SubTask) {
@@ -39,10 +35,8 @@ export class SubTaskItem implements SubTask {
       subTask.createdBy,
       subTask.updatedBy,
       subTask.title,
-      subTask.colorCode,
       subTask.completed,
-      subTask.users,
-      subTask.index);
+      subTask.users);
   }
 
   toObject(): SubTask {
@@ -55,10 +49,8 @@ export class SubTaskItem implements SubTask {
       createdBy: this.createdBy,
       updatedBy: this.updatedBy,
       title: this.title,
-      colorCode: this.colorCode,
       completed: this.completed,
-      users: this.users,
-      index: this.index
+      users: this.users
     };
   }
 }

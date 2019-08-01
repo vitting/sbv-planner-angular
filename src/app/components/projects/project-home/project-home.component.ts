@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, AfterViewChecked, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,14 +11,13 @@ import { RemoveUserFromProjectResult } from '../project-list-item/project-list-i
 import { NavbarService } from 'src/app/services/navbar.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { User } from 'src/app/models/user.model';
-import { MonthItemComponent } from '../../year-calendar/month-item/month-item.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './project-home.component.html',
   styleUrls: ['./project-home.component.scss']
 })
-export class ProjectHomeComponent implements OnInit {
+export class ProjectHomeComponent implements OnInit, OnDestroy {
   projects: Project[] = [];
   projectsSub: Subscription;
   userId: string = null;
@@ -42,8 +41,16 @@ export class ProjectHomeComponent implements OnInit {
     this.currentMonth = new Date(Date.now()).getMonth();
     this.navbarService.navbarTitle.next("Forside");
     this.userId = this.authService.userId;
+    this.showCalendar = this.authService.authUserSettings.showCalendar;
     this.getProjects();
   }
+
+  ngOnDestroy(): void {
+    if (this.projectsSub) {
+      this.projectsSub.unsubscribe();
+    }
+  }
+
 
   private getProjects() {
     if (this.userId) {

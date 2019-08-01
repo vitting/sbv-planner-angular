@@ -19,6 +19,7 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
   @Input() editMode = false;
   @Output() deleteTaskClick = new EventEmitter<Task>();
   @Output() markAllSubTasksAsCompletedClick = new EventEmitter<Task>();
+  @Output() markAllSubTasksAsNotCompletedClick = new EventEmitter<Task>();
   summary: Summary;
   completed = false;
   showCommentIndicator = false;
@@ -92,6 +93,9 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
             break;
           case TasksMenuResult.markAllSubTasksCompleted:
             this.markAllSubTasksAsCompletedClick.emit(this.task);
+            break;
+          case TasksMenuResult.markAllSubTasksAsNotCompleted:
+            this.markAllSubTasksAsNotCompletedClick.emit(this.task);
             break;
           default:
             console.log("OTHER");

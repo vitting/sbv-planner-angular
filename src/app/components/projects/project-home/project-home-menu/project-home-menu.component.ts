@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { AuthService } from 'src/app/services/auth.service';
 
 export enum ProjectHomeMenuResult {
   joinProject,
@@ -14,7 +15,9 @@ export enum ProjectHomeMenuResult {
 })
 export class ProjectHomeMenuComponent implements OnInit {
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<ProjectHomeMenuComponent>) { }
+  constructor(
+    private bottomSheetRef: MatBottomSheetRef<ProjectHomeMenuComponent>,
+    public authService: AuthService) { }
 
   ngOnInit() {
   }

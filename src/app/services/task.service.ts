@@ -172,7 +172,39 @@ export class TaskService {
         this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
           this.navbarService.showProgressbar = true;
-          const taskId = await this.firestoreService.markAllSubTasksAsCompleted(this.authService.userId, task.id);
+          const taskId = await this.firestoreService.markAllSubTasks(this.authService.userId, task.id, true);
+          this.navbarService.showProgressbar = false;
+          resolve(taskId);
+        } else {
+          this.navbarService.showProgressbar = false;
+          resolve(null);
+        }
+      });
+    });
+  }
+
+  markAllSubTasksAsNotCompleted(task: Task): Promise<string> {
+    const data: DialogConfirmData = {
+      header: "Opgaver",
+      button1Text: "Ja",
+      button2Text: "Nej",
+      message1: "Er du sikker på du vil markere alle opgaver som ikke udført?",
+      message2: null
+    };
+
+    this.fabButtonService.showFabButton = false;
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      maxWidth: '350',
+      autoFocus: false,
+      data
+    });
+
+    return new Promise((resolve, reject) => {
+      dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        this.fabButtonService.showFabButton = true;
+        if (result && result.action === DialogConfirmAction.yes) {
+          this.navbarService.showProgressbar = true;
+          const taskId = await this.firestoreService.markAllSubTasks(this.authService.userId, task.id, false);
           this.navbarService.showProgressbar = false;
           resolve(taskId);
         } else {

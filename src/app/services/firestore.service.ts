@@ -63,6 +63,10 @@ export class FirestoreService {
     return this.db.collection<UserMeta>("usermetas").doc<UserMeta>(userId).valueChanges();
   }
 
+  getUserSettings(userId: string) {
+    return this.db.collection<Settings>("settings").doc<Settings>(userId).valueChanges();
+  }
+
   async updateUserMetaComments(userId: string, parentId: string) {
     try {
       const data = {};
@@ -744,45 +748,7 @@ export class FirestoreService {
     }
   }
 
-  async addPersonToTask(taskId: string, userId: string) {
-    const timestamp = this.timestamp;
-
-    try {
-      await this.db.collection<Task>("tasks").doc(taskId).update(
-        {
-          updatedAt: timestamp,
-          updatedBy: userId,
-          users: firebase.firestore.FieldValue.arrayUnion(userId)
-        }
-      );
-
-      return taskId;
-    } catch (error) {
-      console.error("addPersonToTask", error);
-      return null;
-    }
-  }
-
-  async removePersonFromTask(taskId: string, userId: string) {
-    const timestamp = this.timestamp;
-
-    try {
-      await this.db.collection<Task>("subtasks").doc(taskId).update(
-        {
-          updatedAt: timestamp,
-          updatedBy: userId,
-          users: firebase.firestore.FieldValue.arrayRemove(userId)
-        }
-      );
-
-      return taskId;
-    } catch (error) {
-      console.error("removePersonFromTask", error);
-      return null;
-    }
-  }
-
-  async markAllSubTasksAsCompleted(userId: string, taskId: string): Promise<string> {
+  async markAllSubTasks(userId: string, taskId: string, completed: boolean): Promise<string> {
     const subTasks = await this.getSubTasks(taskId).pipe(take(1)).toPromise();
 
     if (subTasks) {
@@ -790,21 +756,16 @@ export class FirestoreService {
       subTasks.forEach((subTask) => {
         const taskRef = this.db.collection('subtasks').doc(subTask.id).ref;
         batch.update(taskRef, {
-          users: firebase.firestore.FieldValue.arrayUnion(userId),
-          completed: true
+          users: completed ? firebase.firestore.FieldValue.arrayUnion(userId) : firebase.firestore.FieldValue.arrayRemove(userId),
+          completed
         });
-      });
-
-      const summaryRef = this.db.collection<Summary>("summaries").doc<Summary>(taskId).ref;
-      batch.update(summaryRef, {
-        numberOfItemsCompleted: subTasks.length
       });
 
       try {
         await batch.commit();
         return Promise.resolve(taskId);
       } catch (error) {
-        console.error("markAllSubTasksAsCompleted", error);
+        console.error("markAllSubTasks", error);
         return Promise.reject(error);
       }
     }

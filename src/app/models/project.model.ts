@@ -5,7 +5,6 @@ export interface Project {
     createdAt: any;
     updatedAt: any;
     createdBy: string;
-    colorCode: string;
     active: boolean;
     users: string[];
 }
@@ -19,7 +18,6 @@ export class ProjectItem implements Project {
     public updatedAt: any,
     public createdBy: string,
     public users: string[] = [],
-    public colorCode: string = null,
     public active: boolean = true,
     ) {}
 
@@ -31,7 +29,6 @@ export class ProjectItem implements Project {
         createdAt: this.createdAt,
         updatedAt: this.updatedAt,
         createdBy: this.createdBy,
-        colorCode: this.colorCode,
         active: this.active,
         users: this.users
       };

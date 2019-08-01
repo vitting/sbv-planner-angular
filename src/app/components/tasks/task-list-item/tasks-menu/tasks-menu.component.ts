@@ -1,10 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { AuthService } from 'src/app/services/auth.service';
 
 export enum TasksMenuResult {
   addAndRemove,
   delete,
-  markAllSubTasksCompleted
+  markAllSubTasksCompleted,
+  markAllSubTasksAsNotCompleted
 }
 
 export interface TasksMenuData {
@@ -17,7 +19,10 @@ export interface TasksMenuData {
   templateUrl: './tasks-menu.component.html'
 })
 export class TasksMenuComponent implements OnInit {
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: TasksMenuData, private bottomSheetRef: MatBottomSheetRef<TasksMenuComponent>) { }
+  constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: TasksMenuData,
+    private bottomSheetRef: MatBottomSheetRef<TasksMenuComponent>,
+    public authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -33,6 +38,9 @@ export class TasksMenuComponent implements OnInit {
         break;
       case "markAllSubTasksCompleted":
         result = TasksMenuResult.markAllSubTasksCompleted;
+        break;
+      case "markAllSubTasksAsNotCompleted":
+        result = TasksMenuResult.markAllSubTasksAsNotCompleted;
         break;
     }
 

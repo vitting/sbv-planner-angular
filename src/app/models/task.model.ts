@@ -9,8 +9,6 @@ export interface Task {
   description: string;
   index: number;
   completed: boolean;
-  users: string[];
-  colorCode: string;
 }
 
 export class TaskItem implements Task {
@@ -24,27 +22,8 @@ export class TaskItem implements Task {
     public title: string,
     public description: string,
     public index: number,
-    public completed: boolean = false,
-    public users: string[] = [],
-    public colorCode: string = null
+    public completed: boolean = false
     ) {}
-
-    static fromObject(item: Task) {
-      return new TaskItem(
-        item.id,
-        item.projectId,
-        item.createdAt,
-        item.updatedAt,
-        item.createdBy,
-        item.updatedAt,
-        item.title,
-        item.description,
-        item.index,
-        item.completed,
-        item.users,
-        item.colorCode
-        );
-    }
 
   toObject(): Task {
     return {
@@ -57,9 +36,7 @@ export class TaskItem implements Task {
       title: this.title,
       description: this.description,
       index: this.index,
-      completed: this.completed,
-      users: this.users,
-      colorCode: this.colorCode
+      completed: this.completed
     };
   }
 }

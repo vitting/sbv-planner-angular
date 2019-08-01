@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   showIndicator = false;
   showIsAuth = false;
   showLogout = false;
+  name = "";
   private navbarTitleSub: Subscription;
   private navbarShowProgressSub: Subscription;
   private navbarRouteChangeSub: Subscription;
@@ -26,7 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private appMetaSub: Subscription;
   constructor(
     private navbarService: NavbarService,
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
@@ -64,6 +65,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // Indicate if user is accepted by the administrator
     this.navbarShowAuthSub = this.authService.isUserAuthenticated$.subscribe((auth) => {
       if (auth && this.authService.authUserInfo.accepted) {
+        this.name = this.authService.authUserInfo.name;
         this.showIsAuth = true;
         this.showLogout = false;
       } else if (auth && this.authService.authUserInfo.waitingForApproval) {

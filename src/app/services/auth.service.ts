@@ -7,6 +7,7 @@ import { of, combineLatest, ReplaySubject, Observable, Subscription } from 'rxjs
 import { SplashService } from './splash.service';
 import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
+import { Settings } from '../models/settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,18 @@ export class AuthService {
   private isAuthenticated = new ReplaySubject<boolean>(1);
   private appMetaUpdated = new ReplaySubject<AppMeta>(1);
   private userMetaUpdated = new ReplaySubject<UserMeta>(1);
+  private userSettingsUpdated = new ReplaySubject<Settings>(1);
   private user: User;
   private id: string = null;
   private userIsAdmin = false;
+  private userIsEditor = false;
   private users: { [key: string]: User } = {};
+  private userSettings: Settings;
   private userMeta: UserMeta;
   private userMetaSub: Subscription;
   private appMeta: AppMeta;
   private appMetaSub: Subscription;
+  private userSettingsSub: Subscription;
   constructor(
     private afAuth: AngularFireAuth,
     private firestoreService: FirestoreService,
@@ -41,8 +46,10 @@ export class AuthService {
       this.id = authUser ? authUser.id : null;
       if (authUser) {
         this.userIsAdmin = authUser.admin;
+        this.userIsEditor = authUser.editor;
         await this.getUserMetaData(authUser.id);
         await this.getAppMetaData();
+        await this.getUserSettingsData(authUser.id);
         users.forEach((user) => {
           this.users[user.id] = user;
         });
@@ -50,6 +57,7 @@ export class AuthService {
         this.userMeta = null;
         this.appMeta = null;
         this.userIsAdmin = false;
+        this.userIsEditor = false;
         if (this.userMetaSub) {
           this.userMetaSub.unsubscribe();
         }
@@ -63,6 +71,8 @@ export class AuthService {
       this.splashService.splashShow.next(false);
     }, (error) => {
       this.user = null;
+      this.userIsAdmin = false;
+      this.userIsEditor = false;
       this.isAuthenticated.next(false);
       this.id = null;
       this.users = {};
@@ -88,6 +98,24 @@ export class AuthService {
         resolve(null);
       });
     });
+  }
+
+  private getUserSettingsData(userId: string) {
+    return new Promise((resolve) => {
+      this.userSettingsSub = this.firestoreService.getUserSettings(userId).subscribe((settings: Settings) => {
+        this.userSettings = settings;
+        this.userSettingsUpdated.next(settings);
+        resolve(null);
+      });
+    });
+  }
+
+  get userSettingsWhenUpdated$() {
+    return this.userSettingsUpdated;
+  }
+
+  get authUserSettings() {
+    return this.userSettings;
   }
 
   get appMetaWhenUpdated$() {
@@ -120,6 +148,10 @@ export class AuthService {
 
   get isAdmin() {
     return this.userIsAdmin;
+  }
+
+  get isEditor() {
+    return this.userIsEditor;
   }
 
   getUserInfo(userId: string) {

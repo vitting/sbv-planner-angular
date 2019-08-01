@@ -69,6 +69,10 @@ export class TasksComponent implements OnInit, OnDestroy {
     const result = this.taskService.markAllSubTasksAsCompleted(task);
   }
 
+  async markAllSubTasksAsNotCompletedClick(task: Task) {
+    const result = this.taskService.markAllSubTasksAsNotCompleted(task);
+  }
+
   gotoAddTasks() {
     this.router.navigate(["/projects", this.projectId, "tasks", "edit"]);
   }
