@@ -39,18 +39,6 @@ form {
             user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
-.app-text-bold {
-  font-weight: 500;
-}
-
-.app-text-lighter {
-  font-weight: lighter;
-}
-
-.app-text-italic {
-  font-style: italic;
-}
-
 .app-item-container {
   padding: 10px;
   border-radius: 4px;
@@ -112,6 +100,14 @@ form {
 
 .app-menu-icon {
   margin-right: 5px;
+}
+
+.app-list-padding, .app-list {
+  padding: 0!important;
+}
+
+.app-button-outline {
+  outline: none!important;
 }
 
 /* width */

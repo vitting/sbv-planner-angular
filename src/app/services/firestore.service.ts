@@ -445,9 +445,18 @@ export class FirestoreService {
 
   async updateUserAdmin(userId: string, state: boolean): Promise<string> {
     try {
-      await this.db.collection<User>("users").doc(userId).update({
-        admin: state
-      });
+      let data: any;
+      if (state) {
+        data = {
+          admin: state,
+          editor: true
+        };
+      } else {
+        data = {
+          admin: state
+        };
+      }
+      await this.db.collection<User>("users").doc(userId).update(data);
       return userId;
     } catch (error) {
       console.error("updateUserAdmin", error);

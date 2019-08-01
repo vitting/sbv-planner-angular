@@ -8,8 +8,7 @@ export enum TaskEditMenuResult {
 
 @Component({
   selector: 'app-task-edit-menu',
-  templateUrl: './task-edit-menu.component.html',
-  styleUrls: ['./task-edit-menu.component.scss']
+  templateUrl: './task-edit-menu.component.html'
 })
 export class TaskEditMenuComponent implements OnInit {
 

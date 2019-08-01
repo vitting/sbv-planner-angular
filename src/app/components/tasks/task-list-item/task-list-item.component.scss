@@ -1,76 +1,72 @@
 @import "../../../../colors";
 
 .task-content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+
+  .task-content-edit {
     display: flex;
-    justify-content: space-between;
-    flex-direction: row;
     align-items: center;
 
-    .task-content-edit {
-        display: flex;
-        align-items: center;
-
-        button {
-            margin-right: 5px;
-        }
+    button {
+      margin-right: 5px;
     }
+  }
 
 
-    .task-menu {
-        align-self: flex-start;
+  .task-menu {
+    align-self: flex-start;
+  }
+
+  .list-item-end-edit-button {
+    color: $pink-100;
+
+    .list-item-end-edit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.2rem;
+
+      mat-icon {
+        font-size: 1.1rem;
+      }
     }
-
-    .list-item-end-edit-button {
-        color: $pink-100;
-
-        .list-item-end-edit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            line-height: 1.2rem;
-
-            mat-icon {
-                font-size: 1.1rem;
-            }
-        }
-    }
+  }
 }
 
 .task-action {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
 
-    .task-action-item:first-child {
-        margin-right: 20px;
-    }
+  .task-action-item:first-child {
+    margin-right: 20px;
+  }
 
-    .task-action-text {
-        font-size: 14px;
-    }
+  .task-action-text {
+    font-size: 14px;
+  }
 
-    .task-action-text {
-        margin-left: 5px;
-    }
+  .task-action-text {
+    margin-left: 5px;
+  }
 
-    .comment-indicator {
-      position: absolute;
-      left: auto;
-      right: auto;
-      top: 4px;
-      border-radius: 50%;
-      background-color: red;
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-    }
+  .comment-indicator {
+    position: absolute;
+    left: auto;
+    right: auto;
+    top: 4px;
+    border-radius: 50%;
+    background-color: red;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
 }
 
 .task-completed {
-    background-color: $pink-a700;
-}
-
-button {
-    outline: none;
+  background-color: $pink-a700;
 }

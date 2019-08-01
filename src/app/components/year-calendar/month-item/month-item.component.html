@@ -2,7 +2,7 @@
   <div class="month-name">{{monthName}}</div>
   <div class="month-tasks">
     <div class="month-add-task" *ngIf="editMode">
-      <button mat-button type="button" (tap)="addCalendarItem()">
+      <button mat-button type="button" (tap)="addCalendarItem()" class="app-button-outline">
         Tilføj en opgave <mat-icon>add_circle</mat-icon>
       </button>
     </div>

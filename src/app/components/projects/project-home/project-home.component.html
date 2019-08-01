@@ -1,14 +1,16 @@
 <h3>Admin og Editor</h3>
 <h3>Hvis en bruger bliver markeret som active = false hvad så. Så skal han vel ikke kunne logge ind?</h3>
 <div class="home-calendar">
-  <app-month-item [singleItem]="true" [monthNumber]="currentMonth" [currentMonth]="currentMonth" *ngIf="showCalendar" (click)="gotoCalendar()"></app-month-item>
+  <app-month-item [singleItem]="true" [monthNumber]="currentMonth" [currentMonth]="currentMonth" *ngIf="showCalendar"
+    (click)="gotoCalendar()"></app-month-item>
 </div>
 <app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>
-<mat-list *ngIf="!showNoData">
+<mat-list *ngIf="!showNoData" class="app-list">
   <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)"
     (commentsTotalClick)="gotoComments($event)" (tasksTotalClick)="gotoTasks($event)"
-    (editTasksClick)="editTasksClick($event)" (editTitleDescClick)="editTitleDescClick($event)" (endEditProjectClick)="endEditProjectClick($event)"
-    (userClick)="removeUserClick($event)" [enableRemoveUserButton]="true" *ngFor="let project of projects"
-    [project]="project" [projectButtonState]="'menu'"></app-project-list-item>
+    (editTasksClick)="editTasksClick($event)" (editTitleDescClick)="editTitleDescClick($event)"
+    (endEditProjectClick)="endEditProjectClick($event)" (userClick)="removeUserClick($event)"
+    [enableRemoveUserButton]="true" *ngFor="let project of projects" [project]="project" [projectButtonState]="'menu'">
+  </app-project-list-item>
 </mat-list>
 <app-fab-button (fabClick)="addMenu()" iconType="add"></app-fab-button>

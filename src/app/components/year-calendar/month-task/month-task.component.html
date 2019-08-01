@@ -1,12 +1,12 @@
 <div class="month-task-container">
   <div class="month-task-title">
-    <button mat-icon-button (click)="editCalendarItem()" *ngIf="editMode">
+    <button mat-icon-button (click)="editCalendarItem()" *ngIf="editMode" class="app-button-outline">
       <mat-icon>edit</mat-icon>
     </button>
     <fa-icon [icon]="['fas', 'circle']" class="month-task-icon"></fa-icon>
     <div>{{calendarItem?.text}}</div>
   </div>
-  <button class="month-task-delete" mat-icon-button (click)="deleteCalendarItem()" *ngIf="editMode">
+  <button class="month-task-delete app-button-outline" mat-icon-button (click)="deleteCalendarItem()" *ngIf="editMode">
     <mat-icon>delete</mat-icon>
   </button>
 </div>

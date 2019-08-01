@@ -1,74 +1,65 @@
 @import "../../../../colors";
 
-mat-expansion-panel {
-    background-color: $indigo-400;
-}
-
 .list-item-container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    .list-item-content {
-        width: 100%;
+  .list-item-content {
+    width: 100%;
 
-        .list-item-title-desc {
-            display: flex;
-            align-items: flex-start;
+    .list-item-title-desc {
+      display: flex;
+      align-items: flex-start;
 
-            .list-item-title-desc-edit {
-                margin-right: 5px;
-                margin-left: -5px;
-            }
-        }
+      .list-item-title-desc-edit {
+        margin-right: 5px;
+        margin-left: -5px;
+      }
     }
+  }
 
-    app-project-users {
-        margin-top: 10px;
-    }
+  app-project-users {
+    margin-top: 10px;
+  }
 
-    .list-item-button {
-        align-self: flex-start;
-        margin-left: 20px;
-    }
+  .list-item-button {
+    align-self: flex-start;
+    margin-left: 20px;
+  }
 }
 
 .list-item-end-edit-button {
-    color: $indigo-100;
+  color: $indigo-100;
 
-    .list-item-end-edit {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        line-height: 1.2rem;
+  .list-item-end-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2rem;
 
-        mat-icon {
-            font-size: 1.1rem;
-        }
+    mat-icon {
+      font-size: 1.1rem;
     }
+  }
 }
 
-
 .tasks-container {
-    font-weight: lighter;
+  font-weight: lighter;
 }
 
 .task-item {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5px;
 }
 
 .subtask-item {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
 }
 
 .empty-space {
-    width: 67px;
-    height: 40px;
-}
-
-button {
-    outline: none;
+  width: 67px;
+  height: 40px;
 }

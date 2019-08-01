@@ -1,12 +1,14 @@
 <mat-list>
   <div appItemContainer="setting" class="settings-item flex-between">
     <div>{{name}}</div>
-    <button mat-icon-button (tap)="changeName()"><mat-icon>edit</mat-icon></button>
+    <button mat-icon-button (tap)="changeName()" class="app-button-outline">
+      <mat-icon>edit</mat-icon>
+    </button>
   </div>
   <div appItemContainer="setting" class="settings-item flex-between">
     <div>Vis kalender på forsiden</div>
-    <mat-slide-toggle color="accent" labelPosition="before" (change)="showCalendar($event)" [checked]="settings?.showCalendar">
+    <mat-slide-toggle color="accent" labelPosition="before" (change)="showCalendar($event)"
+      [checked]="settings?.showCalendar">
     </mat-slide-toggle>
   </div>
-  <button mat-raised-button (tap)="resetPassword()">Test</button>
 </mat-list>

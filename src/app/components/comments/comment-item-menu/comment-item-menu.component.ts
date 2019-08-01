@@ -9,7 +9,6 @@ export enum CommentItemMenuResult {
 @Component({
   selector: 'app-comment-item-menu',
   templateUrl: './comment-item-menu.component.html',
-  styleUrls: ['./comment-item-menu.component.scss']
 })
 export class CommentItemMenuComponent implements OnInit {
 

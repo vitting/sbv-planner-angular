@@ -11,8 +11,7 @@ import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: 'app-comments',
-  templateUrl: './comments.component.html',
-  styleUrls: ['./comments.component.scss']
+  templateUrl: './comments.component.html'
 })
 export class CommentsComponent implements OnInit {
   comments$: Observable<Comment[]>;

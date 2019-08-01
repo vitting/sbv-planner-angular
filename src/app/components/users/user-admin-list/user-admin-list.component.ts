@@ -5,8 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-admin-list',
-  templateUrl: './user-admin-list.component.html',
-  styleUrls: ['./user-admin-list.component.scss']
+  templateUrl: './user-admin-list.component.html'
 })
 export class UserAdminListComponent implements OnInit, OnDestroy {
   users: User[] = [];

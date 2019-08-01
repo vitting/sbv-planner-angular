@@ -6,8 +6,7 @@ import { Template } from 'src/app/models/template.model';
 
 @Component({
   selector: 'app-templates',
-  templateUrl: './templates.component.html',
-  styleUrls: ['./templates.component.scss']
+  templateUrl: './templates.component.html'
 })
 export class TemplatesComponent implements OnInit {
   editMode = false;

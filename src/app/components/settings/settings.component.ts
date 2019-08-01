@@ -62,8 +62,4 @@ export class SettingsComponent implements OnInit {
       }
     });
   }
-
-  resetPassword() {
-    // this.authService.resetPassword();
-  }
 }

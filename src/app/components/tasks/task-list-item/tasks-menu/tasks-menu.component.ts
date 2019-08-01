@@ -14,8 +14,7 @@ export interface TasksMenuData {
 
 @Component({
   selector: 'app-tasks-menu',
-  templateUrl: './tasks-menu.component.html',
-  styleUrls: ['./tasks-menu.component.scss']
+  templateUrl: './tasks-menu.component.html'
 })
 export class TasksMenuComponent implements OnInit {
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: TasksMenuData, private bottomSheetRef: MatBottomSheetRef<TasksMenuComponent>) { }

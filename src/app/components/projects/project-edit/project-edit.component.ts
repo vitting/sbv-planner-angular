@@ -17,8 +17,7 @@ import { ProjectEditItemMenuComponent, ProjectEditItemResult } from './project-e
 
 @Component({
   selector: 'app-project-edit',
-  templateUrl: './project-edit.component.html',
-  styleUrls: ['./project-edit.component.scss']
+  templateUrl: './project-edit.component.html'
 })
 export class ProjectEditComponent implements OnInit {
   projects$: Observable<Project[]>;
@@ -30,7 +29,7 @@ export class ProjectEditComponent implements OnInit {
     private dialog: MatDialog,
     private bottomSheet: MatBottomSheet,
     private projectService: ProjectService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.navbarService.navbarTitle.next("Projekter");

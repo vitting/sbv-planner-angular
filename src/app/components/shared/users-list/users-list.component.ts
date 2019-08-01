@@ -4,8 +4,7 @@ import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-users-list',
-  templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.scss']
+  templateUrl: './users-list.component.html'
 })
 export class UsersListComponent implements OnInit {
   @Input() users: User[] = [];

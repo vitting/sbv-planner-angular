@@ -1,5 +1,3 @@
-import { SubTaskItem } from './subtask.model';
-
 export interface Task {
   id: string;
   projectId: string;

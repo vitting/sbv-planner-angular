@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CalendarItem } from 'src/app/models/calendar.model';
 import { CalendarService } from 'src/app/services/calendar.service';
 
 @Component({
   selector: 'app-year-calendar',
-  templateUrl: './year-calendar.component.html',
-  styleUrls: ['./year-calendar.component.scss']
+  templateUrl: './year-calendar.component.html'
 })
 export class YearCalendarComponent implements OnInit {
   months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
@@ -30,8 +29,6 @@ export class YearCalendarComponent implements OnInit {
   }
 
   async editCalendarItemClick(item: CalendarItem) {
-    console.log(item);
-
     const itemId = await this.calendarService.editCalendarItem(item);
   }
 

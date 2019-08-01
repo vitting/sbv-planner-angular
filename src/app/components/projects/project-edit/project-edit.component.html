@@ -1,8 +1,9 @@
-<mat-list>
+<mat-list class="app-list-padding">
   <app-project-list-item mat-list-item [showDetailsEdit]="true" [showDetails]="false" [showUsers]="false" mat-list-item
     *ngFor="let project of projects$ | async" [project]="project" [projectButtonState]="'delete'" [editMode]="editMode"
-    (editTasksClick)="editTasksClick($event)" (editTitleDescClick)="editTitleDescClick($event)" (endEditProjectClick)="endEditProjectClick($event)"
-    (deleteProjectClick)="deleteProjectClick($event)" (menuClick)="menuClick($event)">
+    (editTasksClick)="editTasksClick($event)" (editTitleDescClick)="editTitleDescClick($event)"
+    (endEditProjectClick)="endEditProjectClick($event)" (deleteProjectClick)="deleteProjectClick($event)"
+    (menuClick)="menuClick($event)">
   </app-project-list-item>
 </mat-list>
 <app-fab-button (fabClick)="addProject()"></app-fab-button>

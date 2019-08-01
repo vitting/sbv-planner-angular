@@ -8,8 +8,7 @@ export enum ProjectEditItemResult {
 
 @Component({
   selector: 'app-project-edit-item-menu',
-  templateUrl: './project-edit-item-menu.component.html',
-  styleUrls: ['./project-edit-item-menu.component.scss']
+  templateUrl: './project-edit-item-menu.component.html'
 })
 export class ProjectEditItemMenuComponent implements OnInit {
 

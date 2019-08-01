@@ -3,7 +3,6 @@ import { NavbarService, NavbarTitleData } from 'src/app/services/navbar.service'
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-navbar',

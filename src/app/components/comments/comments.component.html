@@ -1,5 +1,5 @@
 <app-no-data-box *ngIf="showNoData" [data]="nodata"></app-no-data-box>
-<mat-list>
+<mat-list class="app-list-padding">
   <app-comment-item *ngFor="let comment of comments$ | async" [comment]="comment" (menuClick)="menuItemClicked($event)">
   </app-comment-item>
 </mat-list>

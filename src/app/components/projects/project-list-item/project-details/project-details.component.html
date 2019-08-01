@@ -4,7 +4,7 @@
     {{ projectDate | amLocal:'da' | amDateFormat: 'DD-MM-YYYY' }}
   </div>
   <div>
-    <button *ngIf="!passiveFields" mat-button (tap)="commentClicked()">
+    <button *ngIf="!passiveFields" mat-button (tap)="commentClicked()" class="app-button-outline">
       <span *ngIf="showCommentIndicator" class="comment-indicator"></span>
       <fa-icon [icon]="['far', 'comment']" class="app-project-details-icon"></fa-icon><span
         class="task-action-text">{{summary?.numberOfComments}}</span>
@@ -15,10 +15,10 @@
     </span>
   </div>
   <div>
-    <button *ngIf="editMode" mat-icon-button (tap)="editTasksClicked()">
+    <button *ngIf="editMode" mat-icon-button (tap)="editTasksClicked()" class="app-button-outline">
       <mat-icon>edit</mat-icon>
     </button>
-    <button *ngIf="!passiveFields" mat-button (tap)="tasksClicked()">
+    <button *ngIf="!passiveFields" mat-button (tap)="tasksClicked()" class="app-button-outline">
       <fa-icon [icon]="['fas', 'tasks']" class="app-project-details-icon"></fa-icon><span
         class="task-action-text">{{ summary?.numberOfItemsCompleted }} / {{ summary?.numberOfItems }}</span>
     </button>

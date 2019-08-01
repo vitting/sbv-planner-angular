@@ -1,6 +1,6 @@
 <nav class="app-appbar" [ngClass]="navbarColorStateData">
   <div>
-    <button mat-icon-button *ngIf="showNavBack" (tap)="backButtonClick()">
+    <button mat-icon-button *ngIf="showNavBack" (tap)="backButtonClick()" class="app-button-outline">
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
     <a [routerLink]="['/']" *ngIf="showIsAuth">
@@ -14,48 +14,47 @@
     {{navbarTitle}}
   </div>
   <div class="menu" *ngIf="showIsAuth">
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu" class="app-button-outline">
       <span *ngIf="showIndicator" class="menu-indicator"></span>
       <mat-icon>menus</mat-icon>
     </button>
   </div>
-  <button mat-button *ngIf="showLogout" (tap)="menuItemClick('logout')"><fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud</button>
+  <button mat-button *ngIf="showLogout" (tap)="menuItemClick('logout')" class="app-button-outline">
+    <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
+  </button>
   <div *ngIf="!showIsAuth && !showLogout" class="menu-placeholder"></div>
 </nav>
 <div class="navbar-progress">
   <mat-progress-bar *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar>
 </div>
 <mat-menu #menu="matMenu" xPosition="before">
-  <button mat-menu-item (tap)="menuItemClick('home')">
-    <fa-icon [icon]="['fas', 'home']" class="app-menu-icon"></fa-icon>Mine Projekter
+  <button mat-menu-item (tap)="menuItemClick('home')" class="app-button-outline">
+    <fa-icon [icon]="['fas', 'home']" class="app-menu-icon"></fa-icon>Forside
   </button>
-  <button mat-menu-item (tap)="menuItemClick('calendar')">
+  <button mat-menu-item (tap)="menuItemClick('calendar')" class="app-button-outline">
     <fa-icon [icon]="['far', 'calendar-alt']" class="app-menu-icon"></fa-icon>Kalender
   </button>
-  <button mat-menu-item (tap)="menuItemClick('calendaredit')">
+  <button mat-menu-item (tap)="menuItemClick('calendaredit')" class="app-button-outline">
     <fa-icon [icon]="['far', 'calendar-plus']" class="app-menu-icon"></fa-icon>Rediger kalender
   </button>
-  <button mat-menu-item (tap)="menuItemClick('projects')">
-    <fa-icon [icon]="['far', 'lightbulb']" class="app-menu-icon"></fa-icon>Projekter
+  <button mat-menu-item (tap)="menuItemClick('projects')" class="app-button-outline">
+    <fa-icon [icon]="['far', 'lightbulb']" class="app-menu-icon"></fa-icon>Rediger projekter
   </button>
-  <button mat-menu-item (tap)="menuItemClick('templates')">
-    <fa-icon [icon]="['far', 'clipboard']" class="app-menu-icon"></fa-icon>Skabeloner
+  <button mat-menu-item (tap)="menuItemClick('templates')" class="app-button-outline">
+    <fa-icon [icon]="['far', 'clipboard']" class="app-menu-icon"></fa-icon>Rediger skabeloner
   </button>
-  <button mat-menu-item (tap)="menuItemClick('approveusers')">
+  <button mat-menu-item (tap)="menuItemClick('approveusers')" class="app-button-outline">
     <span *ngIf="showIndicator" class="menu-item-indicator"></span>
     <fa-icon [icon]="['fas', 'users']" class="app-menu-icon"></fa-icon>Godkend brugere
   </button>
-  <button mat-menu-item (tap)="menuItemClick('adminusers')">
-      <span *ngIf="showIndicator" class="menu-item-indicator"></span>
-      <fa-icon [icon]="['fas', 'users']" class="app-menu-icon"></fa-icon>Administrer brugere
-    </button>
-  <button mat-menu-item (tap)="menuItemClick('help')">
-    <fa-icon [icon]="['far', 'question-circle']" class="app-menu-icon"></fa-icon>Hjælp
+  <button mat-menu-item (tap)="menuItemClick('adminusers')" class="app-button-outline">
+    <span *ngIf="showIndicator" class="menu-item-indicator"></span>
+    <fa-icon [icon]="['fas', 'users']" class="app-menu-icon"></fa-icon>Administrer brugere
   </button>
-  <button mat-menu-item (tap)="menuItemClick('settings')">
+  <button mat-menu-item (tap)="menuItemClick('settings')" class="app-button-outline">
     <fa-icon [icon]="['fas', 'cog']" class="app-menu-icon"></fa-icon>Indstillinger
   </button>
-  <button mat-menu-item (tap)="menuItemClick('logout')">
+  <button mat-menu-item (tap)="menuItemClick('logout')" class="app-button-outline">
     <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
   </button>
 </mat-menu>

@@ -63,7 +63,6 @@ export class TasksEditComponent implements OnInit, OnDestroy {
   async drop(event: CdkDragDrop<string[]>) {
     moveItemInArray<Task>(this.tasks, event.previousIndex, event.currentIndex);
     await this.taskService.updateTasksIndex(this.tasks);
-    // this.getTasks();
   }
 
   async addTask() {
@@ -83,7 +82,6 @@ export class TasksEditComponent implements OnInit, OnDestroy {
             this.editTask(task);
             break;
           case TaskEditMenuResult.delete:
-            this.deleteTask(task);
             break;
           default:
             console.log("OTHER");
@@ -97,8 +95,5 @@ export class TasksEditComponent implements OnInit, OnDestroy {
     if (taskId) {
       this.getTasks();
     }
-  }
-
-  private async deleteTask(task: Task) {
   }
 }

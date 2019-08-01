@@ -10,8 +10,7 @@ export enum ProjectHomeMenuResult {
 
 @Component({
   selector: 'app-project-home-menu',
-  templateUrl: './project-home-menu.component.html',
-  styleUrls: ['./project-home-menu.component.scss']
+  templateUrl: './project-home-menu.component.html'
 })
 export class ProjectHomeMenuComponent implements OnInit {
 
