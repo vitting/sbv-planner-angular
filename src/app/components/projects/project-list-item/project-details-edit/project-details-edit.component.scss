@@ -1,11 +1,10 @@
+@import "../../../../../variables";
 .app-project-details-edit {
   font-weight: lighter;
   font-size: 0.9rem;
 
   .app-project-details-edit-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex-row-spacebetween-center;
     margin-top: 5px;
   }
 

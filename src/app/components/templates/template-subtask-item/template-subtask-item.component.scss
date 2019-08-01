@@ -1,8 +1,9 @@
+@import "../../../../variables";
+
 .template-item-subtask {
   .item-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex-row-spacebetween-center;
+
     .item-title-container {
       display: flex;
       align-items: center;

@@ -1,6 +1,6 @@
+@import "../../../../variables";
 .dialog-close-container {
-  display: flex;
-  justify-content: space-between;
+  @include flex-row-spacebetween;
 }
 
 mat-form-field {

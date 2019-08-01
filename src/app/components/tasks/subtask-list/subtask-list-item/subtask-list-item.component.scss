@@ -1,18 +1,16 @@
-@import "../../../../../colors";
+@import "../../../../../variables";
 
 .app-sublist-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-row-spacebetween-center;
   font-size: 14px;
   padding: 5px 2px 5px 10px;
-  background-color: $pink-500;
+  background-color: $bg-color-subtask-item;
   margin-bottom: 5px;
   border-radius: 4px;
   min-height: 50px;
 
   &.app-sublist-item-completed {
-    background-color: $pink-900;
+    background-color: $bg-color-subtask-item-complete
   }
 
   .app-sublist-item-title-completed {
@@ -40,7 +38,7 @@
   }
 
   &:hover {
-    background-color: $pink-300;
+    background-color: $bg-color-subtask-item-hover;
     border-radius: 4px;
   }
 }

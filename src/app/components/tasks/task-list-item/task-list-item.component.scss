@@ -1,10 +1,7 @@
-@import "../../../../colors";
+@import "../../../../variables";
 
 .task-content {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
+  @include flex-row-spacebetween-center;
 
   .task-content-edit {
     display: flex;
@@ -15,13 +12,12 @@
     }
   }
 
-
   .task-menu {
     align-self: flex-start;
   }
 
   .list-item-end-edit-button {
-    color: $pink-100;
+    color: $color-task-edit-end;
 
     .list-item-end-edit {
       display: flex;
@@ -55,15 +51,10 @@
   }
 
   .comment-indicator {
-    position: absolute;
+    @include indicator;
     left: auto;
     right: auto;
     top: 4px;
-    border-radius: 50%;
-    background-color: red;
-    display: inline-block;
-    width: 10px;
-    height: 10px;
   }
 }
 

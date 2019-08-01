@@ -1,16 +1,14 @@
+@import "../../../../../variables";
+
 .admin-user-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-row-spacebetween-center;
 
   .admin-user-item-actions {
     display: flex;
     flex-direction: column;
 
     .slide-button {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      @include flex-row-spacebetween-center;
       margin-bottom: 10px;
 
       &:last-child {

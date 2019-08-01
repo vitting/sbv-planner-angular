@@ -1,10 +1,9 @@
+@import "../../../../../variables";
 .app-project-details {
+  @include flex-row-spacebetween-center;
   font-weight: lighter;
   line-height: 2rem;
   font-size: 0.8rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
   .app-project-details-icon {
     margin-right: 5px;
@@ -15,14 +14,9 @@
   }
 
   .comment-indicator {
-    position: absolute;
+    @include indicator;
     left: auto;
     right: auto;
     top: 4px;
-    border-radius: 50%;
-    background-color: red;
-    display: inline-block;
-    width: 10px;
-    height: 10px;
   }
 }

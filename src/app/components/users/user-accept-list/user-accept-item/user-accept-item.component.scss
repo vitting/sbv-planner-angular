@@ -1,7 +1,7 @@
+@import "../../../../../variables";
+
 .accept-user-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-row-spacebetween-center;
 
   .accept-user-item-buttons {
     button:first-child {

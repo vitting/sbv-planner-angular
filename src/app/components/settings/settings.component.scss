@@ -1,8 +1,7 @@
+@import "../../../variables";
 .settings-item {
   &.flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex-row-spacebetween-center;
   }
 
   &.flex-start {

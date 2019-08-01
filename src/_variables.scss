@@ -1,5 +1,9 @@
 @import "./colors";
 
+$bg-color-body: #effefe;
+$bg-color-scrollbar-track: #f1f1f1;
+$bg-color-scrollbar-thumb: $indigo-50;
+$bg-color-scrollbar-thumb-hover: $indigo-100;
 $navbar-height: 60px;
 $content-container-vertical-margin: 20px;
 $used-vertical-area-space: $navbar-height+$content-container-vertical-margin;
@@ -28,3 +32,37 @@ $bg-color-calendar-month-11: $teal-600;
 $color-highligt-month: rgba(255, 251, 0, 0.7);
 $bg-color-message: $orange-900;
 $bg-color-message-error: $pink-a400;
+$color-text: #fff;
+$color-no-data-text: #555;
+$bg-color-indicator: rgb(255, 0, 0);
+$color-project-edit-end: $indigo-100;
+$color-task-edit-end: $pink-100;
+$bg-color-splash: $indigo-400;
+$bg-color-splash-spinner: #fff;
+$bg-color-user-chip-project: $indigo-300;
+$bg-color-user-chip-task: $pink-400;
+$bg-color-user-chip-subtask: $pink-700;
+$bg-color-user-chip-subtask-complete: $bg-color-user-chip-subtask;
+$bg-color-subtask-item: $pink-500;
+$bg-color-subtask-item-hover: $pink-300;
+$bg-color-subtask-item-complete: $pink-900;
+$color-month-item-border: #fff;
+
+@mixin indicator {
+  position: absolute;
+  border-radius: 50%;
+  background-color: $bg-color-indicator;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+@mixin flex-row-spacebetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flex-row-spacebetween-center {
+  @include flex-row-spacebetween;
+  align-items: center;
+}

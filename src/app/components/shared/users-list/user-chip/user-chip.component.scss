@@ -1,4 +1,4 @@
-@import "../../../../../colors";
+@import "../../../../../variables";
 
 .user-chip {
   font-weight: lighter;
@@ -10,15 +10,15 @@
   display: inline-block;
 
   &.user-chip-project {
-    background-color: $indigo-300;
+    background-color: $bg-color-user-chip-project;
   }
 
   &.user-chip-task {
-    background-color: $pink-400;
+    background-color: $bg-color-user-chip-task;
   }
 
   &.user-chip-subtask {
-    background-color: $pink-700;
+    background-color: $bg-color-user-chip-subtask;
   }
 
   &.user-chip-me {
@@ -27,7 +27,7 @@
   }
 
   &.user-chip-subtask-completed {
-    background-color: $pink-700;
+    background-color: $bg-color-user-chip-subtask-complete;
     cursor: default;
   }
 

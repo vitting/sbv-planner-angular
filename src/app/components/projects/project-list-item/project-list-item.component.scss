@@ -1,8 +1,7 @@
-@import "../../../../colors";
+@import "../../../../variables";
 
 .list-item-container {
-  display: flex;
-  justify-content: space-between;
+  @include flex-row-spacebetween;
 
   .list-item-content {
     width: 100%;
@@ -29,7 +28,7 @@
 }
 
 .list-item-end-edit-button {
-  color: $indigo-100;
+  color: $color-project-edit-end;
 
   .list-item-end-edit {
     display: flex;
@@ -48,14 +47,12 @@
 }
 
 .task-item {
-  display: flex;
-  justify-content: space-between;
+  @include flex-row-spacebetween;
   margin-left: 5px;
 }
 
 .subtask-item {
-  display: flex;
-  justify-content: space-between;
+  @include flex-row-spacebetween;
   margin-left: 20px;
 }
 

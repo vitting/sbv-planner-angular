@@ -1,6 +1,7 @@
+@import "../../../../variables";
+
 .comment-name-container {
-  display: flex;
-  justify-content: space-between;
+  @include flex-row-spacebetween;
 
   .comment-name {
     font-weight: 500;

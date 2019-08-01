@@ -1,12 +1,11 @@
+@import "../../../variables";
 .signup-button {
   display: flex;
   justify-content: flex-end;
 }
 
 .login-form-button-container {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
+  @include flex-row-spacebetween-center;
 }
 
 .message {

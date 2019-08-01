@@ -1,10 +1,9 @@
 @import "variables";
-@import "colors";
 
 html,
 body {
     height: 100%;
-    background-color: #effefe;
+    background-color: $bg-color-body;
 }
 
 body {
@@ -45,7 +44,7 @@ form {
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.30);
   margin-bottom: 5px;
   background-color: $bg-color-project;
-  color: white;
+  color: $color-text;
 
   &.app-item-container-project {
     background-color: $bg-color-project;
@@ -117,15 +116,15 @@ form {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: $bg-color-scrollbar-track;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $indigo-50;
+  background: $bg-color-scrollbar-thumb;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: $indigo-100;
+  background: $bg-color-scrollbar-thumb-hover;
 }

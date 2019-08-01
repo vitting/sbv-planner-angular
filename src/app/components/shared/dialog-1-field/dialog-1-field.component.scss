@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 .dialog-text {
   font-weight: lighter;
   font-size: 0.9rem;
@@ -6,8 +8,7 @@
 }
 
 .dialog-close-container {
-  display: flex;
-  justify-content: space-between;
+  @include flex-row-spacebetween;
   margin-top: 15px;
 }
 

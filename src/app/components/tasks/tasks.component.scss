@@ -1,8 +1,7 @@
+@import "../../../variables";
+
 .task-content {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
+  @include flex-row-spacebetween-center;
 
   .task-menu {
     align-self: flex-start;
@@ -10,9 +9,7 @@
 }
 
 .task-action {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-row-spacebetween-center;
   margin-bottom: 5px;
 
   .task-action-item:first-child {

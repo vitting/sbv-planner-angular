@@ -1,11 +1,8 @@
-@import "../../../colors";
 @import "../../../variables";
 
 .app-appbar {
-  align-items: center;
-  justify-content: space-between;
-  display: flex;
-  color: $text-inverse;
+  @include flex-row-spacebetween-center;
+  color: $color-text;
   padding-left: 10px;
   height: $navbar-height;
   background-color: $bg-color-project;
@@ -54,14 +51,9 @@
       margin-right: 20px;
 
       .menu-indicator {
-        position: absolute;
+        @include indicator;
         left: 6px;
         top: 8px;
-        border-radius: 50%;
-        background-color: red;
-        display: inline-block;
-        width: 10px;
-        height: 10px;
       }
     }
   }
@@ -72,12 +64,7 @@
 }
 
 .menu-item-indicator {
-  position: absolute;
+  @include indicator;
   left: 3px;
   top: 17px;
-  border-radius: 50%;
-  background-color: red;
-  display: inline-block;
-  width: 10px;
-  height: 10px;
 }
