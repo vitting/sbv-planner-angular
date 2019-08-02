@@ -51,7 +51,6 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-
   private getProjects() {
     if (this.userId) {
       this.projectsSub = this.projectService.getProjectsByUserId().subscribe((projects) => {

@@ -5,6 +5,8 @@ import { User } from 'src/app/models/user.model';
 import { Summary } from 'src/app/models/summary.model';
 import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
+import { Task } from 'src/app/models/task.model';
+import { TaskService } from 'src/app/services/task.service';
 
 export interface RemoveUserFromProjectResult {
   user: User;
@@ -35,6 +37,7 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
   @Output() deleteProjectClick = new EventEmitter<Project>();
   @Output() endEditProjectClick = new EventEmitter<Project>();
   users: User[] = [];
+  tasks: Task[] = [];
   summary: Summary = {
     id: '',
     numberOfComments: 0,
@@ -47,11 +50,12 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
   private projectItemEditModeSub: Subscription;
   constructor(
     private authService: AuthService,
-    private projectService: ProjectService) { }
+    private projectService: ProjectService,
+    private taskService: TaskService) { }
 
   ngOnInit() {
     this.getProjectUsers();
-    if (this.projectButtonState !== "addperson") {
+    if (this.projectButtonState !== "addperson" && this.projectButtonState !== "none") {
       this.setEditModeState(this.projectService.isProjectItemInEditMode(this.project.id));
 
       this.projectItemEditModeSub = this.projectService.projectItemEditMode$.subscribe((projectId: string) => {

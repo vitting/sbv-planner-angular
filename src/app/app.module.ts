@@ -39,6 +39,7 @@ import {
   faSquare,
   faQuestionCircle,
   faCircle as faCircle_outline,
+  faDotCircle,
   faCalendarAlt,
   faCalendarPlus
 } from '@fortawesome/free-regular-svg-icons';
@@ -131,6 +132,7 @@ export class AppModule {
       faPlusCircle,
       faCircle,
       faCircle_outline,
+      faDotCircle,
       faQuestionCircle,
       faChevronCircleRight,
       faSignOutAlt);

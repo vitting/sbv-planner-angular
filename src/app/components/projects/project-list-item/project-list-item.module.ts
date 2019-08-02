@@ -11,6 +11,7 @@ import { MomentModule } from 'ngx-moment';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectDetailsEditComponent } from './project-details-edit/project-details-edit.component';
 import { ItemContainerModule } from '../../shared/directives/item-container/item-container.module';
+import { TaskListItemModule } from '../../tasks/task-list-item/task-list-item.module';
 
 @NgModule({
   declarations: [ProjectListItemComponent, ProjectDetailsComponent, ProjectDetailsEditComponent],
@@ -23,7 +24,8 @@ import { ItemContainerModule } from '../../shared/directives/item-container/item
     MomentModule,
     UsersListModule,
     ItemContainerModule,
-    ItemTitleDescModule
+    ItemTitleDescModule,
+    TaskListItemModule
   ],
   exports: [ProjectListItemComponent]
 })

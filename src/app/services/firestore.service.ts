@@ -581,6 +581,10 @@ export class FirestoreService {
     }).valueChanges();
   }
 
+  getProject(projectId: string) {
+    return this.db.collection<Project>("projects").doc<Project>(projectId).valueChanges().pipe(take(1)).toPromise();
+  }
+
   getProjectsNotContainingUserId(userId: string) {
     return this.db.collection<Project>("projects", (ref) => {
       return ref.where("active", "==", true).orderBy("createdAt", "desc").orderBy("title");
@@ -769,6 +773,12 @@ export class FirestoreService {
         return Promise.reject(error);
       }
     }
+  }
+
+  getSubTasksByUser(userId: string, completed: boolean) {
+    return this.db.collection<SubTask>("subtasks", (ref) => {
+      return ref.where("users", "array-contains", userId).where("completed", "==", completed).orderBy("taskId").orderBy("title");
+    }).valueChanges();
   }
 
   async addSubTask(userId: string, title: string, projectId: string, taskId: string): Promise<string> {

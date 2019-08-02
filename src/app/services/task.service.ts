@@ -44,6 +44,17 @@ export class TaskService {
     return this.firestoreService.getSummary(taskId);
   }
 
+  async getTasksByTaskIds(taskIds: string[]) {
+    const tasks: Task[] = [];
+
+    for (const taskId of taskIds) {
+      const project = await this.firestoreService.getTask(taskId);
+      tasks.push(project);
+    }
+
+    return tasks;
+  }
+
   updateTasksIndex(tasks: Task[]) {
     return this.firestoreService.updateTasksIndex(tasks);
   }

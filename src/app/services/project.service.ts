@@ -19,6 +19,8 @@ import { Summary } from '../models/summary.model';
 import { NavbarService } from './navbar.service';
 import { FabButtonService } from './fab-button.service';
 import { Template } from '../models/template.model';
+import { SubTask } from '../models/subtask.model';
+import { Task } from '../models/task.model';
 
 export interface ProjectItemEditModeChange {
   projectId: string;
@@ -81,6 +83,17 @@ export class ProjectService {
 
   getProjectsNotContainingUserId() {
     return this.firestoreService.getProjectsNotContainingUserId(this.authService.userId).pipe(take(1));
+  }
+
+  async getProjectsByProjectIds(projectIds: string[]) {
+    const projects: Project[] = [];
+
+    for (const projectId of projectIds) {
+      const project = await this.firestoreService.getProject(projectId);
+      projects.push(project);
+    }
+
+    return projects;
   }
 
   createProjectFromTemplate(template: Template) {
@@ -236,5 +249,19 @@ export class ProjectService {
         }
       });
     });
+  }
+
+  async getProjectDataForSubTasksWhereUserIsAssigned(completed: boolean): Promise<{[key: string]: string[]}> {
+    const projectsData: {[key: string]: string[]} = {};
+    const subTasks = await this.firestoreService.getSubTasksByUser(this.authService.userId, completed).pipe(take(1)).toPromise();
+    subTasks.forEach((subTask) => {
+      if (projectsData[subTask.projectId]) {
+        projectsData[subTask.projectId].push(subTask.taskId);
+      } else {
+        projectsData[subTask.projectId] = [subTask.taskId];
+      }
+    });
+
+    return projectsData;
   }
 }

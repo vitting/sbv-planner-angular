@@ -10,7 +10,6 @@
         <div>
           <app-item-title-desc [title]="project.title" [description]="project.description"></app-item-title-desc>
         </div>
-
       </div>
       <app-project-details *ngIf="showDetails" [projectDate]="project?.createdAt.toDate()" [summary]="summary"
         (commentsTotalClick)="commentsTotalClicked()" (tasksClick)="tasksClicked()"
@@ -21,6 +20,8 @@
       </app-project-details-edit>
       <app-users-list [type]="'project'" *ngIf="showUsers" [users]="users"
         [enableRemoveUserButton]="enableRemoveUserButton" (userClick)="userClicked($event)"></app-users-list>
+        <!-- <app-task-list-item *ngIf="embeddedMode" *ngFor="let task of tasks" [task]="task" (markAllSubTasksAsCompletedClick)="markAllSubTasksAsCompletedClick($event)" (markAllSubTasksAsNotCompletedClick)="markAllSubTasksAsNotCompletedClick($event)"></app-task-list-item> -->
+        <app-task-list-item *ngIf="embeddedMode"></app-task-list-item>
     </div>
     <button mat-icon-button *ngIf="projectButtonState === 'menu'" class="list-item-button app-button-outline" (tap)="showMenu()">
       <mat-icon>more_vert</mat-icon>
