@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+
+export interface FilterItem {
+  value: number;
+  text: string;
+  selected: boolean;
+}
 
 @Component({
   selector: 'app-filter',
@@ -30,24 +36,39 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 
 export class FilterComponent implements OnInit {
+  @Input() title = "";
+  @Input() filterItems: FilterItem[] = [];
+  @Input() opened = false;
+  @Input() containerType = "project"; // project | task | subtask | comment
+  @Output() selectionChange = new EventEmitter<number>();
   filter1 = true;
   filter2 = false;
   stateOpenClose = "closed";
-  private currentfilter = 1;
+  private currentfilter = -1;
   constructor() { }
 
   ngOnInit() {
+    this.filterItems.forEach((item) => {
+      if (item.selected) {
+        this.currentfilter = item.value;
+      }
+    });
+
+    this.stateOpenClose = this.opened ? "opened" : "closed";
   }
 
 
   filterChange(result: number) {
-    console.log(result);
-    if (result === 1) {
-      this.filter1 = true;
-      this.filter2 = false;
-    } else {
-      this.filter1 = false;
-      this.filter2 = true;
+    this.filterItems.forEach((item) => {
+      if (result === item.value) {
+        item.selected = true;
+      } else {
+        item.selected = false;
+      }
+    });
+
+    if (result !== this.currentfilter) {
+      this.selectionChange.emit(result);
     }
 
     this.currentfilter = result;

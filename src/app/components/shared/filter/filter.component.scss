@@ -1,16 +1,8 @@
-@import "../../../../variables";
-
 .app-filter {
-  background-color: $indigo-400;
-  padding: 10px;
-  color: white;
-
   .app-filter-action {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    .app-filter-title {}
   }
 
   .app-filter-items {

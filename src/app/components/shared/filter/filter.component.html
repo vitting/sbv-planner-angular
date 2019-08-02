@@ -1,18 +1,15 @@
-<div class="app-filter">
+<div class="app-filter" [appItemContainer]="containerType">
   <div class="app-filter-action">
-    <div class="app-filter-title">Filter</div>
+    <div class="app-filter-title">{{title}}</div>
     <button mat-icon-button class="app-button-outline" [@buttonRotate]="stateOpenClose" (tap)="openClose()">
       <mat-icon>expand_less</mat-icon>
     </button>
   </div>
   <div class="app-filter-items" [@containerScale]="stateOpenClose">
-    <div class="app-filter-item">
-      <app-radio [selected]="filter1" [value]="1" (radioClick)="filterChange($event)"></app-radio><span>Alle
-        Projekter</span>
-    </div>
-    <div class="app-filter-item">
-      <app-radio [selected]="filter2" [value]="2" (radioClick)="filterChange($event)"></app-radio><span>Projekter med
-        uafsluttede opgaver</span>
+    <div class="app-filter-item" *ngFor="let filterItem of filterItems">
+      <app-radio [selected]="filterItem.selected" [value]="filterItem.value" (radioClick)="filterChange($event)">
+      </app-radio>
+      <span>{{filterItem.text}}</span>
     </div>
   </div>
 </div>

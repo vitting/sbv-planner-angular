@@ -11,6 +11,7 @@ import { RemoveUserFromProjectResult } from '../project-list-item/project-list-i
 import { NavbarService } from 'src/app/services/navbar.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { User } from 'src/app/models/user.model';
+import { FilterItem } from '../../shared/filter/filter.component';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,9 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
   showNoData = false;
   currentMonth = 0;
   showCalendar = true;
+  filterTitle = "Projekt filter";
+  filterItems: FilterItem[];
+  private currentFilter = 1;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
@@ -42,7 +46,14 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
     this.navbarService.navbarTitle.next("Forside");
     this.userId = this.authService.userId;
     this.showCalendar = this.authService.authUserSettings.showCalendar;
-    this.getProjects();
+    this.currentFilter = this.projectService.currentProjectFilter;
+
+    this.filterItems  = [
+      {value: 1, text: 'Alle mine projekter', selected: this.currentFilter === 1},
+      {value: 2, text: 'Mine projekter med åbne opgaver', selected: this.currentFilter === 2}
+    ];
+
+    this.getProjects(this.currentFilter);
   }
 
   ngOnDestroy(): void {
@@ -51,12 +62,26 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getProjects() {
+  private getProjects(filterValue: number) {
     if (this.userId) {
-      this.projectsSub = this.projectService.getProjectsByUserId().subscribe((projects) => {
-        this.showNoData = projects.length === 0;
-        this.projects = projects;
-      });
+      if (this.projectsSub) {
+        this.projectsSub.unsubscribe();
+      }
+      switch (filterValue) {
+        case 1:
+          this.projectsSub = this.projectService.getProjectsByUserId().subscribe((projects) => {
+            this.showNoData = projects.length === 0;
+            this.projects = projects;
+          });
+          break;
+          case 2:
+            this.projectService.getProjectWhereSubtasksHasUserAssigned(false).then((projects) => {
+              this.projects = projects;
+            });
+            break;
+        default:
+          break;
+      }
     }
   }
 
@@ -152,7 +177,7 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
   async removeUserFromProject(project: Project, user: User) {
     const projectId = await this.projectService.removeUserFromProject(project, user);
     if (projectId) {
-      this.getProjects();
+      this.getProjects(this.currentFilter);
     }
   }
 
@@ -167,11 +192,17 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
   async editTitleDescClick(project: Project) {
     const projectId = await this.projectService.editProject(project);
     if (projectId) {
-      this.getProjects();
+      this.getProjects(this.currentFilter);
     }
   }
 
   endEditProjectClick(project: Project) {
     this.gotoEditProject(project);
+  }
+
+  filterChange(filter: number) {
+    this.currentFilter = filter;
+    this.projectService.currentProjectFilter = filter;
+    this.getProjects(this.currentFilter);
   }
 }

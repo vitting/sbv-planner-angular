@@ -11,9 +11,6 @@ export class RadioComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.selected);
-    console.log(this.value);
-
   }
 
   radioClicked() {

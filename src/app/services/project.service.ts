@@ -4,14 +4,16 @@ import { Project } from '../models/project.model';
 import {
   Dialog2FieldsData,
   Dialog2FieldsComponent,
-  Dialog2FieldsResult } from '../components/shared/dialog-2-fields/dialog-2-fields.component';
+  Dialog2FieldsResult
+} from '../components/shared/dialog-2-fields/dialog-2-fields.component';
 import { FirestoreService } from './firestore.service';
 import { AuthService } from './auth.service';
 import {
   DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
-  DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
+  DialogConfirmAction
+} from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { take } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { Subject } from 'rxjs';
@@ -19,8 +21,6 @@ import { Summary } from '../models/summary.model';
 import { NavbarService } from './navbar.service';
 import { FabButtonService } from './fab-button.service';
 import { Template } from '../models/template.model';
-import { SubTask } from '../models/subtask.model';
-import { Task } from '../models/task.model';
 
 export interface ProjectItemEditModeChange {
   projectId: string;
@@ -31,6 +31,7 @@ export interface ProjectItemEditModeChange {
   providedIn: 'root'
 })
 export class ProjectService {
+  private currenFilter = 1;
   private itemEditMode: Subject<string> = new Subject<string>();
   private itemsInEditMode: string[] = [];
   private summaryCache: { [key: string]: Summary } = {};
@@ -40,6 +41,14 @@ export class ProjectService {
     private navbarService: NavbarService,
     private fabuttonService: FabButtonService,
     private authService: AuthService) { }
+
+  get currentProjectFilter() {
+    return this.currenFilter;
+  }
+
+  set currentProjectFilter(filter: number) {
+    this.currenFilter = filter;
+  }
 
   updateCommentsLastRead(projectId: string) {
     return this.firestoreService.updateUserMetaComments(this.authService.userId, projectId);
@@ -83,17 +92,6 @@ export class ProjectService {
 
   getProjectsNotContainingUserId() {
     return this.firestoreService.getProjectsNotContainingUserId(this.authService.userId).pipe(take(1));
-  }
-
-  async getProjectsByProjectIds(projectIds: string[]) {
-    const projects: Project[] = [];
-
-    for (const projectId of projectIds) {
-      const project = await this.firestoreService.getProject(projectId);
-      projects.push(project);
-    }
-
-    return projects;
   }
 
   createProjectFromTemplate(template: Template) {
@@ -251,17 +249,26 @@ export class ProjectService {
     });
   }
 
-  async getProjectDataForSubTasksWhereUserIsAssigned(completed: boolean): Promise<{[key: string]: string[]}> {
-    const projectsData: {[key: string]: string[]} = {};
+  async getProjectWhereSubtasksHasUserAssigned(completed: boolean) {
+    const projectIds: string[] = [];
     const subTasks = await this.firestoreService.getSubTasksByUser(this.authService.userId, completed).pipe(take(1)).toPromise();
-    subTasks.forEach((subTask) => {
-      if (projectsData[subTask.projectId]) {
-        projectsData[subTask.projectId].push(subTask.taskId);
-      } else {
-        projectsData[subTask.projectId] = [subTask.taskId];
+    for (const subTask of subTasks) {
+      if (projectIds.indexOf(subTask.projectId) === -1) {
+        projectIds.push(subTask.projectId);
       }
-    });
+    }
 
-    return projectsData;
+    return this.getProjectsByProjectIds(projectIds);
+  }
+
+  private async getProjectsByProjectIds(projectIds: string[]) {
+    const projects: Project[] = [];
+
+    for (const projectId of projectIds) {
+      const project = await this.firestoreService.getProject(projectId);
+      projects.push(project);
+    }
+
+    return projects;
   }
 }
