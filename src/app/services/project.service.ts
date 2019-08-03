@@ -137,7 +137,7 @@ export class ProjectService {
       data: dialogCreateData
     });
 
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<string>((resolve) => {
       dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
         this.fabuttonService.showFabButton = true;
         if (result) {
@@ -226,7 +226,7 @@ export class ProjectService {
       button1Text: "Ja",
       button2Text: "Nej",
       message1: "Vil du forlade projektet?",
-      message2: null
+      message2: "Du vil blive fjernet fra alle opgaver du ikke har afsluttet."
     };
 
     this.fabuttonService.showFabButton = false;
@@ -236,11 +236,11 @@ export class ProjectService {
       data
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         this.fabuttonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
-          const projectId = await this.firestoreService.removePersonFromProject(project.id, user.id);
+          const projectId = await this.firestoreService.removeUserFromProject(project.id, user.id);
           resolve(projectId);
         } else {
           resolve(null);

@@ -1,15 +1,14 @@
 <h3>Hvis en bruger bliver markeret som active = false hvad så. Så skal han vel ikke kunne logge ind?</h3>
 <h3>Set auth på database</h3>
 <h3>Test user as editor and admin and nothing</h3>
-<h3>Hvis man forlader et projekt så skal man fjernes fra alle opgaver der er uafslauttet</h3>
 <div class="home-calendar" *ngIf="showCalendar">
   <app-month-item [singleItem]="true" [monthNumber]="currentMonth" [currentMonth]="currentMonth"
     (click)="gotoCalendar()"></app-month-item>
 </div>
 <app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>
-<app-filter (selectionChange)="filterChange($event)" [title]="filterTitle" [opened]="false" [containerType]="'project'"
-  [filterItems]="filterItems"></app-filter>
 <mat-list *ngIf="!showNoData" class="app-list">
+    <app-filter (selectionChange)="filterChange($event)" [title]="filterTitle" [opened]="false" [containerType]="'project'"
+    [filterItems]="filterItems"></app-filter>
   <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)"
     (commentsTotalClick)="gotoComments($event)" (tasksTotalClick)="gotoTasks($event)"
     (editTasksClick)="editTasksClick($event)" (editTitleDescClick)="editTitleDescClick($event)"

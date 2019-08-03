@@ -678,7 +678,7 @@ export class FirestoreService {
     }
   }
 
-  async removePersonFromProject(projectId: string, userId: string) {
+  async removeUserFromProject(projectId: string, userId: string) {
     const timestamp = this.timestamp;
 
     try {
@@ -690,6 +690,21 @@ export class FirestoreService {
         }
       );
 
+      const subTasks = await this.db.collection<SubTask>("subtasks", (ref) => {
+        return ref.where("projectId", "==", projectId).where("users", "array-contains", userId).where("completed", "==", false);
+      }).valueChanges().pipe(take(1)).toPromise();
+
+      if (subTasks.length !== 0) {
+        const batch = this.db.firestore.batch();
+        subTasks.forEach((subTask) => {
+          const subTaskRef = this.db.collection("subtasks").doc(subTask.id).ref;
+          batch.update(subTaskRef, {
+            users: firebase.firestore.FieldValue.arrayRemove(userId)
+          });
+        });
+
+        await batch.commit();
+      }
       return projectId;
     } catch (error) {
       console.error("removePersonFromProject", error);

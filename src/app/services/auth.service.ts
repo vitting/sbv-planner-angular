@@ -28,6 +28,7 @@ export class AuthService {
   private appMeta: AppMeta;
   private appMetaSub: Subscription;
   private userSettingsSub: Subscription;
+  private usersSub: Subscription;
   constructor(
     private afAuth: AngularFireAuth,
     private firestoreService: FirestoreService,
@@ -40,6 +41,7 @@ export class AuthService {
       }
     }));
 
+    // TODO: Problemet er her. Vi læser bruger lige meget og vi er logget ind eller ej
     const users$ = this.firestoreService.getUsers();
     combineLatest([userAuth$, users$]).subscribe(async ([authUser, users]) => {
       this.user = authUser;
@@ -65,6 +67,10 @@ export class AuthService {
         if (this.appMetaSub) {
           this.userMetaSub.unsubscribe();
         }
+
+        if (this.userSettingsSub) {
+          this.userSettingsSub.unsubscribe();
+        }
       }
       console.log("AUTH", authUser);
       this.isAuthenticated.next(authUser ? true : false);
@@ -76,7 +82,16 @@ export class AuthService {
       this.isAuthenticated.next(false);
       this.id = null;
       this.users = {};
+      this.splashService.splashShow.next(false);
       console.log("AUTH ERROR", error);
+    });
+  }
+
+  private getUsers() {
+    return new Promise((resolve) => {
+      this.userMetaSub = this.firestoreService.getUsers().subscribe((users: User[]) => {
+        resolve(users);
+      });
     });
   }
 
