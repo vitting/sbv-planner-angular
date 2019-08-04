@@ -30,7 +30,9 @@ export interface ProjectTaskName {
   providedIn: 'root'
 })
 export class FirestoreService {
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) {
+    // firebase.firestore.setLogLevel("debug");
+  }
 
   get timestamp() {
     return firebase.firestore.FieldValue.serverTimestamp();
@@ -397,7 +399,6 @@ export class FirestoreService {
   }
 
   async addSettings(userId: string): Promise<string> {
-    const timestamp = this.timestamp;
     const settings: Settings = {
       id: userId,
       showCalendar: true
@@ -427,6 +428,7 @@ export class FirestoreService {
     const timestamp = this.timestamp;
     const user: User = new UserItem(userId, name, timestamp).toObject();
     try {
+      await this.addSettings(userId);
       await this.db.collection<User>("users").doc(userId).set(user);
       return user;
     } catch (error) {

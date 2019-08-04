@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
-import { switchMap } from 'rxjs/operators';
-import { of, combineLatest, ReplaySubject, Observable, Subscription } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
+import { of, ReplaySubject, Observable, Subscription } from 'rxjs';
 import { SplashService } from './splash.service';
 import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
 import { Settings } from '../models/settings.model';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,24 +26,30 @@ export class AuthService {
   private userMeta: UserMeta;
   private userMetaSub: Subscription;
   private appMeta: AppMeta;
+  private usersSub: Subscription;
   private appMetaSub: Subscription;
   private userSettingsSub: Subscription;
-  private usersSub: Subscription;
   constructor(
     private afAuth: AngularFireAuth,
     private firestoreService: FirestoreService,
     private splashService: SplashService) {
-    const userAuth$ = this.afAuth.user.pipe(switchMap<firebase.User, Observable<User>>((authUser) => {
+    this.afAuth.user.pipe(switchMap<firebase.User, Observable<User>>((authUser) => {
       if (authUser) {
-        return this.firestoreService.getUser(authUser.uid);
+        return this.firestoreService.getUser(authUser.uid).pipe(catchError((error) => {
+          if (!environment.production) {
+            console.error("getUser", error);
+          }
+          return of(null);
+        }));
       } else {
         return of(null);
       }
-    }));
-
-    // TODO: Problemet er her. Vi læser bruger lige meget og vi er logget ind eller ej
-    const users$ = this.firestoreService.getUsers();
-    combineLatest([userAuth$, users$]).subscribe(async ([authUser, users]) => {
+    })).pipe(catchError((error) => {
+      if (!environment.production) {
+        console.error("afAuth.user", error);
+      }
+      return of(null);
+    })).subscribe(async (authUser) => {
       this.user = authUser;
       this.id = authUser ? authUser.id : null;
       if (authUser) {
@@ -52,27 +58,17 @@ export class AuthService {
         await this.getUserMetaData(authUser.id);
         await this.getAppMetaData();
         await this.getUserSettingsData(authUser.id);
-        users.forEach((user) => {
-          this.users[user.id] = user;
-        });
+        await this.getUsers();
       } else {
         this.userMeta = null;
         this.appMeta = null;
         this.userIsAdmin = false;
         this.userIsEditor = false;
-        if (this.userMetaSub) {
-          this.userMetaSub.unsubscribe();
-        }
-
-        if (this.appMetaSub) {
-          this.userMetaSub.unsubscribe();
-        }
-
-        if (this.userSettingsSub) {
-          this.userSettingsSub.unsubscribe();
-        }
+        this.unsubscribe();
       }
-      console.log("AUTH", authUser);
+      if (!environment.production) {
+        console.log("AUTH", authUser);
+      }
       this.isAuthenticated.next(authUser ? true : false);
       this.splashService.splashShow.next(false);
     }, (error) => {
@@ -83,21 +79,53 @@ export class AuthService {
       this.id = null;
       this.users = {};
       this.splashService.splashShow.next(false);
-      console.log("AUTH ERROR", error);
+
+      if (!environment.production) {
+        console.log("AUTH ERROR", error);
+      }
     });
+  }
+
+  private unsubscribe() {
+    if (this.userMetaSub) {
+      this.userMetaSub.unsubscribe();
+    }
+
+    if (this.appMetaSub) {
+      this.userMetaSub.unsubscribe();
+    }
+
+    if (this.userSettingsSub) {
+      this.userSettingsSub.unsubscribe();
+    }
+
+    if (this.usersSub) {
+      this.usersSub.unsubscribe();
+    }
   }
 
   private getUsers() {
     return new Promise((resolve) => {
-      this.userMetaSub = this.firestoreService.getUsers().subscribe((users: User[]) => {
-        resolve(users);
+      this.usersSub = this.firestoreService.getUsers().pipe(catchError((error) => {
+        console.error("getUsers", error);
+        return of([]);
+      })).subscribe((users: User[]) => {
+        for (const user of users) {
+          this.users[user.id] = user;
+        }
+        resolve(null);
       });
     });
   }
 
   private getUserMetaData(userId: string) {
     return new Promise((resolve) => {
-      this.userMetaSub = this.firestoreService.getUserMeta(userId).subscribe((userMeta: UserMeta) => {
+      this.userMetaSub = this.firestoreService.getUserMeta(userId).pipe(catchError((error) => {
+        if (!environment.production) {
+          console.error("getUserMetaData", error);
+        }
+        return of(null);
+      })).subscribe((userMeta: UserMeta) => {
         this.userMeta = userMeta;
         this.userMetaUpdated.next(userMeta);
         resolve(null);
@@ -107,7 +135,12 @@ export class AuthService {
 
   private getAppMetaData() {
     return new Promise((resolve) => {
-      this.appMetaSub = this.firestoreService.getAppMeta().subscribe((appMeta: AppMeta) => {
+      this.appMetaSub = this.firestoreService.getAppMeta().pipe(catchError((error) => {
+        if (!environment.production) {
+          console.error("getAppMetaData", error);
+        }
+        return of(null);
+      })).subscribe((appMeta: AppMeta) => {
         this.appMeta = appMeta;
         this.appMetaUpdated.next(appMeta);
         resolve(null);
@@ -117,7 +150,12 @@ export class AuthService {
 
   private getUserSettingsData(userId: string) {
     return new Promise((resolve) => {
-      this.userSettingsSub = this.firestoreService.getUserSettings(userId).subscribe((settings: Settings) => {
+      this.userSettingsSub = this.firestoreService.getUserSettings(userId).pipe(catchError((error) => {
+        if (!environment.production) {
+          console.error("getUserSettingsData", error);
+        }
+        return of(null);
+      })).subscribe((settings: Settings) => {
         this.userSettings = settings;
         this.userSettingsUpdated.next(settings);
         resolve(null);

@@ -8,9 +8,7 @@ import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../
 import { MatDialog } from '@angular/material/dialog';
 import {
   DialogConfirmData,
-  DialogConfirmComponent,
-  DialogConfirmResult,
-  DialogConfirmAction
+  DialogConfirmComponent
 } from '../shared/dialog-confirm/dialog-confirm.component';
 
 @Component({
@@ -72,6 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.messages.push("Den indtastede e-mail adresse eller kodeord er ikke rigtigt. Tjek at du har indtastede din e-mail adresse og dit kodeord korrekt.");
         break;
       case "auth/user-disabled":
+        this.messages.push("Kontoen for den indtastede e-mail adresse er deaktiveret. Kontakt en administrator for at blive aktiveret.");
         break;
       case "auth/user-not-found":
         // tslint:disable-next-line: max-line-length

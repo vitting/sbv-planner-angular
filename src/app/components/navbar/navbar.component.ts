@@ -70,9 +70,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showLogout = false;
       } else if (auth && this.authService.authUserInfo.waitingForApproval) {
         this.showLogout = true;
+        this.showNavBack = false;
       } else {
         this.showIsAuth = false;
         this.showLogout = false;
+        this.showNavBack = false;
       }
     });
 

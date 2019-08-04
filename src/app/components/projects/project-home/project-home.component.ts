@@ -39,7 +39,7 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.nodata = {
       textline1: "Du har pt. ikke nogen aktive projekter.",
-      textline2: "Tilslutte dig et eksisterende projekt eller opret et nyt."
+      textline2: "Kom i gang ved at tilslutte dig et eksisterende projekt eller opret et nyt."
     };
 
     this.currentMonth = new Date(Date.now()).getMonth();
