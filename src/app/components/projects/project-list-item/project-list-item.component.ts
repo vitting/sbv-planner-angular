@@ -72,10 +72,12 @@ export class ProjectListItemComponent implements OnInit, OnDestroy {
 
         if (this.authService.authUserMeta && this.authService.authUserMeta[this.project.id]) {
           const projectItemMeta = this.authService.authUserMeta[this.project.id];
-          if (projectItemMeta.commentsLastRead.toDate().getTime() <= summary.commentsUpdatedAt.toDate().getTime()) {
-            this.showCommentIndicator = true;
-          } else {
-            this.showCommentIndicator = false;
+          if (projectItemMeta.commentsLastRead && summary.commentsUpdatedAt) {
+            if (projectItemMeta.commentsLastRead.toDate().getTime() <= summary.commentsUpdatedAt.toDate().getTime()) {
+              this.showCommentIndicator = true;
+            } else {
+              this.showCommentIndicator = false;
+            }
           }
         }
 

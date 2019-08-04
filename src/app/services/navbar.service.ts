@@ -6,7 +6,8 @@ import {
   DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
-  DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
+  DialogConfirmAction
+} from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 
 export interface NavbarRoutes {
@@ -42,13 +43,11 @@ export class NavbarService {
     this.router.events.subscribe((event) => {
       if (this.authService.userId && this.authService.authUserInfo.accepted) {
         if (event instanceof NavigationEnd) {
-
           this.prevRoute = this.currentRoute;
           this.currentRoute = event.url;
 
           if (this.currentRoute && this.currentRoute === "/") {
-            this.prevRoutesIndex = [];
-            this.prevRoute = null;
+            this.resetRouteIndex();
           } else {
             if (!this.backRouteClicked && this.prevRoute) {
               this.prevRoutesIndex.push(this.prevRoute);
@@ -74,6 +73,11 @@ export class NavbarService {
 
   emitRouteBackChange() {
     this.navbarRouteBackChange.next();
+  }
+
+  resetRouteIndex() {
+    this.prevRoutesIndex = [];
+    this.prevRoute = null;
   }
 
   set showIndicator(status: boolean) {

@@ -7,13 +7,13 @@ import { AuthGuard } from 'src/app/services/auth-guard.service';
 const routes: Routes = [{
   path: "signup",
   component: SignupComponent,
-  // canActivate: [AuthGuard],
-  // data: { onlyAdmin: false, noAuthRequired: true }
+  canActivate: [AuthGuard],
+  data: { onlyAdmin: false, onlyEditor: false, noAuthRequired: true }
 }, {
   path: "message",
   component: SignupMessageComponent,
-  // canActivate: [AuthGuard],
-  // data: { onlyAdmin: false }
+  canActivate: [AuthGuard],
+  data: { onlyAdmin: false, onlyEditor: false, noAuthRequired: true }
 }];
 
 @NgModule({

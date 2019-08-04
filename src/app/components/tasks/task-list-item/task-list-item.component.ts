@@ -52,11 +52,12 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
 
       if (this.authService.authUserMeta && this.authService.authUserMeta[this.task.id]) {
         const taskItemMeta = this.authService.authUserMeta[this.task.id];
-        if (taskItemMeta.commentsLastRead.toDate().getTime() < summary.commentsUpdatedAt.toDate().getTime()) {
-          this.showCommentIndicator = true;
-          console.log("Comments er opdateret siden vi var der sidst");
-        } else {
-          this.showCommentIndicator = false;
+        if (summary.commentsUpdatedAt && taskItemMeta.commentsLastRead) {
+          if (taskItemMeta.commentsLastRead.toDate().getTime() < summary.commentsUpdatedAt.toDate().getTime()) {
+            this.showCommentIndicator = true;
+          } else {
+            this.showCommentIndicator = false;
+          }
         }
       }
     });

@@ -48,9 +48,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.loginForm.valid) {
       const email = this.loginForm.get("email").value;
       const password = this.loginForm.get("password").value;
+      this.navbarService.showProgressbar = true;
       try {
         await this.authService.login(email, password);
         this.isUserAuthenticatedSub = this.authService.isUserAuthenticated$.subscribe((isAuth) => {
+          this.navbarService.showProgressbar = false;
           if (isAuth) {
             this.router.navigate(["/"]);
           }
@@ -58,6 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       } catch (error) {
         console.log(error);
         this.showLoginError(error.code);
+        this.navbarService.showProgressbar = false;
       }
     }
   }

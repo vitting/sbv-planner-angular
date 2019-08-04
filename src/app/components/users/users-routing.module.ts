@@ -8,7 +8,7 @@ const routes: Routes = [{
   path: "users/:action",
   component: UsersComponent,
   canActivate: [AuthGuard],
-  data: { onlyAdmin: true }
+  data: { onlyAdmin: true, onlyEditor: false, noAuthRequired: false }
 }];
 
 @NgModule({

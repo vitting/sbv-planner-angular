@@ -8,7 +8,7 @@ const routes: Routes = [{
   path: "settings",
   component: SettingsComponent,
   canActivate: [AuthGuard],
-  data: { onlyAdmin: false }
+  data: { onlyAdmin: false, onlyEditor: false, noAuthRequired: false }
 }];
 
 @NgModule({

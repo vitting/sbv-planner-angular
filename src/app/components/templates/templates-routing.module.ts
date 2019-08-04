@@ -7,17 +7,17 @@ const routes: Routes = [{
   path: "templates",
   component: TemplatesComponent,
   canActivate: [AuthGuard],
-  data: { onlyAdmin: false, onlyEditor: true }
+  data: { onlyAdmin: false, onlyEditor: true, noAuthRequired: false }
 }, {
   path: "templates/:action",
   component: TemplatesComponent,
   canActivate: [AuthGuard],
-  data: { onlyAdmin: false }
+  data: { onlyAdmin: false, onlyEditor: false, noAuthRequired: false }
 }, {
   path: "templates/:templateId/:action",
   component: TemplatesComponent,
   canActivate: [AuthGuard],
-  data: { onlyAdmin: false, onlyEditor: true }
+  data: { onlyAdmin: false, onlyEditor: true, noAuthRequired: false }
 }];
 
 @NgModule({

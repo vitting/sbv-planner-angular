@@ -7,7 +7,7 @@ const routes: Routes = [{
   path: "projects",
   component: ProjectEditComponent,
   canActivate: [AuthGuard],
-  data: { onlyAdmin: false, onlyEditor: true }
+  data: { onlyAdmin: false, onlyEditor: true, noAuthRequired: false }
 }];
 
 @NgModule({

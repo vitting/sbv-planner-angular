@@ -34,9 +34,12 @@ export class AuthService {
     private firestoreService: FirestoreService,
     private splashService: SplashService) {
     this.afAuth.user.pipe(switchMap<firebase.User, Observable<User>>((authUser) => {
+      if (environment.debug) {
+        console.log("Authenticated user", authUser);
+      }
       if (authUser) {
         return this.firestoreService.getUser(authUser.uid).pipe(catchError((error) => {
-          if (!environment.production) {
+          if (environment.debug) {
             console.error("getUser", error);
           }
           return of(null);
@@ -44,8 +47,8 @@ export class AuthService {
       } else {
         return of(null);
       }
-    })).pipe(catchError((error) => {
-      if (!environment.production) {
+    })).pipe<User>(catchError((error) => {
+      if (environment.debug) {
         console.error("afAuth.user", error);
       }
       return of(null);
@@ -66,7 +69,7 @@ export class AuthService {
         this.userIsEditor = false;
         this.unsubscribe();
       }
-      if (!environment.production) {
+      if (environment.debug) {
         console.log("AUTH", authUser);
       }
       this.isAuthenticated.next(authUser ? true : false);
@@ -80,7 +83,7 @@ export class AuthService {
       this.users = {};
       this.splashService.splashShow.next(false);
 
-      if (!environment.production) {
+      if (environment.debug) {
         console.log("AUTH ERROR", error);
       }
     });
@@ -107,7 +110,9 @@ export class AuthService {
   private getUsers() {
     return new Promise((resolve) => {
       this.usersSub = this.firestoreService.getUsers().pipe(catchError((error) => {
-        console.error("getUsers", error);
+        if (environment.debug) {
+          console.error("getUsers", error);
+        }
         return of([]);
       })).subscribe((users: User[]) => {
         for (const user of users) {
@@ -121,7 +126,7 @@ export class AuthService {
   private getUserMetaData(userId: string) {
     return new Promise((resolve) => {
       this.userMetaSub = this.firestoreService.getUserMeta(userId).pipe(catchError((error) => {
-        if (!environment.production) {
+        if (environment.debug) {
           console.error("getUserMetaData", error);
         }
         return of(null);
@@ -136,7 +141,7 @@ export class AuthService {
   private getAppMetaData() {
     return new Promise((resolve) => {
       this.appMetaSub = this.firestoreService.getAppMeta().pipe(catchError((error) => {
-        if (!environment.production) {
+        if (environment.debug) {
           console.error("getAppMetaData", error);
         }
         return of(null);
@@ -151,7 +156,7 @@ export class AuthService {
   private getUserSettingsData(userId: string) {
     return new Promise((resolve) => {
       this.userSettingsSub = this.firestoreService.getUserSettings(userId).pipe(catchError((error) => {
-        if (!environment.production) {
+        if (environment.debug) {
           console.error("getUserSettingsData", error);
         }
         return of(null);
