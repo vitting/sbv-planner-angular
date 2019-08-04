@@ -45,13 +45,14 @@ export class FirestoreService {
     return this.db.createId();
   }
 
-  async addToLog(message: string, userId: string = "", type: string = "") {
+  async addToLog(message: any, userId: string = "", type: string = "", component: string = "") {
     try {
       await this.db.collection<Log>("logs").add({
         type,
         date: this.timestamp,
         message,
-        userId
+        userId,
+        component
       });
       return true;
     } catch (error) {

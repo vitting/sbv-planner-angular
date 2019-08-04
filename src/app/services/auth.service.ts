@@ -9,6 +9,7 @@ import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
 import { Settings } from '../models/settings.model';
 import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +42,8 @@ export class AuthService {
         return this.firestoreService.getUser(authUser.uid).pipe(catchError((error) => {
           if (environment.debug) {
             console.error("getUser", error);
+          } else {
+            this.firestoreService.addToLog(error, this.id, "error", "AuthService");
           }
           return of(null);
         }));
@@ -50,7 +53,10 @@ export class AuthService {
     })).pipe<User>(catchError((error) => {
       if (environment.debug) {
         console.error("afAuth.user", error);
+      } else {
+        this.firestoreService.addToLog(error, this.id, "error", "AuthService");
       }
+
       return of(null);
     })).subscribe(async (user) => {
       if (environment.debug) {
@@ -73,7 +79,10 @@ export class AuthService {
 
       if (environment.debug) {
         console.log("AUTH ERROR", error);
+      } else {
+        this.firestoreService.addToLog(error, this.id, "error", "AuthService");
       }
+
     });
   }
 
@@ -124,7 +133,10 @@ export class AuthService {
       this.usersSub = this.firestoreService.getUsers().pipe(catchError((error) => {
         if (environment.debug) {
           console.error("getUsers", error);
+        } else {
+          this.firestoreService.addToLog(error, this.id, "error", "AuthService");
         }
+
         return of([]);
       })).subscribe((users: User[]) => {
         for (const user of users) {
@@ -140,7 +152,10 @@ export class AuthService {
       this.userMetaSub = this.firestoreService.getUserMeta(userId).pipe(catchError((error) => {
         if (environment.debug) {
           console.error("getUserMetaData", error);
+        } else {
+          this.firestoreService.addToLog(error, this.id, "error", "AuthService");
         }
+
         return of(null);
       })).subscribe((userMeta: UserMeta) => {
         this.userMeta = userMeta;
@@ -155,7 +170,10 @@ export class AuthService {
       this.appMetaSub = this.firestoreService.getAppMeta().pipe(catchError((error) => {
         if (environment.debug) {
           console.error("getAppMetaData", error);
+        } else {
+          this.firestoreService.addToLog(error, this.id, "error", "AuthService");
         }
+
         return of(null);
       })).subscribe((appMeta: AppMeta) => {
         this.appMeta = appMeta;
@@ -170,7 +188,10 @@ export class AuthService {
       this.userSettingsSub = this.firestoreService.getUserSettings(userId).pipe(catchError((error) => {
         if (environment.debug) {
           console.error("getUserSettingsData", error);
+        } else {
+          this.firestoreService.addToLog(error, this.id, "error", "AuthService");
         }
+
         return of(null);
       })).subscribe((settings: Settings) => {
         this.userSettings = settings;

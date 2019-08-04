@@ -8,29 +8,33 @@ import { User } from '../models/user.model';
 })
 export class LogService {
 
-  constructor(private firestoreService: FirestoreService, private authService: AuthService) { }
+  constructor(private firestoreService: FirestoreService) { }
 
   userAdded(user: User) {
     const message = `New user created: ${user.id} / ${user.name}`;
     return this.firestoreService.addToLog(message, user.id, "userAdd");
   }
 
-  userAdminStateChanged(user: User, state: boolean) {
-    const message = `User: ${user.id} / ${user.name} | admin state changed to: ${state} | by: ${this.authService.userId}`;
-    return this.firestoreService.addToLog(message, this.authService.userId, "userAdmin");
+  userAdminStateChanged(authUserId: string, user: User, state: boolean) {
+    const message = `User: ${user.id} / ${user.name} | admin state changed to: ${state} | by: ${authUserId}`;
+    return this.firestoreService.addToLog(message, authUserId, "userAdmin");
   }
 
-  userEditorStateChanged(user: User, state: boolean) {
-    const message = `User: ${user.id} / ${user.name} | editor state changed to: ${state} | by: ${this.authService.userId}`;
-    return this.firestoreService.addToLog(message, this.authService.userId, "userEditor");
+  userEditorStateChanged(authUserId: string, user: User, state: boolean) {
+    const message = `User: ${user.id} / ${user.name} | editor state changed to: ${state} | by: ${authUserId}`;
+    return this.firestoreService.addToLog(message, authUserId, "userEditor");
   }
 
-  userActiveStateChanged(user: User, state: boolean) {
-    const message = `User: ${user.id} / ${user.name} | active state changed to: ${state} | by: ${this.authService.userId}`;
-    return this.firestoreService.addToLog(message, this.authService.userId, "userActive");
+  userActiveStateChanged(authUserId: string, user: User, state: boolean) {
+    const message = `User: ${user.id} / ${user.name} | active state changed to: ${state} | by: ${authUserId}`;
+    return this.firestoreService.addToLog(message, authUserId, "userActive");
   }
 
-  error(error: string) {
-    return this.firestoreService.addToLog(error, this.authService.userId, "error");
+  error(authUserId: string, error: any, component: string = "") {
+    return this.firestoreService.addToLog(error, authUserId, "error", component);
+  }
+
+  info(authUserId: string, message: any, component: string = "") {
+    return this.firestoreService.addToLog(message, authUserId, "info", component);
   }
 }

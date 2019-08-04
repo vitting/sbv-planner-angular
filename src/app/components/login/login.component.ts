@@ -11,6 +11,7 @@ import {
   DialogConfirmComponent
 } from '../shared/dialog-confirm/dialog-confirm.component';
 import { environment } from 'src/environments/environment';
+import { LogService } from 'src/app/services/log.service';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   showForm = true;
   constructor(
     private navbarService: NavbarService,
+    private logService: LogService,
     private authService: AuthService,
     private dialog: MatDialog,
     private router: Router) { }
@@ -61,6 +63,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       } catch (error) {
         if (environment.debug) {
           console.error(error);
+        } else {
+          this.logService.error(this.authService.userId, error, "LoginComponent");
         }
 
         this.showLoginError(error.code);
@@ -122,6 +126,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           } catch (error) {
             if (environment.debug) {
               console.error(error);
+            } else {
+              this.logService.error(this.authService.userId, error, "LoginComponent");
             }
           }
         }

@@ -59,6 +59,8 @@ export class SignupComponent implements OnInit {
       } catch (error) {
         if (environment.debug) {
           console.log(error);
+        } else {
+          this.logService.error(this.authService.userId, error, "SignupComponent");
         }
         this.showSignupError(error.code);
       } finally {

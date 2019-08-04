@@ -74,7 +74,7 @@ export class UserService {
           this.navbarService.showProgressbar = true;
           const success = await this.firestoreService.updateUserAdmin(user.id, state);
           if (success) {
-            this.logService.userAdminStateChanged(user, state);
+            this.logService.userAdminStateChanged(this.authService.userId, user, state);
           }
           this.navbarService.showProgressbar = false;
           resolve(true);
@@ -109,7 +109,7 @@ export class UserService {
           this.navbarService.showProgressbar = true;
           const success = await this.firestoreService.updateUserEditor(user.id, state);
           if (success) {
-            this.logService.userEditorStateChanged(user, state);
+            this.logService.userEditorStateChanged(this.authService.userId, user, state);
           }
           this.navbarService.showProgressbar = false;
           resolve(true);
@@ -143,7 +143,7 @@ export class UserService {
           this.navbarService.showProgressbar = true;
           const success = await this.firestoreService.updateUserActive(user.id, state);
           if (success) {
-            this.logService.userActiveStateChanged(user, state);
+            this.logService.userActiveStateChanged(this.authService.userId, user, state);
           }
           this.navbarService.showProgressbar = false;
           resolve(true);
