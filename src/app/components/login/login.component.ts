@@ -10,6 +10,7 @@ import {
   DialogConfirmData,
   DialogConfirmComponent
 } from '../shared/dialog-confirm/dialog-confirm.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -58,7 +59,10 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         });
       } catch (error) {
-        console.log(error);
+        if (environment.debug) {
+          console.error(error);
+        }
+
         this.showLoginError(error.code);
         this.navbarService.showProgressbar = false;
       }
@@ -93,8 +97,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   forgotPassword() {
-    console.log("FORGOT PASSWORD");
-
     const data: Dialog1FieldData = {
       title: "Nulstil kodeord",
       buttonText: "Send",
@@ -118,7 +120,9 @@ export class LoginComponent implements OnInit, OnDestroy {
             await this.authService.sendResetPasswordEmail(email);
             this.emailSentConfirm(email);
           } catch (error) {
-            console.log(error);
+            if (environment.debug) {
+              console.error(error);
+            }
           }
         }
       }

@@ -15,6 +15,7 @@ import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
 import { Log } from '../models/log.model';
 import { Settings } from '../models/settings.model';
+import { environment } from 'src/environments/environment';
 
 export enum SummaryAction {
   add,
@@ -31,7 +32,9 @@ export interface ProjectTaskName {
 })
 export class FirestoreService {
   constructor(private db: AngularFirestore) {
-    // firebase.firestore.setLogLevel("debug");
+    if (environment.firestoreDebug) {
+      firebase.firestore.setLogLevel("debug");
+    }
   }
 
   get timestamp() {
@@ -52,7 +55,10 @@ export class FirestoreService {
       });
       return true;
     } catch (error) {
-      console.error("addToLog", error);
+      if (environment.debug) {
+        console.error("addToLog", error);
+      }
+
       return false;
     }
   }
@@ -82,7 +88,10 @@ export class FirestoreService {
       });
       return true;
     } catch (error) {
-      console.warn("updateUserMetaComments", error);
+      if (environment.debug) {
+        console.error("updateUserMetaComments", error);
+      }
+
       return false;
     }
   }
@@ -100,7 +109,10 @@ export class FirestoreService {
       });
       return true;
     } catch (error) {
-      console.warn("updateUserMetaLastCheckToAcceptUsers", error);
+      if (environment.debug) {
+        console.error("updateUserMetaLastCheckToAcceptUsers", error);
+      }
+
       return false;
     }
   }
@@ -119,7 +131,10 @@ export class FirestoreService {
       });
       return projectId;
     } catch (error) {
-      console.warn("createProjectFromTemplate", error);
+      if (environment.debug) {
+        console.error("createProjectFromTemplate", error);
+      }
+
       return null;
     }
   }
@@ -154,7 +169,10 @@ export class FirestoreService {
       await this.db.collection<Template>("templates").doc(id).set(template.toObject());
       return id;
     } catch (error) {
-      console.error("AddTemplate", error);
+      if (environment.debug) {
+        console.error("AddTemplate", error);
+      }
+
       return null;
     }
   }
@@ -170,7 +188,10 @@ export class FirestoreService {
       });
       return templateId;
     } catch (error) {
-      console.error("updatedTemplate");
+      if (environment.debug) {
+        console.error("updatedTemplate");
+      }
+
       return null;
     }
   }
@@ -187,7 +208,9 @@ export class FirestoreService {
       });
       return templateId;
     } catch (error) {
-      console.warn("deleteTemplate", error);
+      if (environment.debug) {
+        console.error("deleteTemplate", error);
+      }
 
       return null;
     }
@@ -207,7 +230,10 @@ export class FirestoreService {
       this.db.collection<TemplateTask>("templatetasks").doc(id).set(templateTask);
       return id;
     } catch (error) {
-      console.warn("addTemplateTask");
+      if (environment.debug) {
+        console.error("addTemplateTask");
+      }
+
       return null;
     }
   }
@@ -220,7 +246,10 @@ export class FirestoreService {
       });
       return templateTaskId;
     } catch (error) {
-      console.warn("updateTemplateTask");
+      if (environment.debug) {
+        console.error("updateTemplateTask");
+      }
+
       return null;
     }
   }
@@ -245,7 +274,10 @@ export class FirestoreService {
       });
       return templateTaskId;
     } catch (error) {
-      console.warn("deleteTemplateTask");
+      if (environment.debug) {
+        console.error("deleteTemplateTask");
+      }
+
       return null;
     }
   }
@@ -264,7 +296,10 @@ export class FirestoreService {
       this.db.collection<TemplateSubTask>("templatesubtasks").doc(id).set(templateSubTask);
       return id;
     } catch (error) {
-      console.warn("addTemplateSubTask");
+      if (environment.debug) {
+        console.error("addTemplateSubTask");
+      }
+
       return null;
     }
   }
@@ -276,7 +311,10 @@ export class FirestoreService {
       });
       return templateSubTaskId;
     } catch (error) {
-      console.warn("updateTemplateSubTask");
+      if (environment.debug) {
+        console.error("updateTemplateSubTask");
+      }
+
       return null;
     }
   }
@@ -288,7 +326,10 @@ export class FirestoreService {
       });
       return templateSubTaskId;
     } catch (error) {
-      console.warn("deleteTemplateSubTask");
+      if (environment.debug) {
+        console.error("deleteTemplateSubTask");
+      }
+
       return null;
     }
   }
@@ -309,7 +350,10 @@ export class FirestoreService {
       await this.db.collection<CalendarItem>("calendaritems").doc(id).set(entry);
       return id;
     } catch (error) {
-      console.error("addCalendarItem", error);
+      if (environment.debug) {
+        console.error("addCalendarItem", error);
+      }
+
       return null;
     }
   }
@@ -324,7 +368,10 @@ export class FirestoreService {
 
       return itemId;
     } catch (error) {
-      console.error("updateCalendarItem", error);
+      if (environment.debug) {
+        console.error("updateCalendarItem", error);
+      }
+
       return null;
     }
   }
@@ -332,10 +379,13 @@ export class FirestoreService {
   async deleteCalendarItem(itemId: string): Promise<string> {
     try {
       await this.db.collection<CalendarItem>("calendaritems").doc<CalendarItem>(itemId).delete();
-      return Promise.resolve(itemId);
+      return itemId;
     } catch (error) {
-      console.error("deleteCalendarItem", error);
-      return Promise.reject(error);
+      if (environment.debug) {
+        console.error("deleteCalendarItem", error);
+      }
+
+      return null;
     }
   }
 
@@ -355,7 +405,10 @@ export class FirestoreService {
       await this.updateUserMetaComments(user.id, itemId);
       return id;
     } catch (error) {
-      console.error("AddComment", error);
+      if (environment.debug) {
+        console.error("AddComment", error);
+      }
+
       return null;
     }
   }
@@ -373,7 +426,10 @@ export class FirestoreService {
 
       return commentId;
     } catch (error) {
-      console.error("updateComment", error);
+      if (environment.debug) {
+        console.error("updateComment", error);
+      }
+
       return null;
     }
   }
@@ -383,7 +439,10 @@ export class FirestoreService {
       await this.db.collection<Comment>("comments").doc(commentId).delete();
       return Promise.resolve(commentId);
     } catch (error) {
-      console.error("deleteComment", error);
+      if (environment.debug) {
+        console.error("deleteComment", error);
+      }
+
       return Promise.reject(error);
     }
   }
@@ -407,7 +466,10 @@ export class FirestoreService {
       await this.db.collection<Settings>("settings").doc(userId).set(settings);
       return userId;
     } catch (error) {
-      console.error("addSettings", error);
+      if (environment.debug) {
+        console.error("addSettings", error);
+      }
+
       return null;
     }
   }
@@ -419,7 +481,10 @@ export class FirestoreService {
       });
       return userId;
     } catch (error) {
-      console.error("updateSettingsShowCalendar", error);
+      if (environment.debug) {
+        console.error("updateSettingsShowCalendar", error);
+      }
+
       return null;
     }
   }
@@ -432,7 +497,10 @@ export class FirestoreService {
       await this.db.collection<User>("users").doc(userId).set(user);
       return user;
     } catch (error) {
-      console.error("addUser", error);
+      if (environment.debug) {
+        console.error("addUser", error);
+      }
+
       return null;
     }
   }
@@ -444,7 +512,10 @@ export class FirestoreService {
       });
       return userId;
     } catch (error) {
-      console.error("updateNameOfUser", error);
+      if (environment.debug) {
+        console.error("updateNameOfUser", error);
+      }
+
       return null;
     }
   }
@@ -465,7 +536,10 @@ export class FirestoreService {
       await this.db.collection<User>("users").doc(userId).update(data);
       return userId;
     } catch (error) {
-      console.error("updateUserAdmin", error);
+      if (environment.debug) {
+        console.error("updateUserAdmin", error);
+      }
+
       return null;
     }
   }
@@ -477,7 +551,10 @@ export class FirestoreService {
       });
       return userId;
     } catch (error) {
-      console.error("updateUserEditor", error);
+      if (environment.debug) {
+        console.error("updateUserEditor", error);
+      }
+
       return null;
     }
   }
@@ -489,7 +566,10 @@ export class FirestoreService {
       });
       return userId;
     } catch (error) {
-      console.error("updateUserActive", error);
+      if (environment.debug) {
+        console.error("updateUserActive", error);
+      }
+
       return null;
     }
   }
@@ -520,7 +600,10 @@ export class FirestoreService {
       });
       return userId;
     } catch (error) {
-      console.error("updateUserAccepted", error);
+      if (environment.debug) {
+        console.error("updateUserAccepted", error);
+      }
+
       return null;
     }
   }
@@ -542,7 +625,10 @@ export class FirestoreService {
 
       return "ok";
     } catch (error) {
-      console.error("updateUsersAccepted", error);
+      if (environment.debug) {
+        console.error("updateUsersAccepted", error);
+      }
+
       return null;
     }
   }
@@ -618,7 +704,10 @@ export class FirestoreService {
       await this.addSummary(id);
       return id;
     } catch (error) {
-      console.error("addProject", error);
+      if (environment.debug) {
+        console.error("addProject", error);
+      }
+
       return null;
     }
   }
@@ -642,7 +731,10 @@ export class FirestoreService {
 
       return projectId;
     } catch (error) {
-      console.error("updateProject", error);
+      if (environment.debug) {
+        console.error("updateProject", error);
+      }
+
       return null;
     }
   }
@@ -675,7 +767,10 @@ export class FirestoreService {
 
       return projectId;
     } catch (error) {
-      console.error("addPersonToProject", error);
+      if (environment.debug) {
+        console.error("addPersonToProject", error);
+      }
+
       return null;
     }
   }
@@ -709,7 +804,10 @@ export class FirestoreService {
       }
       return projectId;
     } catch (error) {
-      console.error("removePersonFromProject", error);
+      if (environment.debug) {
+        console.error("removePersonFromProject", error);
+      }
+
       return null;
     }
   }
@@ -723,7 +821,10 @@ export class FirestoreService {
       await this.addSummary(id);
       return id;
     } catch (error) {
-      console.error("addTask", error);
+      if (environment.debug) {
+        console.error("addTask", error);
+      }
+
       return null;
     }
   }
@@ -742,7 +843,10 @@ export class FirestoreService {
 
       return task.id;
     } catch (error) {
-      console.error("updateTask", error);
+      if (environment.debug) {
+        console.error("updateTask", error);
+      }
+
       return null;
     }
   }
@@ -763,9 +867,12 @@ export class FirestoreService {
       });
       await this.deleteSummary(taskId);
       await this.db.collection("tasks").doc(taskId).delete();
-      return Promise.resolve(taskId);
+      return taskId;
     } catch (error) {
-      return Promise.reject(error);
+      if (environment.debug) {
+        console.error("deleteTask", error);
+      }
+      return null;
     }
   }
 
@@ -784,10 +891,13 @@ export class FirestoreService {
 
       try {
         await batch.commit();
-        return Promise.resolve(taskId);
+        return taskId;
       } catch (error) {
-        console.error("markAllSubTasks", error);
-        return Promise.reject(error);
+        if (environment.debug) {
+          console.error("markAllSubTasks", error);
+        }
+
+        return null;
       }
     }
   }
@@ -806,7 +916,10 @@ export class FirestoreService {
       await this.db.collection<SubTask>("subtasks").doc(id).set(subTaskItem.toObject());
       return id;
     } catch (error) {
-      console.error("addSubTask", error);
+      if (environment.debug) {
+        console.error("addSubTask", error);
+      }
+
       return null;
     }
   }
@@ -825,7 +938,10 @@ export class FirestoreService {
 
       return subTask.id;
     } catch (error) {
-      console.error("updateSubTask", error);
+      if (environment.debug) {
+        console.error("updateSubTask", error);
+      }
+
       return null;
     }
   }
@@ -844,7 +960,10 @@ export class FirestoreService {
 
       return subTaskId;
     } catch (error) {
-      console.error("addPersonToSubTask", error);
+      if (environment.debug) {
+        console.error("addPersonToSubTask", error);
+      }
+
       return null;
     }
   }
@@ -863,7 +982,10 @@ export class FirestoreService {
 
       return subTaskId;
     } catch (error) {
-      console.error("removePersonFromSubTask", error);
+      if (environment.debug) {
+        console.error("removePersonFromSubTask", error);
+      }
+
       return null;
     }
   }
@@ -882,7 +1004,10 @@ export class FirestoreService {
 
       return subTaskId;
     } catch (error) {
-      console.error("updateSubTaskCompleteStatus", error);
+      if (environment.debug) {
+        console.error("updateSubTaskCompleteStatus", error);
+      }
+
       return null;
     }
   }
@@ -940,7 +1065,10 @@ export class FirestoreService {
       await this.db.collection<Summary>("summaries").doc(itemId).set(summary);
       return itemId;
     } catch (error) {
-      console.error("addSummary", error);
+      if (environment.debug) {
+        console.error("addSummary", error);
+      }
+
       return null;
     }
   }

@@ -83,8 +83,6 @@ export class TasksEditComponent implements OnInit, OnDestroy {
             break;
           case TaskEditMenuResult.delete:
             break;
-          default:
-            console.log("OTHER");
         }
       }
     });

@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Router } from '@angular/router';
 import { LogService } from 'src/app/services/log.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -56,8 +57,10 @@ export class SignupComponent implements OnInit {
           }
         }
       } catch (error) {
+        if (environment.debug) {
+          console.log(error);
+        }
         this.showSignupError(error.code);
-        console.log(error);
       } finally {
         this.navbarService.showProgressbar = false;
       }
@@ -76,7 +79,6 @@ export class SignupComponent implements OnInit {
         break;
       case "auth/weak-password":
         break;
-      default:
     }
   }
 

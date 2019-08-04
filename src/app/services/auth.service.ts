@@ -52,41 +52,53 @@ export class AuthService {
         console.error("afAuth.user", error);
       }
       return of(null);
-    })).subscribe(async (authUser) => {
-      this.user = authUser;
-      this.id = authUser ? authUser.id : null;
-      if (authUser) {
-        this.userIsAdmin = authUser.admin;
-        this.userIsEditor = authUser.editor;
-        await this.getUserMetaData(authUser.id);
-        await this.getAppMetaData();
-        await this.getUserSettingsData(authUser.id);
-        await this.getUsers();
+    })).subscribe(async (user) => {
+      if (environment.debug) {
+        console.log("CURRENT USER", this.user);
+        console.log("NEW USER", user);
+      }
+
+      if (user) {
+        this.setUserValues(user);
       } else {
-        this.userMeta = null;
-        this.appMeta = null;
-        this.userIsAdmin = false;
-        this.userIsEditor = false;
-        this.unsubscribe();
+        this.resetUserValues();
       }
       if (environment.debug) {
-        console.log("AUTH", authUser);
+        console.log("AUTH", user);
       }
-      this.isAuthenticated.next(authUser ? true : false);
+
       this.splashService.splashShow.next(false);
     }, (error) => {
-      this.user = null;
-      this.userIsAdmin = false;
-      this.userIsEditor = false;
-      this.isAuthenticated.next(false);
-      this.id = null;
-      this.users = {};
-      this.splashService.splashShow.next(false);
+      this.resetUserValues();
 
       if (environment.debug) {
         console.log("AUTH ERROR", error);
       }
     });
+  }
+
+  private async setUserValues(user: User) {
+    this.id = user.id;
+    this.user = user;
+    this.userIsAdmin = user.admin;
+    this.userIsEditor = user.editor;
+    await this.getUserMetaData(user.id);
+    await this.getAppMetaData();
+    await this.getUserSettingsData(user.id);
+    await this.getUsers();
+    this.isAuthenticated.next(true);
+  }
+
+  private resetUserValues() {
+    this.id = null;
+    this.user = null;
+    this.userMeta = null;
+    this.appMeta = null;
+    this.userIsAdmin = false;
+    this.userIsEditor = false;
+    this.users = {};
+    this.unsubscribe();
+    this.isAuthenticated.next(false);
   }
 
   private unsubscribe() {

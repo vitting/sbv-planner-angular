@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  debug: true
+  debug: true,
+  firestoreDebug: false
 };
 
 /*

@@ -98,8 +98,6 @@ export class TaskListItemComponent implements OnInit, OnDestroy {
           case TasksMenuResult.markAllSubTasksAsNotCompleted:
             this.markAllSubTasksAsNotCompletedClick.emit(this.task);
             break;
-          default:
-            console.log("OTHER");
         }
       }
     });

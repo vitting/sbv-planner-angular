@@ -78,8 +78,6 @@ export class ProjectEditComponent implements OnInit {
           case ProjectEditItemResult.delete:
             this.deleteProjectClick(project);
             break;
-          default:
-            console.log("OTHER");
         }
       }
     });

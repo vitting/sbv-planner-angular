@@ -103,8 +103,6 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
           case ProjectHomeMenuResult.newProjectFromTemplate:
             this.gotoNewProjectFromTemplate();
             break;
-          default:
-            console.log("OTHER", result.action);
         }
       }
     });
@@ -130,8 +128,6 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
           case ProjectHomeItemMenuResult.removeFromProject:
             this.removeUserFromProject(project, this.authService.authUserInfo);
             break;
-          default:
-            console.log("OTHER");
         }
       }
     });

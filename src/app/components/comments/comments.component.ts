@@ -90,8 +90,6 @@ export class CommentsComponent implements OnInit {
           case CommentItemMenuResult.delete:
             this.deleteComment(comment);
             break;
-          default:
-            console.log("OTHER");
         }
       }
     });
