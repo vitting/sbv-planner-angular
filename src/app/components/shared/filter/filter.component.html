@@ -1,7 +1,7 @@
 <div class="app-filter" [appItemContainer]="containerType">
   <div class="app-filter-action">
     <div class="app-filter-title">{{title}}</div>
-    <button mat-icon-button class="app-button-outline" [@buttonRotate]="stateOpenClose" (tap)="openClose()">
+    <button mat-icon-button class="app-button-outline" [@buttonRotate]="stateOpenClose" (click)="openClose()">
       <mat-icon>expand_less</mat-icon>
     </button>
   </div>

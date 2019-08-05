@@ -1,7 +1,7 @@
 <div class="message" appItemContainer="message" *ngIf="!showForm">
   <p>Du er allerede logget ind.</p>
   <p>Log ud før du kan logge ind med en anden bruger.</p>
-  <button mat-flat-button color="primary" (tap)="logout()">
+  <button mat-flat-button color="primary" (click)="logout()">
     <fa-icon [icon]="['fas', 'sign-out-alt']" class="app-menu-icon"></fa-icon>Log ud
   </button>
 </div>
@@ -33,7 +33,7 @@
       <button mat-flat-button color="primary" [disabled]="loginForm.invalid || loginForm.untouched" type="submit">
         <fa-icon [icon]="['fas', 'sign-in-alt']" class="app-menu-icon"></fa-icon>Login
       </button>
-      <button mat-flat-button color="accent" type="button" (tap)="forgotPassword()">
+      <button mat-flat-button color="accent" type="button" (click)="forgotPassword()">
         <fa-icon [icon]="['far', 'question-circle']" class="app-menu-icon"></fa-icon>Glemt kodeord
       </button>
     </div>

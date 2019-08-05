@@ -1,11 +1,11 @@
 <app-no-data-box *ngIf="!users.length" [data]="noData"></app-no-data-box>
 <div class="button-all" *ngIf="users.length">
-  <button mat-flat-button color="primary" (tap)="acceptAll(true)" *ngIf="!showUndoButton1"
+  <button mat-flat-button color="primary" (click)="acceptAll(true)" *ngIf="!showUndoButton1"
     [disabled]="disableButton1">Godkend alle</button>
-  <button mat-flat-button color="primary" (tap)="undoAll(true)" *ngIf="showUndoButton1">Fortryd ({{count}})</button>
-  <button mat-flat-button color="accent" (tap)="acceptAll(false)" *ngIf="!showUndoButton2"
+  <button mat-flat-button color="primary" (click)="undoAll(true)" *ngIf="showUndoButton1">Fortryd ({{count}})</button>
+  <button mat-flat-button color="accent" (click)="acceptAll(false)" *ngIf="!showUndoButton2"
     [disabled]="disableButton2">Afvis alle</button>
-  <button mat-flat-button color="accent" (tap)="undoAll(false)" *ngIf="showUndoButton2">Forstryd ({{count}})</button>
+  <button mat-flat-button color="accent" (click)="undoAll(false)" *ngIf="showUndoButton2">Forstryd ({{count}})</button>
 </div>
 <mat-list [disableRipple]="true" class="app-list">
   <app-user-accept-item *ngFor="let user of users" [user]="user"></app-user-accept-item>

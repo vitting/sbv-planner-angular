@@ -1,6 +1,6 @@
 <div mat-list-item appItemContainer="user" class="admin-user-item">
   <div>{{user.name}}</div>
-  <div class="admin-user-item-actions" *ngIf="!showUndo">
+  <div class="admin-user-item-actions">
     <div class="slide-button"><span>Redaktør</span>
       <mat-slide-toggle color="primary" labelPosition="before" (change)="editor($event)" [checked]="editorState">
       </mat-slide-toggle>

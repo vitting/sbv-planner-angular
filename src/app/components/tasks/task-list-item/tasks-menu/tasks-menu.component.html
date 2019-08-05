@@ -1,6 +1,6 @@
 <mat-nav-list>
   <div *ngIf="authService.isEditor">
-    <a mat-list-item (tap)="action($event, 'addremove')">
+    <a mat-list-item (click)="action($event, 'addremove')">
       <span>
         <fa-icon [icon]="['fas', 'edit']" class="app-menu-icon"></fa-icon>Rediger opgaven
       </span>
@@ -8,7 +8,7 @@
     <mat-divider></mat-divider>
   </div>
   <div *ngIf="authService.isEditor">
-    <a mat-list-item (tap)="action($event, 'delete')">
+    <a mat-list-item (click)="action($event, 'delete')">
       <span>
         <fa-icon [icon]="['far', 'trash-alt']" class="app-menu-icon"></fa-icon>Slet opgaven
       </span>
@@ -16,7 +16,7 @@
   </div>
   <div *ngIf="!data.taskCompleted">
     <mat-divider *ngIf="authService.isEditor"></mat-divider>
-    <a mat-list-item (tap)="action($event, 'markAllSubTasksCompleted')">
+    <a mat-list-item (click)="action($event, 'markAllSubTasksCompleted')">
       <span>
         <fa-icon [icon]="['far', 'check-square']" class="app-menu-icon"></fa-icon>Markere alle opgaver som fuldført
       </span>
@@ -24,7 +24,7 @@
   </div>
   <div *ngIf="data.taskCompleted">
     <mat-divider *ngIf="authService.isEditor"></mat-divider>
-    <a mat-list-item (tap)="action($event, 'markAllSubTasksAsNotCompleted')">
+    <a mat-list-item (click)="action($event, 'markAllSubTasksAsNotCompleted')">
       <span>
         <fa-icon [icon]="['far', 'square']" class="app-menu-icon"></fa-icon>Markere alle opgaver som ikke fuldført
       </span>

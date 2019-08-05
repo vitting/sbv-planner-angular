@@ -9,6 +9,14 @@ import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
 import { Settings } from '../models/settings.model';
 import { environment } from 'src/environments/environment';
+import {
+  DialogConfirmData,
+  DialogConfirmComponent,
+  DialogConfirmResult,
+  DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
+import { FabButtonService } from './fab-button.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +41,10 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private firestoreService: FirestoreService,
-    private splashService: SplashService) {
+    private fabbuttonService: FabButtonService,
+    private splashService: SplashService,
+    private router: Router,
+    private dialog: MatDialog) {
     this.afAuth.user.pipe(switchMap<firebase.User, Observable<User>>((authUser) => {
       if (environment.debug) {
         console.log("Authenticated user", authUser);
@@ -64,6 +75,12 @@ export class AuthService {
         console.log("NEW USER", user);
       }
 
+      if (this.user && user) {
+        if (this.user.active && !user.active) {
+          this.userDeactivated();
+        }
+      }
+
       if (user) {
         this.setUserValues(user);
       } else {
@@ -83,6 +100,33 @@ export class AuthService {
         this.firestoreService.addToLog(error, this.id, "error", "AuthService");
       }
 
+    });
+  }
+
+  private userDeactivated() {
+    const dialogConfirmData: DialogConfirmData = {
+      header: "Konto deaktiveret",
+      button1Text: null,
+      button2Text: null,
+      buttonOkText: "Ok",
+      message1: "Din konto er blevet deaktiveret.",
+      message2: "Du vil blive logget ud."
+    };
+
+    this.fabbuttonService.showFabButton = false;
+    const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      autoFocus: false,
+      disableClose: true,
+      data: dialogConfirmData
+    });
+
+    dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+      this.fabbuttonService.showFabButton = true;
+      if (result && result.action === DialogConfirmAction.ok) {
+        await this.logout();
+        this.router.navigate(["/login"]);
+      }
     });
   }
 
@@ -129,6 +173,9 @@ export class AuthService {
   }
 
   private getUsers() {
+    if (this.usersSub) {
+      this.usersSub.unsubscribe();
+    }
     return new Promise((resolve) => {
       this.usersSub = this.firestoreService.getUsers().pipe(catchError((error) => {
         if (environment.debug) {
@@ -148,6 +195,9 @@ export class AuthService {
   }
 
   private getUserMetaData(userId: string) {
+    if (this.userMetaSub) {
+      this.userMetaSub.unsubscribe();
+    }
     return new Promise((resolve) => {
       this.userMetaSub = this.firestoreService.getUserMeta(userId).pipe(catchError((error) => {
         if (environment.debug) {
@@ -166,6 +216,9 @@ export class AuthService {
   }
 
   private getAppMetaData() {
+    if (this.appMetaSub) {
+      this.userMetaSub.unsubscribe();
+    }
     return new Promise((resolve) => {
       this.appMetaSub = this.firestoreService.getAppMeta().pipe(catchError((error) => {
         if (environment.debug) {
@@ -184,6 +237,9 @@ export class AuthService {
   }
 
   private getUserSettingsData(userId: string) {
+    if (this.userSettingsSub) {
+      this.userSettingsSub.unsubscribe();
+    }
     return new Promise((resolve) => {
       this.userSettingsSub = this.firestoreService.getUserSettings(userId).pipe(catchError((error) => {
         if (environment.debug) {
@@ -258,7 +314,6 @@ export class AuthService {
   }
 
   logout() {
-    this.isAuthenticated.next(false);
     return this.afAuth.auth.signOut();
   }
 

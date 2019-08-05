@@ -6,7 +6,7 @@
         <div class="comment-date">{{ comment.createdAt?.toDate() | amLocal:'da' | amDateFormat: 'DD. MMMM YYYY H:mm' }}
         </div>
       </div>
-      <button *ngIf="showMenu" mat-icon-button (tap)="menu()" class="app-button-outline">
+      <button *ngIf="showMenu" mat-icon-button (click)="menu()" class="app-button-outline">
         <mat-icon>more_vert</mat-icon>
       </button>
     </div>

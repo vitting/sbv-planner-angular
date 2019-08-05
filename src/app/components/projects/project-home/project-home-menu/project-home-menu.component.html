@@ -1,24 +1,24 @@
 <mat-nav-list>
-  <a mat-list-item (tap)="action($event, 'joinProject')">
+  <a mat-list-item (click)="action($event, 'joinProject')">
     <span>
       <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Deltag i et eksisterende projekt
     </span>
   </a>
   <div *ngIf="authService.isEditor">
     <mat-divider></mat-divider>
-    <a mat-list-item (tap)="action($event, 'newProject')">
+    <a mat-list-item (click)="action($event, 'newProject')">
       <span>
         <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Opret nyt projekt
       </span>
     </a>
     <mat-divider></mat-divider>
-    <a mat-list-item (tap)="action($event, 'newProjectfromTemplate')">
+    <a mat-list-item (click)="action($event, 'newProjectfromTemplate')">
       <span>
         <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Opret nyt projekt fra skabelon
       </span>
     </a>
     <mat-divider></mat-divider>
-    <a mat-list-item (tap)="action($event, 'newTemplate')">
+    <a mat-list-item (click)="action($event, 'newTemplate')">
       <span>
         <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Opret ny skabelon
       </span>

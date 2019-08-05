@@ -2,7 +2,7 @@
     'app-sublist-item-edit-container': editMode,
     'app-sublist-item-completed': !editMode && (state === 'completed' || state === 'completed-not-user')}">
   <div class="app-sublist-item-edit">
-    <button mat-icon-button type="button" (tap)="onEdit()" *ngIf="editMode" class="app-button-outline">
+    <button mat-icon-button type="button" (click)="onEdit()" *ngIf="editMode" class="app-button-outline">
       <mat-icon>edit</mat-icon>
     </button>
     <div>
@@ -18,10 +18,10 @@
 
   <app-checkbox *ngIf="!editMode && (state === 'check' || state === 'completed')" [selected]="checkValue"
     (checkboxClick)="checkboxClicked($event)"></app-checkbox>
-  <button *ngIf="!editMode && state === 'add'" mat-icon-button (tap)="addPersonToSubTask()" class="app-button-outline">
+  <button *ngIf="!editMode && state === 'add'" mat-icon-button (click)="addPersonToSubTask()" class="app-button-outline">
     <mat-icon>person_add</mat-icon>
   </button>
-  <button *ngIf="editMode" mat-icon-button type="button" (tap)="onDelete()" class="app-button-outline">
+  <button *ngIf="editMode" mat-icon-button type="button" (click)="onDelete()" class="app-button-outline">
     <mat-icon>delete</mat-icon>
   </button>
 </div>

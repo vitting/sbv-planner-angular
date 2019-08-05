@@ -1,18 +1,19 @@
 <div mat-list-item appItemContainer="task">
   <div class="task-content">
     <div [ngClass]="{'task-content-edit': editMode}">
-      <button *ngIf="editMode" mat-icon-button type="button" (tap)="editTitleDescClick()" class="app-button-outline">
+      <button *ngIf="editMode" mat-icon-button type="button" (click)="editTitleDescClick()" class="app-button-outline">
         <mat-icon>edit</mat-icon>
       </button>
       <app-item-title-desc [title]="task.title" [description]="task.description" [completed]="completed">
       </app-item-title-desc>
     </div>
     <div class="task-menu" *ngIf="!editMode">
-      <button mat-icon-button (tap)="menuClick()" class="app-button-outline">
+      <button mat-icon-button (click)="menuClick()" class="app-button-outline">
         <mat-icon>more_vert</mat-icon>
       </button>
     </div>
-    <button mat-button *ngIf="editMode" class="list-item-end-edit-button" (tap)="endEditTaskClicked()" class="app-button-outline">
+    <button mat-button *ngIf="editMode" class="list-item-end-edit-button" (click)="endEditTaskClicked()"
+      class="app-button-outline">
       <div class="list-item-end-edit">
         <mat-icon [inline]="true">edit</mat-icon><span>Afslut</span>
       </div>
@@ -25,8 +26,8 @@
           / {{summary?.numberOfItems}}</span>
       </div>
       <div class="task-action-item">
-        <button mat-button (tap)="commentsClick()" class="app-button-outline">
-            <span *ngIf="showCommentIndicator" class="comment-indicator"></span>
+        <button mat-button (click)="commentsClick()" class="app-button-outline">
+          <span *ngIf="showCommentIndicator" class="comment-indicator"></span>
           <fa-icon [icon]="['far', 'comment']"></fa-icon><span
             class="task-action-text">{{summary?.numberOfComments}}</span>
         </button>

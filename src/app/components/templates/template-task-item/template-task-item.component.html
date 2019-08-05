@@ -1,18 +1,18 @@
 <div appItemContainer="template-task" class="template-task-item">
   <div class="item-content">
     <div class="item-title">
-      <button *ngIf="editMode" mat-icon-button (tap)="editTitleDesc()" class="app-button-outline">
+      <button *ngIf="editMode" mat-icon-button (click)="editTitleDesc()" class="app-button-outline">
         <mat-icon>edit</mat-icon>
       </button>
       <app-item-title-desc [title]="templateTask.title" [description]="templateTask.description"></app-item-title-desc>
     </div>
 
-    <button *ngIf="editMode" mat-icon-button (tap)="deleteTask()" class="app-button-outline">
+    <button *ngIf="editMode" mat-icon-button (click)="deleteTask()" class="app-button-outline">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
 
-  <button *ngIf="editMode" class="item-add app-button-outline" mat-button type="button" (tap)="addSubTask()">Tilføj en opgave<mat-icon>
+  <button *ngIf="editMode" class="item-add app-button-outline" mat-button type="button" (click)="addSubTask()">Tilføj en opgave<mat-icon>
       add_circle</mat-icon></button>
   <mat-list>
     <app-template-subtask-item [editMode]="editMode" *ngFor="let templateSubTask of templateSubTasks"

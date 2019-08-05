@@ -1,24 +1,24 @@
 <mat-nav-list>
-  <a mat-list-item (tap)="action($event, 'gotoTasks')">
+  <a mat-list-item (click)="action($event, 'gotoTasks')">
     <span>
       <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Vis projektets opgaver
     </span>
   </a>
   <mat-divider></mat-divider>
-  <a mat-list-item (tap)="action($event, 'gotoComments')">
+  <a mat-list-item (click)="action($event, 'gotoComments')">
     <span>
       <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Vis projektets kommentarer
     </span>
   </a>
   <mat-divider></mat-divider>
-  <a mat-list-item (tap)="action($event, 'removeFromProject')">
+  <a mat-list-item (click)="action($event, 'removeFromProject')">
     <span>
       <fa-icon [icon]="['fas', 'arrow-left']" class="app-menu-icon"></fa-icon>Forlad projektet
     </span>
   </a>
   <div *ngIf="authService.isEditor">
     <mat-divider></mat-divider>
-    <a mat-list-item (tap)="action($event, 'editProject')">
+    <a mat-list-item (click)="action($event, 'editProject')">
       <span>
         <fa-icon [icon]="['fas', 'edit']" class="app-menu-icon"></fa-icon>Rediger projektet
       </span>

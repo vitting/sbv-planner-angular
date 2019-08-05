@@ -3,7 +3,7 @@
     <div class="list-item-content">
       <div class="list-item-title-desc">
         <div class="list-item-title-desc-edit" *ngIf="editMode">
-          <button mat-icon-button (tap)="editProjectTitleDescClicked()" class="app-button-outline">
+          <button mat-icon-button (click)="editProjectTitleDescClicked()" class="app-button-outline">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -20,21 +20,21 @@
       </app-project-details-edit>
       <app-users-list [type]="'project'" *ngIf="showUsers" [users]="users"
         [enableRemoveUserButton]="enableRemoveUserButton" (userClick)="userClicked($event)"></app-users-list>
-        <!-- <app-task-list-item *ngIf="embeddedMode" *ngFor="let task of tasks" [task]="task" (markAllSubTasksAsCompletedClick)="markAllSubTasksAsCompletedClick($event)" (markAllSubTasksAsNotCompletedClick)="markAllSubTasksAsNotCompletedClick($event)"></app-task-list-item> -->
-        <app-task-list-item *ngIf="embeddedMode"></app-task-list-item>
     </div>
-    <button mat-icon-button *ngIf="projectButtonState === 'menu'" class="list-item-button app-button-outline" (tap)="showMenu()">
+    <button mat-icon-button *ngIf="projectButtonState === 'menu'" class="list-item-button app-button-outline"
+      (click)="showMenu()">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="projectButtonState === 'addperson'" class="list-item-button app-button-outline" (tap)="addPerson()">
+    <button mat-icon-button *ngIf="projectButtonState === 'addperson'" class="list-item-button app-button-outline"
+      (click)="addPerson()">
       <mat-icon>person_add</mat-icon>
     </button>
     <button mat-icon-button *ngIf="projectButtonState === 'delete'" class="list-item-button app-button-outline"
-      (tap)="deleteProjectClicked()">
+      (click)="deleteProjectClicked()">
       <mat-icon>delete</mat-icon>
     </button>
-    <button mat-button *ngIf="projectButtonState === 'endedit'" class="list-item-button list-item-end-edit-button app-button-outline"
-      (tap)="endEditProjectClicked()">
+    <button mat-button *ngIf="projectButtonState === 'endedit'"
+      class="list-item-button list-item-end-edit-button app-button-outline" (click)="endEditProjectClicked()">
       <div class="list-item-end-edit">
         <mat-icon [inline]="true">edit</mat-icon><span>Afslut</span>
       </div>

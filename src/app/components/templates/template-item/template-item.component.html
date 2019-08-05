@@ -1,23 +1,23 @@
 <div mat-list-item appItemContainer="template" class="template-item">
   <div class="item-content">
     <div class="item-title">
-      <button *ngIf="editMode" mat-icon-button (tap)="editTitleDesc()" class="app-button-outline">
+      <button *ngIf="editMode" mat-icon-button (click)="editTitleDesc()" class="app-button-outline">
         <mat-icon>edit</mat-icon>
       </button>
       <app-item-title-desc [title]="template.title" [description]="template.description"></app-item-title-desc>
     </div>
 
-    <button *ngIf="!addMode && editMode" mat-icon-button (tap)="deleteTemplate()" class="app-button-outline">
+    <button *ngIf="!addMode && editMode" mat-icon-button (click)="deleteTemplate()" class="app-button-outline">
       <mat-icon>delete</mat-icon>
     </button>
-    <button *ngIf="!addMode && !editMode" mat-icon-button (tap)="editTemplate()" class="app-button-outline">
+    <button *ngIf="!addMode && !editMode" mat-icon-button (click)="editTemplate()" class="app-button-outline">
       <mat-icon>edit</mat-icon>
     </button>
-    <button *ngIf="addMode" mat-icon-button (tap)="createProjectFromTemplate()" class="app-button-outline">
+    <button *ngIf="addMode" mat-icon-button (click)="createProjectFromTemplate()" class="app-button-outline">
       <mat-icon>add_circle</mat-icon>
     </button>
   </div>
-  <button *ngIf="editMode" class="item-add app-button-outline" mat-button type="button" (tap)="addTask()">Tilføj en opgave gruppe<mat-icon>
+  <button *ngIf="editMode" class="item-add app-button-outline" mat-button type="button" (click)="addTask()">Tilføj en opgave gruppe<mat-icon>
       add_circle</mat-icon></button>
   <mat-list>
     <app-template-task-item [editMode]="editMode" *ngFor="let templateTask of templateTasks"
