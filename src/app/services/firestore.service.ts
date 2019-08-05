@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { ProjectItem, Project } from '../models/project.model';
-import { TaskItem, Task } from '../models/task.model';
+import { Project } from '../models/project.model';
+import { Task } from '../models/task.model';
 import { take, map } from 'rxjs/operators';
-import { SubTaskItem, SubTask } from '../models/subtask.model';
-import { User, UserItem } from '../models/user.model';
+import { SubTask } from '../models/subtask.model';
+import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
-import { Comment, CommentItem } from '../models/comment.model';
+import { Comment } from '../models/comment.model';
 import { Summary } from '../models/summary.model';
-import { TemplateItem, Template, TemplateTask, TemplateSubTask } from '../models/template.model';
+import { Template, TemplateTask, TemplateSubTask } from '../models/template.model';
 import { CalendarItem } from '../models/calendar.model';
 import { UserMeta } from '../models/user-meta.model';
 import { AppMeta } from '../models/app-meta.model';
@@ -165,9 +165,18 @@ export class FirestoreService {
   async addTemplate(user: User, title: string, description: string) {
     const id = this.newId;
     const timestamp = this.timestamp;
-    const template = new TemplateItem(id, title, description, timestamp, timestamp, user.id, user.id);
+    const template: Template = {
+      id,
+      title,
+      description,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      createdBy: user.id,
+      updatedBy: user.id,
+      active: true
+    };
     try {
-      await this.db.collection<Template>("templates").doc(id).set(template.toObject());
+      await this.db.collection<Template>("templates").doc(id).set(template);
       return id;
     } catch (error) {
       if (environment.debug) {
@@ -399,10 +408,19 @@ export class FirestoreService {
   async addComment(user: User, text: string, type: string, itemId: string): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;
-    const comment = new CommentItem(id, itemId, text, timestamp, timestamp, type, user.id);
+    const comment: Comment = {
+      id,
+      type,
+      parentId: itemId,
+      text,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      userId: user.id,
+      active: true
+    };
 
     try {
-      await this.db.collection<Comment>("comments").doc(id).set(comment.toObject());
+      await this.db.collection<Comment>("comments").doc(id).set(comment);
       await this.updateUserMetaComments(user.id, itemId);
       return id;
     } catch (error) {
@@ -492,7 +510,17 @@ export class FirestoreService {
 
   async addUser(userId: string, name: string): Promise<User> {
     const timestamp = this.timestamp;
-    const user: User = new UserItem(userId, name, timestamp).toObject();
+    const user: User = {
+      id: userId,
+      name,
+      createdAt: timestamp,
+      active: true,
+      admin: false,
+      editor: true,
+      waitingForApproval: true,
+      accepted: false,
+      photoUrl: null
+    };
     try {
       await this.addSettings(userId);
       await this.db.collection<User>("users").doc(userId).set(user);
@@ -634,21 +662,21 @@ export class FirestoreService {
     }
   }
 
-  async getProjectTaskName(projectId: string, taskId: string): Promise<ProjectTaskName> {
-    const projectTaskName: ProjectTaskName = {
-      projectName: null,
-      taskName: null
-    };
+  // async getProjectTaskName(projectId: string, taskId: string): Promise<ProjectTaskName> {
+  //   const projectTaskName: ProjectTaskName = {
+  //     projectName: null,
+  //     taskName: null
+  //   };
 
-    const project: Project = await this.db.collection<Project>("projects").doc<Project>(projectId).valueChanges().pipe(take(1)).toPromise();
-    projectTaskName.projectName = project.title;
-    if (taskId) {
-      const task: Task = await this.db.collection<Task>("tasks").doc<Task>(taskId).valueChanges().pipe(take(1)).toPromise();
-      projectTaskName.taskName = task.title;
-    }
+  //   const project: Project = await this.db.collection<Project>("projects").doc<Project>(projectId).valueChanges().pipe(take(1)).toPromise();
+  //   projectTaskName.projectName = project.title;
+  //   if (taskId) {
+  //     const task: Task = await this.db.collection<Task>("tasks").doc<Task>(taskId).valueChanges().pipe(take(1)).toPromise();
+  //     projectTaskName.taskName = task.title;
+  //   }
 
-    return projectTaskName;
-  }
+  //   return projectTaskName;
+  // }
 
   getUser(userId: string): Observable<User> {
     return this.db.collection<User>("users").doc<User>(userId).valueChanges();
@@ -698,10 +726,18 @@ export class FirestoreService {
   async addProject(userId: string, title: string, description: string): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;
-
-    const projectItem = new ProjectItem(id, title, description, timestamp, timestamp, userId, [userId]);
+    const project: Project = {
+      id,
+      title,
+      description,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      createdBy: userId,
+      active: true,
+      users: [userId]
+    };
     try {
-      await this.db.collection<Project>("projects").doc(id).set(projectItem.toObject());
+      await this.db.collection<Project>("projects").doc(id).set(project);
       await this.addSummary(id);
       return id;
     } catch (error) {
@@ -754,7 +790,7 @@ export class FirestoreService {
     return this.db.collection<Project>("projects").doc(projectId).delete();
   }
 
-  async addPersonToProject(projectId: string, userId: string) {
+  async addUserToProject(projectId: string, userId: string) {
     const timestamp = this.timestamp;
 
     try {
@@ -816,9 +852,20 @@ export class FirestoreService {
   async addTask(userId: string, title: string, description: string, projectId: string, index: number): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;
-    const taskItem = new TaskItem(id, projectId, timestamp, timestamp, userId, userId, title, description, index);
+    const task: Task = {
+      id,
+      projectId,
+      title,
+      description,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      createdBy: userId,
+      updatedBy: userId,
+      completed: false,
+      index
+    };
     try {
-      await this.db.collection<Task>("tasks").doc(id).set(taskItem.toObject());
+      await this.db.collection<Task>("tasks").doc(id).set(task);
       await this.addSummary(id);
       return id;
     } catch (error) {
@@ -912,9 +959,20 @@ export class FirestoreService {
   async addSubTask(userId: string, title: string, projectId: string, taskId: string): Promise<string> {
     const id = this.newId;
     const timestamp = this.timestamp;
-    const subTaskItem = new SubTaskItem(id, projectId, taskId, timestamp, timestamp, userId, userId, title);
+    const subTask: SubTask = {
+      id,
+      taskId,
+      projectId,
+      title,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      createdBy: userId,
+      updatedBy: userId,
+      completed: false,
+      users: []
+    };
     try {
-      await this.db.collection<SubTask>("subtasks").doc(id).set(subTaskItem.toObject());
+      await this.db.collection<SubTask>("subtasks").doc(id).set(subTask);
       return id;
     } catch (error) {
       if (environment.debug) {

@@ -44,7 +44,7 @@ export class CommentService {
       data
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
         this.fabButtonService.showFabButton = true;
         if (result) {
@@ -81,7 +81,7 @@ export class CommentService {
       data
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
         this.fabButtonService.showFabButton = true;
         if (result) {
@@ -113,7 +113,7 @@ export class CommentService {
       data: dialogConfirmData
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {

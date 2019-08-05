@@ -217,7 +217,7 @@ export class ProjectService {
   }
 
   addUserToProject(project: Project): Promise<string> {
-    return this.firestoreService.addPersonToProject(project.id, this.authService.userId);
+    return this.firestoreService.addUserToProject(project.id, this.authService.userId);
   }
 
   removeUserFromProject(project: Project, user: User) {

@@ -15,7 +15,10 @@ import {
   Dialog2FieldsComponent,
   Dialog2FieldsResult
 } from '../components/shared/dialog-2-fields/dialog-2-fields.component';
-import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
+import {
+  Dialog1FieldData,
+  Dialog1FieldComponent,
+  Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
 import { SubTask } from '../models/subtask.model';
 import { NavbarService } from './navbar.service';
 import { FabButtonService } from './fab-button.service';
