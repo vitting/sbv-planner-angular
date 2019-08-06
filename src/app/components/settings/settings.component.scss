@@ -1,12 +1,14 @@
 @import "../../../variables";
-.settings-item {
-  &.flex-between {
-    @include flex-row-spacebetween-center;
-  }
+.flex-between {
+  @include flex-row-spacebetween-center;
+}
 
-  &.flex-start {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.settings-item-space-right {
+  margin-right: 10px;
 }

@@ -6,6 +6,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Settings } from 'src/app/models/settings.model';
 import { Dialog1FieldComponent, Dialog1FieldData, Dialog1FieldResult } from '../shared/dialog-1-field/dialog-1-field.component';
 import { MatDialog } from '@angular/material/dialog';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-settings',
@@ -15,10 +16,12 @@ import { MatDialog } from '@angular/material/dialog';
 export class SettingsComponent implements OnInit {
   name: string;
   settings: Settings;
+  user: User;
   constructor(
     private navbarService: NavbarService,
     private authService: AuthService,
-    private firestoreService: FirestoreService, private dialog: MatDialog) { }
+    private firestoreService: FirestoreService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.navbarService.setNavbarTitleWithColor({
@@ -26,7 +29,8 @@ export class SettingsComponent implements OnInit {
       colorState: "setting"
     });
 
-    this.name = this.authService.authUserInfo.name;
+    this.user = this.authService.authUserInfo;
+    this.name = this.user.name;
     this.firestoreService.getSettings(this.authService.userId).subscribe((settings) => {
       this.settings = settings;
     });

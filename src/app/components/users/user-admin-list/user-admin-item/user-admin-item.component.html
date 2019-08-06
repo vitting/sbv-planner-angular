@@ -1,4 +1,4 @@
-<div mat-list-item appItemContainer="user" class="admin-user-item">
+<div mat-list-item appItemContainer="user" class="admin-user-item" *ngIf="!isCurrentUser">
   <div>{{user.name}}</div>
   <div class="admin-user-item-actions">
     <div class="slide-button"><span>Redaktør</span>

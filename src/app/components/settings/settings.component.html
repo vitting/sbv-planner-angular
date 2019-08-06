@@ -11,4 +11,11 @@
       [checked]="settings?.showCalendar">
     </mat-slide-toggle>
   </div>
+  <div appItemContainer="setting" class="settings-item flex-between">
+    <div>Mine rettigheder</div>
+    <div>
+      <div class="flex-between"><span class="settings-item-space-right">Redaktør:</span> <span>{{user.editor ? "Ja" : "Nej"}}</span></div>
+      <div class="flex-between"><span class="settings-item-space-right">Administrator:</span> <span>{{user.admin ? "Ja" : "Nej"}}</span></div>
+    </div>
+  </div>
 </mat-list>

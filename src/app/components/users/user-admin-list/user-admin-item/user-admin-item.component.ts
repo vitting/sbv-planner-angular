@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-admin-item',
@@ -13,10 +14,12 @@ export class UserAdminItemComponent implements OnInit {
   adminState: boolean;
   editorState: boolean;
   activeState: boolean;
-  constructor(private userService: UserService) { }
+  isCurrentUser = false;
+  constructor(private authService: AuthService, private userService: UserService) { }
 
   ngOnInit() {
     if (this.user) {
+      this.isCurrentUser = this.authService.userId === this.user.id;
       this.adminState = this.user.admin;
       this.editorState = this.user.editor;
       this.activeState = this.user.active;
