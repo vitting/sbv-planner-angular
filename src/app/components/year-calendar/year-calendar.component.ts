@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CalendarItem } from 'src/app/models/calendar.model';
 import { CalendarService } from 'src/app/services/calendar.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-year-calendar',
@@ -12,9 +13,10 @@ export class YearCalendarComponent implements OnInit {
   currentMonth = 0;
   editMode = false;
   highlightCurrentMonth = false;
-  constructor(private calendarService: CalendarService, private route: ActivatedRoute) { }
+  constructor(private navbarService: NavbarService, private calendarService: CalendarService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.navbarService.setNavbarTitle("Kalender");
     this.currentMonth = new Date(Date.now()).getMonth();
 
     if (this.route.snapshot.params.action && this.route.snapshot.params.action === "edit") {
