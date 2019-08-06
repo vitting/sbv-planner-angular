@@ -118,9 +118,9 @@ export class FirestoreService {
     }
   }
 
-  async createProjectFromTemplate(userId: string, template: Template) {
+  async createProjectFromTemplate(userId: string, template: Template, newTitle: string, newDescription: string) {
     try {
-      const projectId = await this.addProject(userId, template.title, template.description);
+      const projectId = await this.addProject(userId, newTitle, newDescription);
       const templateTasks = await this.getTemplateTasks(template.id).pipe(take(1)).toPromise();
       templateTasks.forEach(async (templateTask, index) => {
         const taskId = await this.addTask(userId, templateTask.title, templateTask.description, projectId, index);
@@ -661,22 +661,6 @@ export class FirestoreService {
       return null;
     }
   }
-
-  // async getProjectTaskName(projectId: string, taskId: string): Promise<ProjectTaskName> {
-  //   const projectTaskName: ProjectTaskName = {
-  //     projectName: null,
-  //     taskName: null
-  //   };
-
-  //   const project: Project = await this.db.collection<Project>("projects").doc<Project>(projectId).valueChanges().pipe(take(1)).toPromise();
-  //   projectTaskName.projectName = project.title;
-  //   if (taskId) {
-  //     const task: Task = await this.db.collection<Task>("tasks").doc<Task>(taskId).valueChanges().pipe(take(1)).toPromise();
-  //     projectTaskName.taskName = task.title;
-  //   }
-
-  //   return projectTaskName;
-  // }
 
   getUser(userId: string): Observable<User> {
     return this.db.collection<User>("users").doc<User>(userId).valueChanges();

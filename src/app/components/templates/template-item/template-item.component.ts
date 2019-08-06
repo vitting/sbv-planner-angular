@@ -14,7 +14,10 @@ export class TemplateItemComponent implements OnInit {
   @Input() template: Template;
   @Input() addMode = false;
   templateTasks: TemplateTask[] = [];
-  constructor(private templateService: TemplateService, private projectService: ProjectService, private router: Router) { }
+  constructor(
+    private templateService: TemplateService,
+    private projectService: ProjectService,
+    private router: Router) { }
 
   ngOnInit() {
     this.templateService.getTemplateTasks(this.template.id).subscribe((templateTasks) => {
@@ -38,7 +41,10 @@ export class TemplateItemComponent implements OnInit {
     this.templateService.addTemplateTask(this.template);
   }
 
-  createProjectFromTemplate() {
-    this.projectService.createProjectFromTemplate(this.template);
+  async createProjectFromTemplate() {
+    const result = await this.projectService.createProjectFromTemplate(this.template);
+    if (result) {
+      this.router.navigate(["/"]);
+    }
   }
 }

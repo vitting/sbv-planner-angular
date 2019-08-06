@@ -21,6 +21,7 @@ import { Summary } from '../models/summary.model';
 import { NavbarService } from './navbar.service';
 import { FabButtonService } from './fab-button.service';
 import { Template } from '../models/template.model';
+import { Router } from '@angular/router';
 
 export interface ProjectItemEditModeChange {
   projectId: string;
@@ -96,10 +97,10 @@ export class ProjectService {
 
   createProjectFromTemplate(template: Template) {
     const dialogConfirmData: DialogConfirmData = {
-      header: "Opret project",
+      header: "Opret projekt",
       button1Text: "Ja",
       button2Text: "Nej",
-      message1: "Vil du et projekt fra den valgte skabelon?",
+      message1: "Vil du oprette et nyt projekt fra den valgte skabelon?",
       message2: null
     };
 
@@ -110,13 +111,51 @@ export class ProjectService {
       data: dialogConfirmData
     });
 
-    dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      this.fabuttonService.showFabButton = true;
-      if (result && result.action === DialogConfirmAction.yes) {
-        this.navbarService.showProgressbar = true;
-        const projectId = await this.firestoreService.createProjectFromTemplate(this.authService.userId, template);
-        this.navbarService.showProgressbar = false;
-      }
+    return new Promise((resolve) => {
+      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
+        this.fabuttonService.showFabButton = true;
+        if (result && result.action === DialogConfirmAction.yes) {
+          const resultTitle = await this.setTitleForProjectCreatedFromTemplate(template);
+          if (resultTitle) {
+            this.navbarService.showProgressbar = true;
+            const projectId = await this.firestoreService.createProjectFromTemplate(
+              this.authService.userId,
+              template,
+              resultTitle.field1Value,
+              resultTitle.field2Value);
+            this.navbarService.showProgressbar = false;
+            resolve(projectId);
+          }
+          resolve(null);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  }
+
+  setTitleForProjectCreatedFromTemplate(template: Template): Promise<Dialog2FieldsResult> {
+    const dialogEditData: Dialog2FieldsData = {
+      title: "Titel og beskrivelse for nyt projekt",
+      buttonText: "Gem",
+      field1Label: "Titel",
+      field1Value: template.title,
+      field2Label: "Beskrivelse",
+      field2Value: template.description
+    };
+
+    this.fabuttonService.showFabButton = false;
+    const dialogEditRef = this.dialog.open(Dialog2FieldsComponent, {
+      maxWidth: '350',
+      autoFocus: true,
+      data: dialogEditData
+    });
+
+    return new Promise((resolve) => {
+      dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
+        this.fabuttonService.showFabButton = true;
+        resolve(result);
+      });
     });
   }
 

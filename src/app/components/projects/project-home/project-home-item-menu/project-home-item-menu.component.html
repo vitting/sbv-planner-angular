@@ -7,13 +7,7 @@
   <mat-divider></mat-divider>
   <a mat-list-item (click)="action($event, 'gotoComments')">
     <span>
-      <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Vis projektets kommentarer
-    </span>
-  </a>
-  <mat-divider></mat-divider>
-  <a mat-list-item (click)="action($event, 'removeFromProject')">
-    <span>
-      <fa-icon [icon]="['fas', 'arrow-left']" class="app-menu-icon"></fa-icon>Forlad projektet
+      <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon"></fa-icon>Vis projektets kommentar
     </span>
   </a>
   <div *ngIf="authService.isEditor">
@@ -24,4 +18,10 @@
       </span>
     </a>
   </div>
+  <mat-divider></mat-divider>
+  <a mat-list-item (click)="action($event, 'removeFromProject')">
+    <span>
+      <fa-icon [icon]="['fas', 'arrow-left']" class="app-menu-icon"></fa-icon>Forlad projektet
+    </span>
+  </a>
 </mat-nav-list>
