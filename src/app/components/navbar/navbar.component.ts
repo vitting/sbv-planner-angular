@@ -155,28 +155,56 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.router.navigate(["/"]);
         break;
       case "calendar":
-        this.router.navigate(["/calendar"]);
+        this.router.navigate(["/calendar"], {
+          queryParams: {
+            showback: false
+          }
+        });
         break;
       case "calendaredit":
-        this.router.navigate(["/calendar/edit"]);
+        this.router.navigate(["/calendar/edit"], {
+          queryParams: {
+            showback: false
+          }
+        });
         break;
       case "projects":
-        this.router.navigate(["/projects"]);
+        this.router.navigate(["/projects"], {
+          queryParams: {
+            showback: false
+          }
+        });
         break;
       case "templates":
-        this.router.navigate(["/templates"]);
+        this.router.navigate(["/templates"], {
+          queryParams: {
+            showback: false
+          }
+        });
         break;
       case "approveusers":
-        this.router.navigate(["/users/accept"]);
+        this.router.navigate(["/users/accept"], {
+          queryParams: {
+            showback: false
+          }
+        });
         break;
       case "adminusers":
-        this.router.navigate(["/users/admin"]);
+        this.router.navigate(["/users/admin"], {
+          queryParams: {
+            showback: false
+          }
+        });
         break;
       case "help":
 
         break;
       case "settings":
-        this.router.navigate(["/settings"]);
+        this.router.navigate(["/settings"], {
+          queryParams: {
+            showback: false
+          }
+        });
         break;
       case "logout":
         this.logout();

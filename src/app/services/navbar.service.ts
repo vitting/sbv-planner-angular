@@ -43,8 +43,19 @@ export class NavbarService {
     this.router.events.subscribe((event) => {
       if (this.authService.userId && this.authService.authUserInfo.accepted) {
         if (event instanceof NavigationEnd) {
+          const urlTree = this.router.parseUrl(event.url);
+
+          if (urlTree.queryParams.showback !== undefined && urlTree.queryParams.showback === "false") {
+            this.resetRouteIndex();
+            this.backRouteClicked = false;
+            this.emitRouteChange();
+            return;
+          }
+
           this.prevRoute = this.currentRoute;
           this.currentRoute = event.url;
+
+
 
           if (this.currentRoute && this.currentRoute === "/") {
             this.resetRouteIndex();
@@ -54,8 +65,8 @@ export class NavbarService {
             }
           }
 
-          this.emitRouteChange();
           this.backRouteClicked = false;
+          this.emitRouteChange();
         }
       }
     });
