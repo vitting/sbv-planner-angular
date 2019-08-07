@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import {
   DialogConfirmData,
@@ -14,14 +14,18 @@ import {
 import { ProjectService } from 'src/app/services/project.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ProjectEditItemMenuComponent, ProjectEditItemResult } from './project-edit-item-menu/project-edit-item-menu.component';
+import { NoDataBoxData } from '../../shared/no-data-box/no-data-box.component';
 
 @Component({
   selector: 'app-project-edit',
   templateUrl: './project-edit.component.html'
 })
 export class ProjectEditComponent implements OnInit {
-  projects$: Observable<Project[]>;
+  projects: Project[] = [];
   editMode = true;
+  nodata: NoDataBoxData;
+  showNoData = false;
+  private projectsSub: Subscription;
   constructor(
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
@@ -34,7 +38,15 @@ export class ProjectEditComponent implements OnInit {
   ngOnInit() {
     this.navbarService.navbarTitle.next("Projekter");
 
-    this.projects$ = this.firestoreService.getProjects();
+    this.nodata = {
+      textline1: "Der er endnu ikke oprettet nogen projekter.",
+      textline2: "Kom i gang og være den første til at oprette et projekt."
+    };
+
+    this.projectsSub = this.firestoreService.getProjects().subscribe((projects) => {
+      this.projects = projects;
+      this.showNoData = projects.length === 0;
+    });
   }
 
   async addProject() {

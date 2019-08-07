@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { ProjectListItemModule } from '../project-list-item/project-list-item.module';
 import { ProjectEditItemMenuComponent } from './project-edit-item-menu/project-edit-item-menu.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NoDataBoxModule } from '../../shared/no-data-box/no-data-box.module';
 
 @NgModule({
   declarations: [ProjectEditComponent, ProjectEditItemMenuComponent],
@@ -17,7 +18,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatListModule,
     FontAwesomeModule,
     FabButtonModule,
-    ProjectListItemModule
+    ProjectListItemModule,
+    NoDataBoxModule
   ],
   entryComponents: [ProjectEditItemMenuComponent],
   exports: [ProjectEditComponent, ProjectEditItemMenuComponent]
