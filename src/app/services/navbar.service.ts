@@ -9,6 +9,7 @@ import {
   DialogConfirmAction
 } from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
 
 export interface NavbarRoutes {
   prevRoute: string;
@@ -44,7 +45,6 @@ export class NavbarService {
       if (this.authService.userId && this.authService.authUserInfo.accepted) {
         if (event instanceof NavigationEnd) {
           const urlTree = this.router.parseUrl(event.url);
-
           if (urlTree.queryParams.showback !== undefined && urlTree.queryParams.showback === "false") {
             this.resetRouteIndex();
             this.backRouteClicked = false;
@@ -54,8 +54,6 @@ export class NavbarService {
 
           this.prevRoute = this.currentRoute;
           this.currentRoute = event.url;
-
-
 
           if (this.currentRoute && this.currentRoute === "/") {
             this.resetRouteIndex();
