@@ -95,6 +95,10 @@ form {
   &.app-item-container-message-error {
     background-color: $bg-color-message-error;
   }
+
+  &.app-item-container-project-filter {
+    background-color: $bg-color-project-filter;
+  }
 }
 
 .app-menu-icon {

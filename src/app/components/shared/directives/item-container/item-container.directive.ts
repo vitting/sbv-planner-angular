@@ -46,6 +46,9 @@ export class ItemContainerDirective implements OnInit {
       case "message-error":
         this.render.addClass(this.elemRef.nativeElement, "app-item-container-message-error");
         break;
+      case "project-filter":
+        this.render.addClass(this.elemRef.nativeElement, "app-item-container-project-filter");
+        break;
     }
   }
 }

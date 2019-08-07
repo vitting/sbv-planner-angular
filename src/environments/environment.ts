@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   debug: true,
-  firestoreDebug: false
+  firestoreDebug: false,
+  authGuardDebug: false
 };
 
 /*

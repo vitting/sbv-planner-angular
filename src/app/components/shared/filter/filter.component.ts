@@ -23,12 +23,14 @@ export interface FilterItem {
     state("closed", style({
       height: 0,
       transform: 'scaleY(0)',
-      opacity: 0
+      opacity: 0,
+      'padding-bottom': 0
     })),
     state("opened", style({
       height: 100,
       transform: 'scaleY(1)',
-      opacity: 1
+      opacity: 1,
+      'padding-bottom': '10px'
     })),
     transition("closed => opened", animate("300ms ease-in")),
     transition("opened => closed", animate("300ms ease-out"))

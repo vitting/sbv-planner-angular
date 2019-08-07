@@ -4,7 +4,7 @@
 </div>
 <app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>
 <mat-list *ngIf="!showNoData" class="app-list">
-    <app-filter (selectionChange)="filterChange($event)" [title]="filterTitle" [opened]="false" [containerType]="'project'"
+    <app-filter (selectionChange)="filterChange($event)" [title]="filterTitle" [opened]="false" [containerType]="'project-filter'"
     [filterItems]="filterItems"></app-filter>
   <app-project-list-item mat-list-item (menuClick)="projectItemMenuClick($event)"
     (commentsTotalClick)="gotoComments($event)" (tasksTotalClick)="gotoTasks($event)"

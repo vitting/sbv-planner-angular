@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     return this.authService.isUserAuthenticated$.pipe(map((result) => {
       // If no authentication is required
       if (route.data && route.data.noAuthRequired) {
-        if (environment.debug) {
+        if (environment.authGuardDebug) {
           console.log("AUTHGUARD NO AUTH REQUIRED");
         }
 
@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
 
       // If user isn't authenticated
       if (!result) {
-        if (environment.debug) {
+        if (environment.authGuardDebug) {
           console.log("AUTHGUARD WE ARE NOT AUTHENTICATED");
         }
 
@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate {
 
       // If we are waiting for approval
       if (this.authService.authUserInfo.waitingForApproval) {
-        if (environment.debug) {
+        if (environment.authGuardDebug) {
           console.log("AUTHGUARD WE ARE WAITING FOR APPROVAL");
         }
 
@@ -47,7 +47,7 @@ export class AuthGuard implements CanActivate {
 
       // If user isn't accpeted
       if (!this.authService.authUserInfo.accepted) {
-        if (environment.debug) {
+        if (environment.authGuardDebug) {
           console.log("AUTHGUARD WE ARE NOT ACCEPTED");
         }
 
@@ -58,13 +58,13 @@ export class AuthGuard implements CanActivate {
       // If user have to be Administrator
       if (route.data && route.data.onlyAdmin) {
         if (this.authService.authUserInfo.admin) {
-          if (environment.debug) {
+          if (environment.authGuardDebug) {
             console.log("AUTHGUARD ONLY ADMIN TRUE");
           }
 
           return true;
         } else {
-          if (environment.debug) {
+          if (environment.authGuardDebug) {
             console.log("AUTHGUARD ONLY ADMIN FALSE");
           }
 
@@ -76,13 +76,13 @@ export class AuthGuard implements CanActivate {
       // If user have to be Editor
       if (route.data && route.data.onlyEditor) {
         if (this.authService.authUserInfo.editor) {
-          if (environment.debug) {
+          if (environment.authGuardDebug) {
             console.log("AUTHGUARD ONLY EDITOR TRUE");
           }
 
           return true;
         } else {
-          if (environment.debug) {
+          if (environment.authGuardDebug) {
             console.log("AUTHGUARD ONLY EDITOR FALSE");
           }
 
@@ -91,7 +91,7 @@ export class AuthGuard implements CanActivate {
         }
       }
 
-      if (environment.debug) {
+      if (environment.authGuardDebug) {
         console.log("AUTHGUARD WE REACHED TO END");
       }
 
