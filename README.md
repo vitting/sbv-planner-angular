@@ -4,7 +4,7 @@
 
 For Firebase config add the file __firebase-config.ts__ in the environments folder with you Firebase config:
 
-```
+```typescript
 export const firebaseConfig = {
     firebase: {
         apiKey: 'YOU FIREBASE API KEY',
