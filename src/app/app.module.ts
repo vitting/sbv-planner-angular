@@ -14,23 +14,15 @@ import {
   faUsers,
   faEdit,
   faHome,
-  faAddressBook,
-  faUserEdit,
   faSignInAlt,
   faSignOutAlt,
-  faClipboardList,
-  faBook,
-  faArchive,
   faArrowLeft,
-  faTrash,
   faCircle,
-  faPlusCircle,
   faChevronCircleRight,
   faCog
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faComment,
-  faComments,
   faCalendar,
   faTrashAlt,
   faLightbulb,
@@ -38,8 +30,6 @@ import {
   faCheckSquare,
   faSquare,
   faQuestionCircle,
-  faCircle as faCircle_outline,
-  faDotCircle,
   faCalendarAlt,
   faCalendarPlus
 } from '@fortawesome/free-regular-svg-icons';
@@ -63,7 +53,6 @@ import 'moment/locale/da';
 import { SplashScreenModule } from './components/shared/splash-screen/splash-screen.module';
 import { UsersModule } from './components/users/users.module';
 import { YearCalendarModule } from './components/year-calendar/year-calendar.module';
-import { Dialog2FieldsComponent } from './components/shared/dialog-2-fields/dialog-2-fields.component';
 import { Dialog2FieldsModule } from './components/shared/dialog-2-fields/dialog-2-fields.module';
 import { Dialog1FieldModule } from './components/shared/dialog-1-field/dialog-1-fieldmodule';
 import { DialogConfirmModule } from './components/shared/dialog-confirm/dialog-confirm.module';
@@ -106,33 +95,23 @@ export class AppModule {
     library.add(
       faTimesCircle,
       faComment,
-      faComments,
       faCog,
       faTasks,
       faCalendar,
       faUser,
-      faAddressBook,
-      faUserEdit,
       faLightbulb,
       faSignInAlt,
-      faClipboardList,
       faCalendarAlt,
       faCalendarPlus,
       faEdit,
       faCheckSquare,
       faSquare,
-      faBook,
-      faArchive,
       faClipboard,
       faHome,
-      faTrash,
       faTrashAlt,
       faUsers,
       faArrowLeft,
-      faPlusCircle,
       faCircle,
-      faCircle_outline,
-      faDotCircle,
       faQuestionCircle,
       faChevronCircleRight,
       faSignOutAlt);
