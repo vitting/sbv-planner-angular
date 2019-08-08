@@ -49,6 +49,9 @@ export class ItemContainerDirective implements OnInit {
       case "project-filter":
         this.render.addClass(this.elemRef.nativeElement, "app-item-container-project-filter");
         break;
+      case "log":
+        this.render.addClass(this.elemRef.nativeElement, "app-item-container-log");
+        break;
     }
   }
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import {
   DialogConfirmData,
@@ -20,7 +20,7 @@ import { NoDataBoxData } from '../../shared/no-data-box/no-data-box.component';
   selector: 'app-project-edit',
   templateUrl: './project-edit.component.html'
 })
-export class ProjectEditComponent implements OnInit {
+export class ProjectEditComponent implements OnInit, OnDestroy {
   projects: Project[] = [];
   editMode = true;
   nodata: NoDataBoxData;
@@ -47,6 +47,12 @@ export class ProjectEditComponent implements OnInit {
       this.projects = projects;
       this.showNoData = projects.length === 0;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.projectsSub) {
+      this.projectsSub.unsubscribe();
+    }
   }
 
   async addProject() {

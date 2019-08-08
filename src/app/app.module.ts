@@ -31,7 +31,8 @@ import {
   faSquare,
   faQuestionCircle,
   faCalendarAlt,
-  faCalendarPlus
+  faCalendarPlus,
+  faFileAlt
 } from '@fortawesome/free-regular-svg-icons';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -56,6 +57,7 @@ import { YearCalendarModule } from './components/year-calendar/year-calendar.mod
 import { Dialog2FieldsModule } from './components/shared/dialog-2-fields/dialog-2-fields.module';
 import { Dialog1FieldModule } from './components/shared/dialog-1-field/dialog-1-fieldmodule';
 import { DialogConfirmModule } from './components/shared/dialog-confirm/dialog-confirm.module';
+import { LogsModule } from './components/logs/logs.module';
 
 @NgModule({
   declarations: [
@@ -85,7 +87,8 @@ import { DialogConfirmModule } from './components/shared/dialog-confirm/dialog-c
     Dialog2FieldsModule,
     Dialog1FieldModule,
     DialogConfirmModule,
-    AppRoutingModule, // AppRoutingModule = Keep this routing module last to make wildcard work correct
+    LogsModule,
+    AppRoutingModule // AppRoutingModule = Keep this routing module last to make wildcard work correct
   ],
   providers: [AngularFireAuthGuard],
   bootstrap: [AppComponent]
@@ -114,6 +117,7 @@ export class AppModule {
       faCircle,
       faQuestionCircle,
       faChevronCircleRight,
+      faFileAlt,
       faSignOutAlt);
   }
 }

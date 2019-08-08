@@ -99,6 +99,12 @@ form {
   &.app-item-container-project-filter {
     background-color: $bg-color-project-filter;
   }
+
+  &.app-item-container-log {
+    background-color: $bg-color-log;
+    color: $color-text-reverse;
+    border: 1px solid $bluegray-200;
+  }
 }
 
 .app-menu-icon {
