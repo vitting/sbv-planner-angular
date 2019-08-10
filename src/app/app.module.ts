@@ -60,7 +60,6 @@ import { Dialog2FieldsModule } from './components/shared/dialog-2-fields/dialog-
 import { Dialog1FieldModule } from './components/shared/dialog-1-field/dialog-1-fieldmodule';
 import { DialogConfirmModule } from './components/shared/dialog-confirm/dialog-confirm.module';
 import { LogsModule } from './components/logs/logs.module';
-import { NameOfUserPipe } from './components/shared/pipes/name-of-user.pipe';
 
 @NgModule({
   declarations: [

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,6 +12,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { User } from 'src/app/models/user.model';
 import { FilterItem } from '../../shared/filter/filter.component';
+import { CalendarService } from 'src/app/services/calendar.service';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,7 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
     private navbarService: NavbarService,
     private authService: AuthService,
     private projectService: ProjectService,
+    private calendarService: CalendarService,
     private router: Router,
     private bottomSheet: MatBottomSheet) { }
 

@@ -1,33 +1,32 @@
 @import "../../../../variables";
+
 .outer-container {
+  box-sizing: border-box;
+  font-weight: lighter;
+  padding: 20px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  color: $color-no-data-text;
   height: calc(100vh - #{$used-vertical-area-space} - 20px);
 
   &.no-data-small {
     height: 100%;
-    display: block;
   }
 
   .no-data-container {
-    box-sizing: border-box;
-    font-weight: lighter;
-    padding: 20px 40px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: $color-no-data-text;
-
     .line2 {
       margin-top: 15px;
     }
+
+    .no-data-button {
+      margin-top: 20px;
+    }
   }
 }
+
 
 
 

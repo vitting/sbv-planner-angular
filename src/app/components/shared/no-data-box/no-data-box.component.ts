@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 export interface NoDataBoxData {
   textline1: string;
@@ -11,6 +11,7 @@ export interface NoDataBoxData {
   styleUrls: ['./no-data-box.component.scss']
 })
 export class NoDataBoxComponent implements OnInit {
+  @ViewChild("itemContainer", {static: true}) element: ElementRef;
   @Input() data: NoDataBoxData;
   @Input() small = false;
   @Input() showButton = false;

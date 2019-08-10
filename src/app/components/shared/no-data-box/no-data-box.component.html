@@ -2,7 +2,7 @@
     <div class="no-data-container">
         <div>{{data?.textline1}}</div>
         <div class="line2" *ngIf="data?.textline2">{{data?.textline2}}</div>
-        <div *ngIf="showButton">
+        <div *ngIf="showButton" class="no-data-button">
           <button mat-fab (click)="NoDataAddButton()">
             <mat-icon>add</mat-icon>
           </button>
