@@ -24,6 +24,10 @@ export class UserService {
     private logService: LogService,
     private dialog: MatDialog) { }
 
+  addUser(userId: string, name: string) {
+    return this.firestoreService.addUser(userId, name);
+  }
+
   async acceptUser(user: User, accepted: boolean) {
     this.navbarService.showProgressbar = true;
     const userId = await this.firestoreService.updateUserAccepted(user.id, accepted);

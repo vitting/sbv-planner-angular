@@ -5,15 +5,23 @@ import { LogsRoutingModule } from './logs-routing.module';
 import { LogsComponent } from './logs.component';
 import { MatListModule } from '@angular/material/list';
 import { ItemContainerModule } from '../shared/directives/item-container/item-container.module';
-
+import { MomentModule } from 'ngx-moment';
+import { NameOfUserPipe } from '../shared/pipes/name-of-user.pipe';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { FilterModule } from '../shared/filter/filter.module';
 
 @NgModule({
-  declarations: [LogsComponent],
+  declarations: [LogsComponent, NameOfUserPipe],
   imports: [
     CommonModule,
     LogsRoutingModule,
     MatListModule,
-    ItemContainerModule
+    MatTooltipModule,
+    MomentModule,
+    FontAwesomeModule,
+    ItemContainerModule,
+    FilterModule
   ],
   exports: [LogsComponent]
 })

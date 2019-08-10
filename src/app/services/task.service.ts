@@ -334,7 +334,7 @@ export class TaskService {
   }
 
   addUserToSubTask(subTaskId: string): Promise<string> {
-    return this.firestoreService.addPersonToSubTask(subTaskId, this.authService.userId);
+    return this.firestoreService.addUserToSubTask(subTaskId, this.authService.userId);
   }
 
   removeUserFromSubTask(subTaskId: string, userId: string) {
@@ -357,7 +357,7 @@ export class TaskService {
       dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
         this.fabButtonService.showFabButton = true;
         if (result && result.action === DialogConfirmAction.yes) {
-          const resultId = await this.firestoreService.removePersonFromSubTask(subTaskId, userId);
+          const resultId = await this.firestoreService.removeUserFromSubTask(subTaskId, userId);
           resolve(resultId);
         } else {
           resolve(null);

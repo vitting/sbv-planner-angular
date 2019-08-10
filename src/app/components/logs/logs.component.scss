@@ -1,5 +1,11 @@
 @import "../../../variables";
 
-.log-header {
+.log-item {
+  font-weight: lighter;
 
+  .flex {
+    display: flex;
+  }
 }
+
+

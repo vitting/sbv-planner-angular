@@ -45,6 +45,34 @@ export class FirestoreService {
     return this.db.createId();
   }
 
+  getAllLogs() {
+    return this.db.collection<Log>("logs", (ref) => {
+      return ref.orderBy("date", "desc");
+    }).valueChanges();
+  }
+
+  getErrorLogs() {
+    return this.db.collection<Log>("logs", (ref) => {
+      return ref.where("type", "==", "error").orderBy("date", "desc");
+    }).valueChanges();
+  }
+
+  getInfoLogs() {
+    return this.db.collection<Log>("logs", (ref) => {
+      return ref.where("type", "==", "info").orderBy("date", "desc");
+    }).valueChanges();
+  }
+
+  getUserLogs() {
+    return this.db.collection<Log>("logs", (ref) => {
+      return ref.where("type", "==", "userAdd")
+      .where("type", "==", "userAdmin")
+      .where("type", "==", "userEditor")
+      .where("type", "==", "userActive")
+      .orderBy("date", "desc");
+    }).valueChanges();
+  }
+
   async addToLog(message: any, userId: string = "", type: string = "", component: string = "") {
     try {
       await this.db.collection<Log>("logs").add({
@@ -76,7 +104,7 @@ export class FirestoreService {
     return this.db.collection<Settings>("settings").doc<Settings>(userId).valueChanges();
   }
 
-  async updateUserMetaComments(userId: string, parentId: string) {
+    async updateUserMetaComments(userId: string, parentId: string) {
     try {
       const data = {};
 
@@ -523,6 +551,7 @@ export class FirestoreService {
     };
     try {
       await this.addSettings(userId);
+      await this.updateUserMetaLastCheckToAcceptUsers(userId);
       await this.db.collection<User>("users").doc(userId).set(user);
       return user;
     } catch (error) {
@@ -989,7 +1018,7 @@ export class FirestoreService {
     }
   }
 
-  async addPersonToSubTask(subTaskId: string, userId: string) {
+  async addUserToSubTask(subTaskId: string, userId: string) {
     const timestamp = this.timestamp;
 
     try {
@@ -1011,7 +1040,7 @@ export class FirestoreService {
     }
   }
 
-  async removePersonFromSubTask(subTaskId: string, userId: string) {
+  async removeUserFromSubTask(subTaskId: string, userId: string) {
     const timestamp = this.timestamp;
 
     try {

@@ -1,4 +1,5 @@
-<mat-list class="app-list">
+<app-no-data-box *ngIf="showNoData" [data]="nodata" [showButton]="true" (noDataAddClick)="addNewProject()"></app-no-data-box>
+<mat-list class="app-list" *ngIf="!showNoData">
   <app-project-list-item mat-list-item (addPersonClick)="projectAddPersonClick($event)" *ngFor="let project of projects"
     [project]="project" [enableRemoveUserButton]="false" [projectButtonState]="'addperson'" [passiveMode]="true">
   </app-project-list-item>

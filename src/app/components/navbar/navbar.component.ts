@@ -82,6 +82,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if (this.authService.isAdmin) {
         if (appMeta && appMeta.usersToApprove) {
           const metaAcceptVisit = this.authService.authUserMeta["accept-visit"];
+
           if (metaAcceptVisit && metaAcceptVisit.usersApprovedLastChecked) {
             const appDate: Date = appMeta.userToApproveLastUpdated.toDate();
             const userDate: Date = metaAcceptVisit.usersApprovedLastChecked.toDate();
@@ -134,6 +135,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       "app-appbar-color-state-user": this.navbarColorState === "user",
       "app-appbar-color-state-template": this.navbarColorState === "template",
       "app-appbar-color-state-message": this.navbarColorState === "message",
+      "app-appbar-color-state-log": this.navbarColorState === "log",
       "app-appbar-color-state-setting": this.navbarColorState === "setting"
     };
   }

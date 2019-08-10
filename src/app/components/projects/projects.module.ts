@@ -5,6 +5,7 @@ import { ProjectsComponent } from './projects.component';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { RouterModule } from '@angular/router';
 import { ProjectListItemModule } from './project-list-item/project-list-item.module';
+import { NoDataBoxModule } from '../shared/no-data-box/no-data-box.module';
 
 @NgModule({
   declarations: [ProjectsComponent],
@@ -13,6 +14,7 @@ import { ProjectListItemModule } from './project-list-item/project-list-item.mod
     RouterModule,
     ProjectsRoutingModule,
     MatListModule,
+    NoDataBoxModule,
     ProjectListItemModule
   ],
   exports: [ProjectsComponent]

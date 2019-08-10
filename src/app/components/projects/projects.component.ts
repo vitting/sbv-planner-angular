@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
+import { NoDataBoxData } from '../shared/no-data-box/no-data-box.component';
 
 @Component({
   selector: 'app-projects',
@@ -12,7 +13,8 @@ import { ProjectService } from 'src/app/services/project.service';
 export class ProjectsComponent implements OnInit, OnDestroy {
   projects: Project[];
   projectSub: Subscription;
-
+  nodata: NoDataBoxData;
+  showNoData = false;
   constructor(
     private navbarService: NavbarService,
     private projectService: ProjectService,
@@ -21,7 +23,13 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.navbarService.navbarTitle.next("Tilslut til projekt");
 
+    this.nodata = {
+      textline1: "Der endnu ikke oprettet nogen projekter.",
+      textline2: "Vær den første til at oprette et projekt"
+    };
+
     this.projectSub = this.projectService.getProjectsNotContainingUserId().subscribe((projects) => {
+      this.showNoData = projects.length === 0;
       this.projects = projects;
     });
   }
@@ -35,5 +43,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     if (result) {
       this.router.navigate(["/"]);
     }
+  }
+
+  addNewProject() {
+    this.router.navigate(["/projects"]);
   }
 }

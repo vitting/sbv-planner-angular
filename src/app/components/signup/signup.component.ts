@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
 import { Router } from '@angular/router';
 import { LogService } from 'src/app/services/log.service';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
     private navbarService: NavbarService,
     private authService: AuthService,
     private logService: LogService,
-    private firestoreService: FirestoreService,
+    private userService: UserService,
     private router: Router) {
   }
 
@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
         this.navbarService.showProgressbar = true;
         const userCred = await this.authService.createUser(email, password);
         if (userCred) {
-          const user = await this.firestoreService.addUser(userCred.user.uid, name);
+          const user = await this.userService.addUser(userCred.user.uid, name);
           if (user) {
             this.logService.userAdded(user);
             this.router.navigate(["/message"]);
