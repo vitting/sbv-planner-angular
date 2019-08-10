@@ -32,8 +32,8 @@ export class LogsComponent implements OnInit, OnDestroy {
     });
 
     this.nodata = {
-      textline1: "Der ikke nogen log elemnter.",
-      textline2: null
+      textline1: "Der ikke nogen log elementer.",
+      textline2: ""
     };
 
     this.filterItems  = [
