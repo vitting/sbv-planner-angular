@@ -14,18 +14,14 @@
   .no-data-container {
     box-sizing: border-box;
     font-weight: lighter;
-    padding: 20px;
+    padding: 20px 40px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 1.2rem;
     color: $color-no-data-text;
-    background-color: $bg-color-no-data;
-
-
 
     .line2 {
       margin-top: 15px;
