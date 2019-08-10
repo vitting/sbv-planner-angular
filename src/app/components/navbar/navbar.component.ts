@@ -198,8 +198,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
           }
         });
         break;
-      case "help":
-
+      case "log":
+        this.router.navigate(["/logs"], {
+          queryParams: {
+            showback: false
+          }
+        });
         break;
       case "settings":
         this.router.navigate(["/settings"], {

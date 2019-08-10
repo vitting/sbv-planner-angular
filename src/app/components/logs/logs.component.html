@@ -1,31 +1,32 @@
-<app-filter (selectionChange)="filterChange($event)" [title]="filterTitle" [opened]="false" [containerType]="'log-filter'"
+<app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="false"></app-no-data-box>
+<div *ngIf="!showNoData">
+    <app-filter (selectionChange)="filterChange($event)" [title]="filterTitle" [opened]="false" [containerType]="'log-filter'"
     [filterItems]="filterItems"></app-filter>
-<app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>
-<mat-list class="app-list">
-  <div appItemContainer="log" *ngFor="let log of logs" class="log-item">
-    <div>
-      <div class="flex">
-        <fa-icon [icon]="['far', 'calendar']" class="app-menu-icon" matTooltip="Log Dato"></fa-icon>
-        <div>{{ log.date.toDate() | amLocal:'da' | amDateFormat: 'DD-MM-YYYY H:mm:ss' }}</div>
+  <mat-list class="app-list" >
+    <div appItemContainer="log" *ngFor="let log of logs" class="log-item">
+      <div>
+        <div class="flex">
+          <fa-icon [icon]="['far', 'calendar']" class="app-menu-icon" matTooltip="Log Dato"></fa-icon>
+          <div>{{ log.date.toDate() | amLocal:'da' | amDateFormat: 'DD-MM-YYYY H:mm:ss' }}</div>
+        </div>
+        <div class="flex">
+          <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon" matTooltip="Log Type"></fa-icon>
+          <div>{{ log.subtype }}</div>
+        </div>
+        <div class="flex">
+          <fa-icon [icon]="['fas', 'directions']" class="app-menu-icon" matTooltip="Log Komponent"></fa-icon>
+          <div>{{ log.component !== "" ? log.component : "Ingen komponent" }}</div>
+        </div>
+        <div class="flex">
+          <fa-icon [icon]="['fas', 'user']" class="app-menu-icon" matTooltip="Log Bruger">
+          </fa-icon>
+          <div>{{ log.userId | nameOfUser }}</div>
+        </div>
       </div>
       <div class="flex">
-        <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon" matTooltip="Log Type"></fa-icon>
-        <div>{{ log.subtype }}</div>
-      </div>
-      <div class="flex">
-        <fa-icon [icon]="['fas', 'directions']" class="app-menu-icon" matTooltip="Log Komponent"></fa-icon>
-        <div>{{ log.component !== "" ? log.component : "Ingen komponent" }}</div>
-      </div>
-      <div class="flex">
-        <fa-icon [icon]="['fas', 'user']" class="app-menu-icon" matTooltip="Log Bruger">
-        </fa-icon>
-        <div>{{ log.userId | nameOfUser }}</div>
+        <fa-icon [icon]="['fas', 'exclamation-circle']" class="app-menu-icon" matTooltip="Log Besked"></fa-icon>
+        <div>{{ log.message }}</div>
       </div>
     </div>
-    <div class="flex">
-      <fa-icon [icon]="['fas', 'exclamation-circle']" class="app-menu-icon" matTooltip="Log Besked"></fa-icon>
-      <div>{{ log.message }}</div>
-    </div>
-  </div>
-
-</mat-list>
+  </mat-list>
+</div>

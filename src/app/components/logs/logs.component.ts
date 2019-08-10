@@ -18,7 +18,7 @@ export class LogsComponent implements OnInit, OnDestroy {
   filterTitle = "Log filter";
   filterItems: FilterItem[];
   nodata: NoDataBoxData;
-  showNoData = false;
+  showNoData = true;
   private currentFilter = 1;
   private logSub: Subscription;
   constructor(
@@ -32,7 +32,7 @@ export class LogsComponent implements OnInit, OnDestroy {
     });
 
     this.nodata = {
-      textline1: "Der ikke nogen log elementer.",
+      textline1: "Loggen er tom.",
       textline2: ""
     };
 
