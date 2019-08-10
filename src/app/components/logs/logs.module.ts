@@ -10,6 +10,7 @@ import { NameOfUserPipe } from '../shared/pipes/name-of-user.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { FilterModule } from '../shared/filter/filter.module';
+import { NoDataBoxModule } from '../shared/no-data-box/no-data-box.module';
 
 @NgModule({
   declarations: [LogsComponent, NameOfUserPipe],
@@ -20,6 +21,7 @@ import { FilterModule } from '../shared/filter/filter.module';
     MatTooltipModule,
     MomentModule,
     FontAwesomeModule,
+    NoDataBoxModule,
     ItemContainerModule,
     FilterModule
   ],

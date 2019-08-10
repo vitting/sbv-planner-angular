@@ -1,7 +1,8 @@
 <app-filter (selectionChange)="filterChange($event)" [title]="filterTitle" [opened]="false" [containerType]="'log-filter'"
     [filterItems]="filterItems"></app-filter>
+<app-no-data-box *ngIf="showNoData" [data]="nodata" [small]="true"></app-no-data-box>
 <mat-list class="app-list">
-  <div appItemContainer="log" *ngFor="let log of logs$ | async" class="log-item">
+  <div appItemContainer="log" *ngFor="let log of logs" class="log-item">
     <div>
       <div class="flex">
         <fa-icon [icon]="['far', 'calendar']" class="app-menu-icon" matTooltip="Log Dato"></fa-icon>
@@ -9,7 +10,7 @@
       </div>
       <div class="flex">
         <fa-icon [icon]="['fas', 'chevron-circle-right']" class="app-menu-icon" matTooltip="Log Type"></fa-icon>
-        <div>{{ log.type }}</div>
+        <div>{{ log.subtype }}</div>
       </div>
       <div class="flex">
         <fa-icon [icon]="['fas', 'directions']" class="app-menu-icon" matTooltip="Log Komponent"></fa-icon>

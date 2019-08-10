@@ -51,32 +51,17 @@ export class FirestoreService {
     }).valueChanges();
   }
 
-  getErrorLogs() {
+  getLogsByType(logType: string) {
     return this.db.collection<Log>("logs", (ref) => {
-      return ref.where("type", "==", "error").orderBy("date", "desc");
+      return ref.where("type", "==", logType).orderBy("date", "desc");
     }).valueChanges();
   }
 
-  getInfoLogs() {
-    return this.db.collection<Log>("logs", (ref) => {
-      return ref.where("type", "==", "info").orderBy("date", "desc");
-    }).valueChanges();
-  }
-
-  getUserLogs() {
-    return this.db.collection<Log>("logs", (ref) => {
-      return ref.where("type", "==", "userAdd")
-      .where("type", "==", "userAdmin")
-      .where("type", "==", "userEditor")
-      .where("type", "==", "userActive")
-      .orderBy("date", "desc");
-    }).valueChanges();
-  }
-
-  async addToLog(message: any, userId: string = "", type: string = "", component: string = "") {
+  async addToLog(message: any, userId: string = "", type: string = "", subtype: string = "", component: string = "") {
     try {
       await this.db.collection<Log>("logs").add({
         type,
+        subtype,
         date: this.timestamp,
         message,
         userId,
