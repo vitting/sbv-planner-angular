@@ -3,21 +3,22 @@ import { FirestoreService } from './firestore.service';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import {
-  Dialog2FieldsData,
   Dialog2FieldsComponent,
-  Dialog2FieldsResult } from '../components/shared/dialog-2-fields/dialog-2-fields.component';
+  Dialog2FieldsResult
+} from '../components/shared/dialog-2-fields/dialog-2-fields.component';
 import { FabButtonService } from './fab-button.service';
 import { NavbarService } from './navbar.service';
 import { Template, TemplateTask, TemplateSubTask } from '../models/template.model';
 import {
-  DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
-  DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
+  DialogConfirmAction
+} from '../components/shared/dialog-confirm/dialog-confirm.component';
 import {
-  Dialog1FieldData,
   Dialog1FieldComponent,
-  Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
+  Dialog1FieldResult
+} from '../components/shared/dialog-1-field/dialog-1-field.component';
+import { DialogUtilityService } from './dialog-utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,7 @@ export class TemplateService {
     private authService: AuthService,
     private dialog: MatDialog,
     private navbarService: NavbarService,
+    private dialogUtility: DialogUtilityService,
     private fabuttonService: FabButtonService) { }
 
   getTemplate(templateId: string) {
@@ -47,284 +49,193 @@ export class TemplateService {
     return this.firestoreService.getTemplateSubTasks(templateTaskId);
   }
 
-  addTemplate() {
-    const dialogCreateData: Dialog2FieldsData = {
-      title: "Ny Skabelon",
-      buttonText: "Tilføj",
-      field1Label: "Titel",
-      field1Value: null,
-      field2Label: "Beskrivelse",
-      field2Value: null
-    };
-
+  async addTemplate() {
     this.fabuttonService.showFabButton = false;
     const dialogCreateRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: true,
-      data: dialogCreateData
+      data: this.dialogUtility.getDialog2FieldsData("Ny Skabelon", "Tilføj", "Titel", "Beskrivelse")
     });
 
-    return new Promise<string>((resolve, reject) => {
-      dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const templateId = await this.firestoreService.addTemplate(this.authService.authUserInfo, result.field1Value, result.field2Value);
-          this.navbarService.showProgressbar = false;
-          resolve(templateId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogCreateRef.afterClosed().toPromise<Dialog2FieldsResult>();
+    let templateId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      templateId = await this.firestoreService.addTemplate(this.authService.authUserInfo, result.field1Value, result.field2Value);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateId);
   }
 
-  updateTemplate(template: Template) {
-    const dialogCreateData: Dialog2FieldsData = {
-      title: "Rediger Skabelon",
-      buttonText: "Gem",
-      field1Label: "Titel",
-      field1Value: template.title,
-      field2Label: "Beskrivelse",
-      field2Value: template.description
-    };
-
+  async updateTemplate(template: Template) {
     this.fabuttonService.showFabButton = false;
     const dialogCreateRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: true,
-      data: dialogCreateData
+      data: this.dialogUtility.getDialog2FieldsData("Rediger Skabelon", "Gem", "Titel", "Beskrivelse", template.title, template.description)
     });
 
-    return new Promise<string>((resolve, reject) => {
-      dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const templateId = await this.firestoreService.updateTemplate(
-            this.authService.authUserInfo,
-            template.id,
-            result.field1Value,
-            result.field2Value);
-          this.navbarService.showProgressbar = false;
-          resolve(templateId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogCreateRef.afterClosed().toPromise<Dialog2FieldsResult>();
+    let templateId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      templateId = await this.firestoreService.updateTemplate(
+        this.authService.authUserInfo,
+        template.id,
+        result.field1Value,
+        result.field2Value);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateId);
   }
 
-  deleteTemplate(template: Template) {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Slet skabelon",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du skabelonen?",
-      message2: "Alle opgave grupper og opgaver bliver også slettet!"
-    };
-
+  async deleteTemplate(template: Template) {
     this.fabuttonService.showFabButton = false;
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
-      data: dialogConfirmData
+      data: this.dialogUtility.getDialogConfirmData(
+        "Slet skabelon", "Vil du skabelonen?", "Alle opgave grupper og opgaver bliver også slettet!")
     });
 
-    dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      this.fabuttonService.showFabButton = true;
-      if (result && result.action === DialogConfirmAction.yes) {
-        this.navbarService.showProgressbar = true;
-        const templateId = await this.firestoreService.deleteTemplate(template.id);
-        this.navbarService.showProgressbar = false;
-      }
-    });
+    const result = await dialogConfirmRef.afterClosed().toPromise<DialogConfirmResult>();
+    let templateId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result && result.action === DialogConfirmAction.yes) {
+      this.navbarService.showProgressbar = true;
+      templateId = await this.firestoreService.deleteTemplate(template.id);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateId);
   }
 
-  addTemplateTask(template: Template) {
-    const dialogCreateData: Dialog2FieldsData = {
-      title: "Ny opgave gruppe",
-      buttonText: "Tilføj",
-      field1Label: "Titel",
-      field1Value: null,
-      field2Label: "Beskrivelse",
-      field2Value: null
-    };
-
+  async addTemplateTask(template: Template) {
     this.fabuttonService.showFabButton = false;
     const dialogCreateRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: true,
-      data: dialogCreateData
+      data: this.dialogUtility.getDialog2FieldsData("Ny opgave gruppe", "Tilføj", "Titel", "Beskrivelse")
     });
 
-    return new Promise<string>((resolve, reject) => {
-      dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const templateTaskId = await this.firestoreService.addTemplateTask(template.id, result.field1Value, result.field2Value);
-          this.navbarService.showProgressbar = false;
-          resolve(templateTaskId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogCreateRef.afterClosed().toPromise<Dialog2FieldsResult>();
+    let templateTaskId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      templateTaskId = await this.firestoreService.addTemplateTask(template.id, result.field1Value, result.field2Value);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateTaskId);
   }
 
-  updateTemplateTask(templateTask: TemplateTask) {
-    const dialogCreateData: Dialog2FieldsData = {
-      title: "Rediger opgave gruppe",
-      buttonText: "Gem",
-      field1Label: "Titel",
-      field1Value: templateTask.title,
-      field2Label: "Beskrivelse",
-      field2Value: templateTask.description
-    };
-
+  async updateTemplateTask(templateTask: TemplateTask) {
     this.fabuttonService.showFabButton = false;
     const dialogCreateRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: true,
-      data: dialogCreateData
+      data: this.dialogUtility.getDialog2FieldsData(
+        "Rediger opgave gruppe", "Gem", "Titel", "Beskrivelse", templateTask.title, templateTask.description)
     });
 
-    return new Promise<string>((resolve, reject) => {
-      dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const templateId = await this.firestoreService.updateTemplateTask(
-            templateTask.id,
-            result.field1Value,
-            result.field2Value);
-          this.navbarService.showProgressbar = false;
-          resolve(templateId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogCreateRef.afterClosed().toPromise<Dialog2FieldsResult>();
+    let templateTaskId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      templateTaskId = await this.firestoreService.updateTemplateTask(
+        templateTask.id,
+        result.field1Value,
+        result.field2Value);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateTaskId);
   }
 
-  deleteTemplateTask(templateTask: TemplateTask) {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Slet opgave gruppe",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du opgave gruppen?",
-      message2: "Alle opgaver tilkynyttet til gruppen bliver også slettet!"
-    };
-
+  async deleteTemplateTask(templateTask: TemplateTask) {
     this.fabuttonService.showFabButton = false;
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
-      data: dialogConfirmData
+      data: this.dialogUtility.getDialogConfirmData(
+        "Slet opgave gruppe", "Vil du opgave gruppen?", "Alle opgaver tilkynyttet til gruppen bliver også slettet!")
     });
 
-    dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      this.fabuttonService.showFabButton = true;
-      if (result && result.action === DialogConfirmAction.yes) {
-        this.navbarService.showProgressbar = true;
-        const templateTaskId = await this.firestoreService.deleteTemplateTask(templateTask.id);
-        this.navbarService.showProgressbar = false;
-      }
-    });
+    const result = await dialogConfirmRef.afterClosed().toPromise<DialogConfirmResult>();
+    let templateTaskId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result && result.action === DialogConfirmAction.yes) {
+      this.navbarService.showProgressbar = true;
+      templateTaskId = await this.firestoreService.deleteTemplateTask(templateTask.id);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateTaskId);
   }
 
-  addTemplateSubTask(templateTask: TemplateTask) {
-    const dialogCreateData: Dialog1FieldData = {
-      title: "Ny opgave",
-      buttonText: "Tilføj",
-      fieldLabel: "Opgave",
-      fieldValue: null,
-      multiLine: 3
-    };
-
+  async addTemplateSubTask(templateTask: TemplateTask) {
     this.fabuttonService.showFabButton = false;
     const dialogCreateRef = this.dialog.open(Dialog1FieldComponent, {
       maxWidth: '350',
       autoFocus: true,
-      data: dialogCreateData
+      data: this.dialogUtility.getDialog1FieldData("Ny opgave", "Tilføj", "Opgave", null, 3)
     });
 
-    return new Promise<string>((resolve, reject) => {
-      dialogCreateRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const templateSubTaskId = await this.firestoreService.addTemplateSubTask(templateTask, result.fieldValue);
-          this.navbarService.showProgressbar = false;
-          resolve(templateSubTaskId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogCreateRef.afterClosed().toPromise<Dialog1FieldResult>();
+    let templateSubTaskId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      templateSubTaskId = await this.firestoreService.addTemplateSubTask(templateTask, result.fieldValue);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateSubTaskId);
   }
 
-  updateTemplateSubTask(templateSubTask: TemplateSubTask) {
-    const dialogCreateData: Dialog1FieldData = {
-      title: "Rediger opgave",
-      buttonText: "Gem",
-      fieldLabel: "Opgave",
-      fieldValue: templateSubTask.title,
-      multiLine: 3
-    };
-
+  async updateTemplateSubTask(templateSubTask: TemplateSubTask) {
     this.fabuttonService.showFabButton = false;
     const dialogCreateRef = this.dialog.open(Dialog1FieldComponent, {
       maxWidth: '350',
       autoFocus: true,
-      data: dialogCreateData
+      data: this.dialogUtility.getDialog1FieldData("Rediger opgave", "Gem", "Opgave", templateSubTask.title, 3)
     });
 
-    return new Promise<string>((resolve, reject) => {
-      dialogCreateRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const templateSubTaskId = await this.firestoreService.updateTemplateSubTask(templateSubTask.id, result.fieldValue);
-          this.navbarService.showProgressbar = false;
-          resolve(templateSubTaskId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogCreateRef.afterClosed().toPromise<Dialog1FieldResult>();
+    let templateSubTaskId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      templateSubTaskId = await this.firestoreService.updateTemplateSubTask(templateSubTask.id, result.fieldValue);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateSubTaskId);
   }
 
-  deleteTemplateSubTask(templateSubTask: TemplateSubTask) {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Slet opgaven",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du opgavem?",
-      message2: null
-    };
-
+  async deleteTemplateSubTask(templateSubTask: TemplateSubTask) {
     this.fabuttonService.showFabButton = false;
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
-      data: dialogConfirmData
+      data: this.dialogUtility.getDialogConfirmData("Slet opgaven", "Vil du opgavem?")
     });
 
-    dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      this.fabuttonService.showFabButton = true;
-      if (result && result.action === DialogConfirmAction.yes) {
-        this.navbarService.showProgressbar = true;
-        const templateSubTaskId = await this.firestoreService.deleteTemplateSubTask(templateSubTask.id);
-        this.navbarService.showProgressbar = false;
-      }
-    });
+    const result = await dialogConfirmRef.afterClosed().toPromise<DialogConfirmResult>();
+    let templateSubTaskId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result && result.action === DialogConfirmAction.yes) {
+      this.navbarService.showProgressbar = true;
+      templateSubTaskId = await this.firestoreService.deleteTemplateSubTask(templateSubTask.id);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(templateSubTaskId);
   }
 }

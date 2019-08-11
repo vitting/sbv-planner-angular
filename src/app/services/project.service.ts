@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Project } from '../models/project.model';
 import {
-  Dialog2FieldsData,
   Dialog2FieldsComponent,
   Dialog2FieldsResult
 } from '../components/shared/dialog-2-fields/dialog-2-fields.component';
 import { FirestoreService } from './firestore.service';
 import { AuthService } from './auth.service';
 import {
-  DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
   DialogConfirmAction
@@ -21,7 +19,7 @@ import { Summary } from '../models/summary.model';
 import { NavbarService } from './navbar.service';
 import { FabButtonService } from './fab-button.service';
 import { Template } from '../models/template.model';
-import { Router } from '@angular/router';
+import { DialogUtilityService } from './dialog-utility.service';
 
 export interface ProjectItemEditModeChange {
   projectId: string;
@@ -41,6 +39,7 @@ export class ProjectService {
     private firestoreService: FirestoreService,
     private navbarService: NavbarService,
     private fabuttonService: FabButtonService,
+    private dialogUtility: DialogUtilityService,
     private authService: AuthService) { }
 
   get currentProjectFilter() {
@@ -95,197 +94,139 @@ export class ProjectService {
     return this.firestoreService.getProjectsNotContainingUserId(this.authService.userId).pipe(take(1));
   }
 
-  createProjectFromTemplate(template: Template) {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Opret projekt",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du oprette et nyt projekt fra den valgte skabelon?",
-      message2: null
-    };
-
+  async createProjectFromTemplate(template: Template) {
     this.fabuttonService.showFabButton = false;
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
-      data: dialogConfirmData
+      data: this.dialogUtility.getDialogConfirmData(
+        "Opret projekt",
+        "Vil du oprette et nyt projekt fra den valgte skabelon?")
     });
 
-    return new Promise((resolve) => {
-      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result && result.action === DialogConfirmAction.yes) {
-          const resultTitle = await this.setTitleForProjectCreatedFromTemplate(template);
-          if (resultTitle) {
-            this.navbarService.showProgressbar = true;
-            const projectId = await this.firestoreService.createProjectFromTemplate(
-              this.authService.userId,
-              template,
-              resultTitle.field1Value,
-              resultTitle.field2Value);
-            this.navbarService.showProgressbar = false;
-            resolve(projectId);
-          }
-          resolve(null);
-        } else {
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogConfirmRef.afterClosed().toPromise<DialogConfirmResult>();
+    let projectId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result && result.action === DialogConfirmAction.yes) {
+      const resultTitle = await this.setTitleForProjectCreatedFromTemplate(template);
+      if (resultTitle) {
+        this.navbarService.showProgressbar = true;
+        projectId = await this.firestoreService.createProjectFromTemplate(
+          this.authService.userId,
+          template,
+          resultTitle.field1Value,
+          resultTitle.field2Value);
+        this.navbarService.showProgressbar = false;
+      }
+    }
+
+    return Promise.resolve(projectId);
   }
 
-  setTitleForProjectCreatedFromTemplate(template: Template): Promise<Dialog2FieldsResult> {
-    const dialogEditData: Dialog2FieldsData = {
-      title: "Titel og beskrivelse for nyt projekt",
-      buttonText: "Gem",
-      field1Label: "Titel",
-      field1Value: template.title,
-      field2Label: "Beskrivelse",
-      field2Value: template.description
-    };
-
+  async setTitleForProjectCreatedFromTemplate(template: Template): Promise<Dialog2FieldsResult> {
     this.fabuttonService.showFabButton = false;
     const dialogEditRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: true,
-      data: dialogEditData
+      data: this.dialogUtility.getDialog2FieldsData(
+        "Titel og beskrivelse for nyt projekt",
+        "Gem", "Titel", "Beskrivelse",
+        template.title,
+        template.description)
     });
 
-    return new Promise((resolve) => {
-      dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-        this.fabuttonService.showFabButton = true;
-        resolve(result);
-      });
-    });
+    const result = await dialogEditRef.afterClosed().toPromise<Dialog2FieldsResult>();
+    this.fabuttonService.showFabButton = true;
+    return Promise.resolve(result);
   }
 
-  addProject(): Promise<string> {
-    const dialogCreateData: Dialog2FieldsData = {
-      title: "Nyt Projekt",
-      buttonText: "Tilføj",
-      field1Label: "Titel",
-      field1Value: null,
-      field2Label: "Beskrivelse",
-      field2Value: null
-    };
-
+  async addProject(): Promise<string> {
     this.fabuttonService.showFabButton = false;
     const dialogCreateRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: true,
-      data: dialogCreateData
+      data: this.dialogUtility.getDialog2FieldsData("Nyt Projekt", "Tilføj", "Titel", "Beskrivelse")
     });
 
-    return new Promise<string>((resolve) => {
-      dialogCreateRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const projectId = await this.firestoreService.addProject(this.authService.userId, result.field1Value, result.field2Value);
-          this.navbarService.showProgressbar = false;
-          resolve(projectId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogCreateRef.afterClosed().toPromise<Dialog2FieldsResult>();
+    let projectId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      projectId = await this.firestoreService.addProject(this.authService.userId, result.field1Value, result.field2Value);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(projectId);
   }
 
-  editProject(project: Project) {
-    const dialogEditData: Dialog2FieldsData = {
-      title: "Rediger Projekt",
-      buttonText: "Gem",
-      field1Label: "Titel",
-      field1Value: project.title,
-      field2Label: "Beskrivelse",
-      field2Value: project.description
-    };
-
+  async editProject(project: Project) {
     this.fabuttonService.showFabButton = false;
     const dialogEditRef = this.dialog.open(Dialog2FieldsComponent, {
       maxWidth: '350',
       autoFocus: false,
-      data: dialogEditData
+      data: this.dialogUtility.getDialog2FieldsData("Rediger Projekt", "Gem", "Titel", "Beskrivelse", project.title, project.description)
     });
 
-    return new Promise((resolve, reject) => {
-      dialogEditRef.afterClosed().subscribe(async (result: Dialog2FieldsResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const projectId = await this.firestoreService.updateProject(
-            this.authService.userId,
-            project.id,
-            result.field1Value,
-            result.field2Value);
-          this.navbarService.showProgressbar = false;
-          resolve(projectId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogEditRef.afterClosed().toPromise<Dialog2FieldsResult>();
+    let projectId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      projectId = await this.firestoreService.updateProject(
+        this.authService.userId,
+        project.id,
+        result.field1Value,
+        result.field2Value);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(projectId);
   }
 
-  deleteProject(project: Project) {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Slet projekt",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du slette projektet?",
-      message2: "Alle opgaver og kommentarer bliver også slettet!"
-    };
-
+  async deleteProject(project: Project) {
     this.fabuttonService.showFabButton = false;
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
-      data: dialogConfirmData
+      data: this.dialogUtility.getDialogConfirmData(
+        "Slet projekt",
+        "Vil du slette projektet?",
+        "Alle opgaver og kommentarer bliver også slettet!")
     });
 
-    dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-      this.fabuttonService.showFabButton = true;
-      if (result && result.action === DialogConfirmAction.yes) {
-        this.navbarService.showProgressbar = true;
-        await this.firestoreService.deleteProject(project.id);
-        this.navbarService.showProgressbar = false;
-      }
-    });
+    const result = await dialogConfirmRef.afterClosed().toPromise<DialogConfirmResult>();
+    this.fabuttonService.showFabButton = true;
+    if (result && result.action === DialogConfirmAction.yes) {
+      this.navbarService.showProgressbar = true;
+      await this.firestoreService.deleteProject(project.id);
+      this.navbarService.showProgressbar = false;
+    }
   }
 
   addUserToProject(project: Project): Promise<string> {
     return this.firestoreService.addUserToProject(project.id, this.authService.userId);
   }
 
-  removeUserFromProject(project: Project, user: User) {
-    const data: DialogConfirmData = {
-      header: "Forlad projekt",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du forlade projektet?",
-      message2: "Du vil blive fjernet fra alle opgaver du ikke har afsluttet."
-    };
-
+  async removeUserFromProject(project: Project, user: User) {
     this.fabuttonService.showFabButton = false;
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       maxWidth: '350',
       autoFocus: false,
-      data
+      data: this.dialogUtility.getDialogConfirmData(
+        "Forlad projekt",
+        "Vil du forlade projektet?",
+        "Du vil blive fjernet fra alle opgaver du ikke har afsluttet.")
     });
 
-    return new Promise((resolve) => {
-      dialogRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-        this.fabuttonService.showFabButton = true;
-        if (result && result.action === DialogConfirmAction.yes) {
-          const projectId = await this.firestoreService.removeUserFromProject(project.id, user.id);
-          resolve(projectId);
-        } else {
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogRef.afterClosed().toPromise<DialogConfirmResult>();
+    let projectId = null;
+    this.fabuttonService.showFabButton = true;
+    if (result && result.action === DialogConfirmAction.yes) {
+      projectId = await this.firestoreService.removeUserFromProject(project.id, user.id);
+    }
+
+    return Promise.resolve(projectId);
   }
 
   async getProjectWhereSubtasksHasUserAssigned(completed: boolean) {

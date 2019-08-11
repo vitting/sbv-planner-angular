@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { CalendarItem } from 'src/app/models/calendar.model';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,6 @@ export class MonthItemComponent implements OnInit, OnDestroy {
   @Output() addCalendarItemClick = new EventEmitter<number>();
   @Output() editCalendarItemClick = new EventEmitter<CalendarItem>();
   @Output() deleteCalendarItemClick = new EventEmitter<CalendarItem>();
-  @ViewChild("monthItem", { static: true }) monthItemRef: ElementRef;
   itemClass = {};
   highligtMonth = false;
   monthName: string;

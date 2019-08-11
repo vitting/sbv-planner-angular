@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
+import { Dialog1FieldComponent, Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
 import { Comment } from '../models/comment.model';
 import {
-  DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
-  DialogConfirmAction } from '../components/shared/dialog-confirm/dialog-confirm.component';
+  DialogConfirmAction
+} from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { NavbarService } from './navbar.service';
 import { FabButtonService } from './fab-button.service';
+import { DialogUtilityService } from './dialog-utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,110 +23,75 @@ export class CommentService {
     private authService: AuthService,
     private navbarService: NavbarService,
     private fabButtonService: FabButtonService,
+    private dialogUtility: DialogUtilityService,
     private dialog: MatDialog) { }
 
   getComments(parentId: string) {
     return this.firestoreService.getComments(parentId);
   }
 
-  addComment(parentId: string, commentType: string): Promise<string> {
-    const data: Dialog1FieldData = {
-      title: "Ny kommentar",
-      buttonText: "Tilføj",
-      fieldLabel: "Skriv kommentar",
-      fieldValue: null,
-      multiLine: 3
-    };
-
+  async addComment(parentId: string, commentType: string): Promise<string> {
     this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
       autoFocus: true,
-      data
+      data: this.dialogUtility.getDialog1FieldData("Ny kommentar", "Tilføj", "Skriv kommentar", null, 3)
     });
 
-    return new Promise((resolve) => {
-      dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
-        this.fabButtonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const commentId = await this.firestoreService.addComment(
-            this.authService.authUserInfo,
-            result.fieldValue,
-            commentType,
-            parentId
-          );
-          this.navbarService.showProgressbar = false;
-          resolve(commentId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogRef.afterClosed().toPromise<Dialog1FieldResult>();
+    let commentId = null;
+    this.fabButtonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      commentId = await this.firestoreService.addComment(
+        this.authService.authUserInfo,
+        result.fieldValue,
+        commentType,
+        parentId
+      );
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(commentId);
   }
 
-  editComment(comment: Comment): Promise<string> {
-    const data: Dialog1FieldData = {
-      title: "Rediger kommentar",
-      buttonText: "Opdater",
-      fieldLabel: "Kommentar",
-      fieldValue: comment.text,
-      multiLine: 3
-    };
-
+  async editComment(comment: Comment): Promise<string> {
     this.fabButtonService.showFabButton = false;
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
       autoFocus: true,
-      data
+      data: this.dialogUtility.getDialog1FieldData("Rediger kommentar", "Opdater", "Kommentar", comment.text, 3)
     });
 
-    return new Promise((resolve) => {
-      dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
-        this.fabButtonService.showFabButton = true;
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const commentId = await this.firestoreService.updateComment(comment.id, result.fieldValue);
-          this.navbarService.showProgressbar = false;
-          resolve(commentId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogRef.afterClosed().toPromise<Dialog1FieldResult>();
+    let commentId = null;
+    this.fabButtonService.showFabButton = true;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      commentId = await this.firestoreService.updateComment(comment.id, result.fieldValue);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(commentId);
   }
 
-  deleteComment(comment: Comment): Promise<string> {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Slet kommentar",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du slette din kommentar?",
-      message2: null
-    };
-
+  async deleteComment(comment: Comment): Promise<string> {
     this.fabButtonService.showFabButton = false;
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
-      data: dialogConfirmData
+      data: this.dialogUtility.getDialogConfirmData("Slet kommentar", "Vil du slette din kommentar?")
     });
 
-    return new Promise((resolve) => {
-      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-        this.fabButtonService.showFabButton = true;
-        if (result && result.action === DialogConfirmAction.yes) {
-          this.navbarService.showProgressbar = true;
-          const commentId = await this.firestoreService.deleteComment(comment.id);
-          this.navbarService.showProgressbar = false;
-          resolve(commentId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogConfirmRef.afterClosed().toPromise<DialogConfirmResult>();
+    let commentId = null;
+    this.fabButtonService.showFabButton = true;
+    if (result && result.action === DialogConfirmAction.yes) {
+      this.navbarService.showProgressbar = true;
+      commentId = await this.firestoreService.deleteComment(comment.id);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(commentId);
   }
 }

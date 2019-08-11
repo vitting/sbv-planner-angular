@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from './firestore.service';
 import { AuthService } from './auth.service';
-import { Dialog1FieldData, Dialog1FieldComponent, Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
+import { Dialog1FieldComponent, Dialog1FieldResult } from '../components/shared/dialog-1-field/dialog-1-field.component';
 import { NavbarService } from './navbar.service';
 import { CalendarItem } from '../models/calendar.model';
 import {
-  DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
   DialogConfirmAction
 } from '../components/shared/dialog-confirm/dialog-confirm.component';
-import { BehaviorSubject } from 'rxjs';
+import { DialogUtilityService } from './dialog-utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +35,7 @@ export class CalendarService {
     private dialog: MatDialog,
     private firestoreService: FirestoreService,
     private navbarService: NavbarService,
+    private dialogUtility: DialogUtilityService,
     private authService: AuthService) { }
 
   getMonthName(month: number) {
@@ -46,97 +46,61 @@ export class CalendarService {
     return this.firestoreService.getCalendarItems(month);
   }
 
-  addCalendarItem(month: number) {
-    const data: Dialog1FieldData = {
-      title: "Ny kalender opgave",
-      buttonText: "Tilføj",
-      fieldLabel: "Opgave tekst",
-      fieldValue: null,
-      multiLine: 2
-    };
-
+  async addCalendarItem(month: number) {
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
       autoFocus: true,
-      data
+      data: this.dialogUtility.getDialog1FieldData("Ny kalender opgave", "Tilføj", "Opgave tekst", null, 2)
     });
 
-    return new Promise((resolve) => {
-      dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const itemId = await this.firestoreService.addCalendarItem(
-            this.authService.authUserInfo,
-            result.fieldValue,
-            month
-          );
-          this.navbarService.showProgressbar = false;
-          resolve(itemId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogRef.afterClosed().toPromise<Dialog1FieldResult>();
+    let calendarId = null;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      calendarId = await this.firestoreService.addCalendarItem(
+        this.authService.authUserInfo,
+        result.fieldValue,
+        month
+      );
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(calendarId);
   }
 
-  editCalendarItem(item: CalendarItem) {
-    const data: Dialog1FieldData = {
-      title: "Rediger kalender opgave",
-      buttonText: "Opdater",
-      fieldLabel: "Opgave tekst",
-      fieldValue: item.text,
-      multiLine: 2
-    };
-
+  async editCalendarItem(item: CalendarItem) {
     const dialogRef = this.dialog.open(Dialog1FieldComponent, {
       width: '350px',
       autoFocus: true,
-      data
+      data: this.dialogUtility.getDialog1FieldData("Rediger kalender opgave", "Opdater", "Opgave tekst", item.text, 2)
     });
 
-    return new Promise((resolve) => {
-      dialogRef.afterClosed().subscribe(async (result: Dialog1FieldResult) => {
-        if (result) {
-          this.navbarService.showProgressbar = true;
-          const itemId = await this.firestoreService.updateCalendarItem(item.id, result.fieldValue);
-          this.navbarService.showProgressbar = false;
-          resolve(itemId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogRef.afterClosed().toPromise<Dialog1FieldResult>();
+    let calendarId = null;
+    if (result) {
+      this.navbarService.showProgressbar = true;
+      calendarId = await this.firestoreService.updateCalendarItem(item.id, result.fieldValue);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(calendarId);
   }
 
-  deleteItem(item: CalendarItem) {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Slet kalender opgaven",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Vil du slette kalender opgaven?",
-      message2: null
-    };
-
+  async deleteItem(item: CalendarItem) {
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
-      data: dialogConfirmData
+      data: this.dialogUtility.getDialogConfirmData("Slet kalender opgaven", "Vil du slette kalender opgaven?")
     });
 
-    return new Promise((resolve) => {
-      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-        if (result && result.action === DialogConfirmAction.yes) {
-          this.navbarService.showProgressbar = true;
-          const itemId = await this.firestoreService.deleteCalendarItem(item.id);
-          this.navbarService.showProgressbar = false;
-          resolve(itemId);
-        } else {
-          this.navbarService.showProgressbar = false;
-          resolve(null);
-        }
-      });
-    });
+    const result = await dialogConfirmRef.afterClosed().toPromise<DialogConfirmResult>();
+    let calendarId = null;
+    if (result && result.action === DialogConfirmAction.yes) {
+      this.navbarService.showProgressbar = true;
+      calendarId = await this.firestoreService.deleteCalendarItem(item.id);
+      this.navbarService.showProgressbar = false;
+    }
+
+    return Promise.resolve(calendarId);
   }
 }

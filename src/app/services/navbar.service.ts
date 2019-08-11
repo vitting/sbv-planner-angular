@@ -3,12 +3,12 @@ import { Subject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './auth.service';
 import {
-  DialogConfirmData,
   DialogConfirmComponent,
   DialogConfirmResult,
   DialogConfirmAction
 } from '../components/shared/dialog-confirm/dialog-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogUtilityService } from './dialog-utility.service';
 import { Location } from '@angular/common';
 
 export interface NavbarRoutes {
@@ -37,6 +37,8 @@ export class NavbarService {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private dialogUtility: DialogUtilityService,
+    private location: Location,
     private dialog: MatDialog) {
     this.currentRoute = this.router.url;
     this.prevRoute = this.currentRoute;
@@ -87,6 +89,7 @@ export class NavbarService {
   resetRouteIndex() {
     this.prevRoutesIndex = [];
     this.prevRoute = null;
+    this.location.replaceState("/");
   }
 
   set showIndicator(status: boolean) {
@@ -126,32 +129,21 @@ export class NavbarService {
   }
 
   async logout(): Promise<boolean> {
-    const dialogConfirmData: DialogConfirmData = {
-      header: "Log ud",
-      button1Text: "Ja",
-      button2Text: "Nej",
-      message1: "Er du sikker på du vil logge ud?",
-      message2: null
-    };
-
     const dialogConfirmRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
       autoFocus: false,
-      data: dialogConfirmData
+      data: this.dialogUtility.getDialogConfirmData("Log ud", "Er du sikker på du vil logge ud?")
     });
 
-    return new Promise((resolve, reject) => {
-      dialogConfirmRef.afterClosed().subscribe(async (result: DialogConfirmResult) => {
-        if (result && result.action === DialogConfirmAction.yes) {
-          this.showProgressbar = true;
-          await this.authService.logout();
-          this.showProgressbar = false;
-          resolve(true);
-        } else {
-          this.showProgressbar = false;
-          resolve(false);
-        }
-      });
-    });
+    const result = await dialogConfirmRef.afterClosed().toPromise<DialogConfirmResult>();
+    let returnValue = false;
+    if (result && result.action === DialogConfirmAction.yes) {
+      this.showProgressbar = true;
+      await this.authService.logout();
+      this.showProgressbar = false;
+      returnValue = true;
+    }
+
+    return Promise.resolve(returnValue);
   }
 }

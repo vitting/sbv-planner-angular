@@ -16,7 +16,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private splashService: SplashService) {}
 
   ngOnInit(): void {
-    // this.authService.logout();
     this.splashSub = this.splashService.splashShow.subscribe((showSplash) => {
       this.showSplash = showSplash;
     });

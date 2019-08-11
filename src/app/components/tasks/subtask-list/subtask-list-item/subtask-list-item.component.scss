@@ -6,7 +6,6 @@
   padding: 5px 2px 5px 10px;
   background-color: $bg-color-subtask-item;
   margin-bottom: 5px;
-  border-radius: 4px;
   min-height: 50px;
 
   &.app-sublist-item-completed {
@@ -39,6 +38,5 @@
 
   &:hover {
     background-color: $bg-color-subtask-item-hover;
-    border-radius: 4px;
   }
 }

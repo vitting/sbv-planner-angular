@@ -21,7 +21,8 @@ import {
   faExclamationCircle,
   faChevronCircleRight,
   faCog,
-  faDirections
+  faDirections,
+  faCalendarDay
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faComment,
@@ -103,6 +104,7 @@ export class AppModule {
       faCog,
       faTasks,
       faCalendar,
+      faCalendarDay,
       faUser,
       faLightbulb,
       faSignInAlt,
@@ -122,6 +124,7 @@ export class AppModule {
       faExclamationCircle,
       faFileAlt,
       faDirections,
+      faFileAlt,
       faSignOutAlt);
   }
 }

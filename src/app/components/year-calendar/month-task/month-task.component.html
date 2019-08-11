@@ -4,7 +4,11 @@
       <mat-icon>edit</mat-icon>
     </button>
     <fa-icon [icon]="['fas', 'circle']" class="month-task-icon"></fa-icon>
-    <div>{{calendarItem?.text}}</div>
+    <div class="month-task-title-text">
+      <div>
+        {{calendarItem?.text}}
+      </div>
+    </div>
   </div>
   <button class="month-task-delete app-button-outline" mat-icon-button (click)="deleteCalendarItem()" *ngIf="editMode">
     <mat-icon>delete</mat-icon>
