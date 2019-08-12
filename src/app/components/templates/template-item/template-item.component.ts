@@ -30,8 +30,8 @@ import { state, trigger, style, transition, animate } from '@angular/animations'
       opacity: 1,
       'padding-bottom': '10px'
     })),
-    transition("closed => opened", animate("300ms ease-in")),
-    transition("opened => closed", animate("300ms ease-out"))
+    transition("closed => opened", animate("200ms ease-in")),
+    transition("opened => closed", animate("200ms ease-out"))
   ])]
 })
 export class TemplateItemComponent implements OnInit {
