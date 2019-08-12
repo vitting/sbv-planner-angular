@@ -152,7 +152,7 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
   }
 
   gotoNewTemplate() {
-    this.router.navigate(["/templates/edit"]);
+    this.router.navigate(["/templates"]);
   }
 
   gotoProjects() {

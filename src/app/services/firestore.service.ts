@@ -154,7 +154,9 @@ export class FirestoreService {
   }
 
   getTemplate(templateId: string) {
-    return this.db.collection<Template>("templates").doc<Template>(templateId).valueChanges();
+    return this.db.collection<Template>("templates", (ref) => {
+      return ref.where("active", "==", true).where("id", "==", templateId);
+    }).valueChanges();
   }
 
   getTemplates() {

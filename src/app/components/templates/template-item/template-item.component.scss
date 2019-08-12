@@ -6,6 +6,7 @@
 
     .item-title {
       display: flex;
+      align-items: center;
     }
   }
 
@@ -13,5 +14,10 @@
     mat-icon {
       margin-left: 5px;
     }
+  }
+
+  .template-items-expand {
+    display: flex;
+    justify-content: flex-end;
   }
 }

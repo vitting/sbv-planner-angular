@@ -38,7 +38,7 @@ export class TemplatesComponent implements OnInit {
     if (templateId) {
       this.singleEditMode = true;
       this.templateService.getTemplate(templateId).subscribe((template) => {
-        this.templates.push(template);
+        this.templates = template;
       });
     } else {
       this.templateService.getTemplates().subscribe((templates: Template[]) => {

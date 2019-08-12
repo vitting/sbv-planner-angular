@@ -6,7 +6,6 @@
       </button>
       <app-item-title-desc [title]="template.title" [description]="template.description"></app-item-title-desc>
     </div>
-
     <button *ngIf="!addMode && editMode" mat-icon-button (click)="deleteTemplate()" class="app-button-outline">
       <mat-icon>delete</mat-icon>
     </button>
@@ -17,10 +16,20 @@
       <mat-icon>add_circle</mat-icon>
     </button>
   </div>
-  <button *ngIf="editMode" class="item-add app-button-outline" mat-button type="button" (click)="addTask()">Tilføj en opgave gruppe<mat-icon>
-      add_circle</mat-icon></button>
-  <mat-list>
-    <app-template-task-item [editMode]="editMode" *ngFor="let templateTask of templateTasks"
-      [templateTask]="templateTask"></app-template-task-item>
-  </mat-list>
+  <div class="template-items-expand" *ngIf="showExpand && !editMode">
+    <button mat-icon-button class="app-button-outline" [@buttonRotate]="stateOpenClose" (click)="openClose()">
+      <mat-icon>expand_less</mat-icon>
+    </button>
+  </div>
+  <div class="template-task-items" [@containerScale]="stateOpenClose">
+    <button *ngIf="editMode" class="item-add app-button-outline" mat-button type="button" (click)="addTask()">
+      Tilføj en opgave gruppe
+      <mat-icon>
+        add_circle</mat-icon>
+    </button>
+    <mat-list>
+      <app-template-task-item [editMode]="editMode" *ngFor="let templateTask of templateTasks"
+        [templateTask]="templateTask"></app-template-task-item>
+    </mat-list>
+  </div>
 </div>

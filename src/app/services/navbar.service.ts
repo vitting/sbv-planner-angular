@@ -38,7 +38,6 @@ export class NavbarService {
     private router: Router,
     private authService: AuthService,
     private dialogUtility: DialogUtilityService,
-    private location: Location,
     private dialog: MatDialog) {
     this.currentRoute = this.router.url;
     this.prevRoute = this.currentRoute;
@@ -47,7 +46,9 @@ export class NavbarService {
       if (this.authService.userId && this.authService.authUserInfo.accepted) {
         if (event instanceof NavigationEnd) {
           const urlTree = this.router.parseUrl(event.url);
-          if (urlTree.queryParams.showback !== undefined && urlTree.queryParams.showback === "false") {
+
+          // If user clicks a menu item we won't show the back button
+          if ("showback" in urlTree.queryParams && urlTree.queryParams.showback === "false") {
             this.resetRouteIndex();
             this.backRouteClicked = false;
             this.emitRouteChange();
@@ -89,7 +90,6 @@ export class NavbarService {
   resetRouteIndex() {
     this.prevRoutesIndex = [];
     this.prevRoute = null;
-    this.location.replaceState("/");
   }
 
   set showIndicator(status: boolean) {
